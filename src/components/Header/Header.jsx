@@ -1,0 +1,163 @@
+import React, { useState } from "react";
+import { Transition } from "@headlessui/react";
+import { NavLink } from "react-router-dom";
+import logo from '../../assets/images/res-logo.png'
+
+function Header() {
+    const [isOpen, setIsOpen] = useState(false);
+    return (
+        <div>
+            <nav className="bg-white border-b-2">
+                <div className="mx-auto px-4 sm:px-6 lg:px-10 w-full">
+                    <div className="flex items-center justify-between h-16">
+                        <div className="flex items-center justify-between w-full">
+                            <div className="flex items-center gap-3">
+                                <img
+                                    className="h-10 w-10"
+                                    src={logo}
+                                    alt="Workflow"
+                                />
+                                <h5 className="text-[#212245] font-semibold text-[1rem]">Tasty Treat</h5>
+                            </div>
+                            <div className="hidden md:block">
+                                <div className="ml-10 flex items-baseline space-x-4">
+                                    <NavLink
+                                        to={"/"}
+                                        className={({ isActive }) =>
+                                            isActive
+                                                ? "text-[#df2020] px-3 py-2 font-semibold leading-5 bg-[#fde4e4] rounded-lg"
+                                                : "text-[#212245] hover:text-[#df2020] px-3 py-2 font-semibold leading-5 hover:bg-[#fde4e4] rounded-lg"
+                                        }
+                                    >
+                                        Home
+                                    </NavLink>
+                                    <NavLink
+                                        to={"/cart"}
+                                        className={({ isActive }) =>
+                                            isActive
+                                                ? "text-[#df2020] px-3 py-2 font-semibold leading-5 bg-[#fde4e4] rounded-lg"
+                                                : "text-[#212245] hover:text-[#df2020] px-3 py-2 font-semibold leading-5 hover:bg-[#fde4e4] rounded-lg"
+                                        }
+                                    >
+                                        Cart
+                                    </NavLink>
+                                    <NavLink
+                                        to={"/contact"}
+                                        className={({ isActive }) =>
+                                            isActive
+                                                ? "text-[#df2020] px-3 py-2 font-semibold leading-5 bg-[#fde4e4] rounded-lg"
+                                                : "text-[#212245] hover:text-[#df2020] px-3 py-2 font-semibold leading-5 hover:bg-[#fde4e4] rounded-lg"
+                                        }
+                                    >
+                                        Contact
+                                    </NavLink>
+                                </div>
+                            </div>
+                            <div className="relative lg:mr-0 mr-7">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-7 h-7 cursor-pointer">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
+                                </svg>
+                                <div className="absolute -right-2 -top-2 text-center">
+                                    <p className="w-5 h-5 bg-[#df2020] text-sm text-white rounded-xl">1</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="-mr-2 flex md:hidden">
+                            <button
+                                onClick={() => setIsOpen(!isOpen)}
+                                type="button"
+                                className="bg-[#df2020] inline-flex items-center justify-center p-2 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-[#df2020] focus:ring-white"
+                                aria-controls="mobile-menu"
+                                aria-expanded="false"
+                            >
+                                <span className="sr-only">Open main menu</span>
+                                {!isOpen ? (
+                                    <svg
+                                        className="block h-6 w-6"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke="currentColor"
+                                        aria-hidden="true"
+                                    >
+                                        <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeWidth="2"
+                                            d="M4 6h16M4 12h16M4 18h16"
+                                        />
+                                    </svg>
+                                ) : (
+                                    <svg
+                                        className="block h-6 w-6"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke="currentColor"
+                                        aria-hidden="true"
+                                    >
+                                        <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeWidth="2"
+                                            d="M6 18L18 6M6 6l12 12"
+                                        />
+                                    </svg>
+                                )}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <Transition
+                    show={isOpen}
+                    enter="transition ease-out duration-100 transform"
+                    enterFrom="opacity-0 scale-95"
+                    enterTo="opacity-100 scale-100"
+                    leave="transition ease-in duration-75 transform"
+                    leaveFrom="opacity-100 scale-100"
+                    leaveTo="opacity-0 scale-95"
+                >
+                    {isOpen && (
+                        <div className="md:hidden" id="mobile-menu">
+                            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                                <NavLink
+                                    to={"/"}
+                                    className={({ isActive }) =>
+                                        isActive
+                                            ? "text-[#df2020] px-3 py-2 font-semibold leading-5 bg-[#fde4e4] rounded-lg block"
+                                            : "text-[#212245] hover:text-[#df2020] px-3 py-2 font-semibold leading-5 block hover:bg-[#fde4e4] rounded-lg"
+                                    }
+                                >
+                                    Home
+                                </NavLink>
+                                <NavLink
+                                    to={"/cart"}
+                                    className={({ isActive }) =>
+                                        isActive
+                                            ? "text-[#df2020] px-3 py-2 font-semibold leading-5 bg-[#fde4e4] rounded-lg block"
+                                            : "text-[#212245] hover:text-[#df2020] px-3 py-2 font-semibold leading-5 block hover:bg-[#fde4e4] rounded-lg"
+                                    }
+                                >
+                                    Cart
+                                </NavLink>
+                                <NavLink
+                                    to={"/contact"}
+                                    className={({ isActive }) =>
+                                        isActive
+                                            ? "text-[#df2020] px-3 py-2 font-semibold leading-5 bg-[#fde4e4] rounded-lg block"
+                                            : "text-[#212245] hover:text-[#df2020] px-3 py-2 font-semibold leading-5 block hover:bg-[#fde4e4] rounded-lg"
+                                    }
+                                >
+                                    Contact
+                                </NavLink>
+                            </div>
+                        </div>
+                    )}
+                </Transition>
+            </nav>
+        </div>
+    );
+}
+
+export default Header;
