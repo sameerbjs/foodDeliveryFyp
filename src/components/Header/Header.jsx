@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Popover, Transition } from "@headlessui/react";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import logo from '../../assets/images/res-logo.png'
 
 function Header() {
@@ -82,7 +82,7 @@ function Header() {
                                         <p className="w-5 h-5 bg-[#df2020] text-sm text-white rounded-xl">1</p>
                                     </div>
                                 </div>
-                                {/* <Popover className="relative mt-2" as="div">
+                                <Popover className="relative mt-2" as="div">
                                     <Popover.Button>
                                         <div>
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7 cursor-pointer">
@@ -100,16 +100,16 @@ function Header() {
                                     >
                                         <Popover.Panel className="absolute z-10 bg-white px-2 min-w-[150px] py-3 shadow-md right-0 border border-black/50 rounded-md">
                                             <div className="w-full">
-                                                <Link to={'/user-register'} className="w-full">
-                                                    <button className="text-white bg-[#df2020] hover:bg-[#df2020]/50 w-full px-4 py-2 rounded-lg">Register</button>
-                                                </Link>
+                                                <div className="w-full">
+                                                    <button className="text-white bg-[#df2020] hover:bg-[#df2020]/50 w-full px-4 py-2 rounded-lg">Profile</button>
+                                                </div>
                                                 <div className="w-full mt-3">
-                                                    <button className="text-white bg-[#df2020] hover:bg-[#df2020]/50 w-full px-4 py-2 rounded-lg">Login</button>
+                                                    <button className="text-white bg-[#df2020] hover:bg-[#df2020]/50 w-full px-4 py-2 rounded-lg">Logout</button>
                                                 </div>
                                             </div>
                                         </Popover.Panel>
                                     </Transition>
-                                </Popover> */}
+                                </Popover>
                             </div>
                         </div>
                         <div className="-mr-2 flex md:hidden">
@@ -200,6 +200,26 @@ function Header() {
                                     }
                                 >
                                     Contact
+                                </NavLink>
+                                <NavLink
+                                    to={"/user-register"}
+                                    className={({ isActive }) =>
+                                        isActive
+                                            ? "text-[#df2020] px-3 py-2 font-semibold leading-5 bg-[#fde4e4] rounded-lg block"
+                                            : "text-[#212245] hover:text-[#df2020] px-3 py-2 font-semibold leading-5 block hover:bg-[#fde4e4] rounded-lg"
+                                    }
+                                >
+                                    Register
+                                </NavLink>
+                                <NavLink
+                                    to={"/user-login"}
+                                    className={({ isActive }) =>
+                                        isActive
+                                            ? "text-[#df2020] px-3 py-2 font-semibold leading-5 bg-[#fde4e4] rounded-lg block"
+                                            : "text-[#212245] hover:text-[#df2020] px-3 py-2 font-semibold leading-5 block hover:bg-[#fde4e4] rounded-lg"
+                                    }
+                                >
+                                    Login
                                 </NavLink>
                             </div>
                         </div>
