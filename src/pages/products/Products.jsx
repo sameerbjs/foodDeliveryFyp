@@ -19,12 +19,12 @@ export const ProductRest = () => {
                                             <h1 className="text-lg font-medium text-gray-900 mb-3">{data.category}</h1>
                                             <p className="leading-relaxed mb-3">{data.desc.split(' ').slice(0, 20).join(' ')}...</p>
                                             <div className="flex items-center justify-between">
-                                                <a className="text-red-500 inline-flex items-center md:mb-2 lg:mb-0">Show details
+                                                <p className="text-red-500 inline-flex items-center md:mb-2 lg:mb-0">Show details
                                                     <svg className="w-4 h-4 ml-2" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
                                                         <path d="M5 12h14"></path>
                                                         <path d="M12 5l7 7-7 7"></path>
                                                     </svg>
-                                                </a>
+                                                </p>
                                                 <div>
                                                 <span className="text-gray-400 mr-3 inline-flex items-center lg:ml-auto md:ml-0 ml-auto leading-none text-sm pr-3 py-1 border-r-2 border-gray-200">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mr-1    ">
