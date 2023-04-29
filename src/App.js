@@ -5,6 +5,7 @@ import { HomePage } from "./pages/Home/Home";
 import Register from "./pages/auth/userAuth/Register";
 import Login from "./pages/auth/userAuth/Login";
 import ContactUs from "./pages/contact/ContactUs";
+import { ProductRest } from "./pages/products/Products";
 
 function App() {
   return (
@@ -19,6 +20,9 @@ function App() {
 
         {/* contact us */}
         <Route path="/contact" element={<ContactUs />} />
+
+        {/* products of res */}
+        <Route path="/products" element={<ProductRest />} />
       </Routes>
     </>
   );

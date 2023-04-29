@@ -2,6 +2,7 @@ import React from 'react'
 import rest1 from '../../assets/images/rest1.jpeg'
 import rest2 from '../../assets/images/rest2.jpeg'
 import rest3 from '../../assets/images/rest3.jpeg'
+import { Link } from 'react-router-dom'
 
 export const HomeExplore = () => {
     return (
@@ -13,46 +14,46 @@ export const HomeExplore = () => {
                 </div>
 
                 <div className='mt-10'>
-                    <div className='grid lg:grid-cols-4 md:grid-col-2 grid-col-1 gap-5'>
+                    <div className='grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-5'>
                         <div className='group cursor-pointer'>
-                            <div className='w-full h-full relative'>
-                                <img src={rest1} alt="rest1" className='rounded-lg object-cover w-100 h-full' />
+                            <Link to={'/products'} className='w-full h-full relative'>
+                                <img src={rest1} alt="rest1" className='rounded-lg object-cover w-full h-full' />
                                 <div className='absolute rounded-lg group-hover:bg-black/60 top-0 z-10 flex justify-center items-center h-full w-full'>
                                     <h1 className='text-white font-semibold lg:text-2xl text-xl hidden group-hover:block'>
                                         Ali baba food resturant
                                     </h1>
                                 </div>
-                            </div>
+                            </Link>
                         </div>
                         <div className='group cursor-pointer'>
-                            <div className='w-full h-full relative'>
-                                <img src={rest2} alt="rest2" className='rounded-lg object-cover w-100 h-full' />
+                            <Link to={'/products'} className='w-full h-full relative'>
+                                <img src={rest2} alt="rest1" className='rounded-lg object-cover w-full h-full' />
                                 <div className='absolute rounded-lg group-hover:bg-black/60 top-0 z-10 flex justify-center items-center h-full w-full'>
                                     <h1 className='text-white font-semibold lg:text-2xl text-xl hidden group-hover:block'>
                                         Ali baba food resturant
                                     </h1>
                                 </div>
-                            </div>
+                            </Link>
                         </div>
                         <div className='group cursor-pointer'>
-                            <div className='w-full h-full relative'>
-                                <img src={rest3} alt="rest3" className='rounded-lg object-cover w-100 h-full' />
+                            <Link to={'/products'} className='w-full h-full relative'>
+                                <img src={rest3} alt="rest1" className='rounded-lg object-cover w-full h-full' />
                                 <div className='absolute rounded-lg group-hover:bg-black/60 top-0 z-10 flex justify-center items-center h-full w-full'>
                                     <h1 className='text-white font-semibold lg:text-2xl text-xl hidden group-hover:block'>
                                         Ali baba food resturant
                                     </h1>
                                 </div>
-                            </div>
+                            </Link>
                         </div>
                         <div className='group cursor-pointer'>
-                            <div className='w-full h-full relative'>
-                                <img src={rest1} alt="rest4" className='rounded-lg object-cover w-100 h-full' />
+                            <Link to={'/products'} className='w-full h-full relative'>
+                                <img src={rest1} alt="rest1" className='rounded-lg object-cover w-full h-full' />
                                 <div className='absolute rounded-lg group-hover:bg-black/60 top-0 z-10 flex justify-center items-center h-full w-full'>
                                     <h1 className='text-white font-semibold lg:text-2xl text-xl hidden group-hover:block'>
                                         Ali baba food resturant
                                     </h1>
                                 </div>
-                            </div>
+                            </Link>
                         </div>
                     </div>
                 </div>
