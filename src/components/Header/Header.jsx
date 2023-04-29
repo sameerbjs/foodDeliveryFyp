@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { Transition } from "@headlessui/react";
-import { NavLink } from "react-router-dom";
+import { Popover, Transition } from "@headlessui/react";
+import { Link, NavLink } from "react-router-dom";
 import logo from '../../assets/images/res-logo.png'
 
 function Header() {
@@ -51,15 +51,65 @@ function Header() {
                                     >
                                         Contact
                                     </NavLink>
+                                    <NavLink
+                                        to={"/user-register"}
+                                        className={({ isActive }) =>
+                                            isActive
+                                                ? "text-[#df2020] px-3 py-2 font-semibold leading-5 bg-[#fde4e4] rounded-lg"
+                                                : "text-[#212245] hover:text-[#df2020] px-3 py-2 font-semibold leading-5 hover:bg-[#fde4e4] rounded-lg"
+                                        }
+                                    >
+                                        Register
+                                    </NavLink>
+                                    <NavLink
+                                        to={"/user-login"}
+                                        className={({ isActive }) =>
+                                            isActive
+                                                ? "text-[#df2020] px-3 py-2 font-semibold leading-5 bg-[#fde4e4] rounded-lg"
+                                                : "text-[#212245] hover:text-[#df2020] px-3 py-2 font-semibold leading-5 hover:bg-[#fde4e4] rounded-lg"
+                                        }
+                                    >
+                                        Login
+                                    </NavLink>
                                 </div>
                             </div>
-                            <div className="relative lg:mr-0 mr-7">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-7 h-7 cursor-pointer">
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
-                                </svg>
-                                <div className="absolute -right-2 -top-2 text-center">
-                                    <p className="w-5 h-5 bg-[#df2020] text-sm text-white rounded-xl">1</p>
+                            <div className="flex items-center gap-3 lg:mr-0 mr-7 flex-row-reverse">
+                                <div className="relative">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-7 h-7 cursor-pointer">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
+                                    </svg>
+                                    <div className="absolute -right-2 -top-2 text-center">
+                                        <p className="w-5 h-5 bg-[#df2020] text-sm text-white rounded-xl">1</p>
+                                    </div>
                                 </div>
+                                {/* <Popover className="relative mt-2" as="div">
+                                    <Popover.Button>
+                                        <div>
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7 cursor-pointer">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
+                                            </svg>
+                                        </div>
+                                    </Popover.Button>
+                                    <Transition
+                                        enter="transition duration-100 ease-out"
+                                        enterFrom="transform scale-95 opacity-0"
+                                        enterTo="transform scale-100 opacity-100"
+                                        leave="transition duration-75 ease-out"
+                                        leaveFrom="transform scale-100 opacity-100"
+                                        leaveTo="transform scale-95 opacity-0"
+                                    >
+                                        <Popover.Panel className="absolute z-10 bg-white px-2 min-w-[150px] py-3 shadow-md right-0 border border-black/50 rounded-md">
+                                            <div className="w-full">
+                                                <Link to={'/user-register'} className="w-full">
+                                                    <button className="text-white bg-[#df2020] hover:bg-[#df2020]/50 w-full px-4 py-2 rounded-lg">Register</button>
+                                                </Link>
+                                                <div className="w-full mt-3">
+                                                    <button className="text-white bg-[#df2020] hover:bg-[#df2020]/50 w-full px-4 py-2 rounded-lg">Login</button>
+                                                </div>
+                                            </div>
+                                        </Popover.Panel>
+                                    </Transition>
+                                </Popover> */}
                             </div>
                         </div>
                         <div className="-mr-2 flex md:hidden">
