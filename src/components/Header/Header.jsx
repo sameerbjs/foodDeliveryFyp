@@ -7,7 +7,7 @@ function Header() {
     const [isOpen, setIsOpen] = useState(false);
     return (
         <div>
-            <nav className="bg-white border-b-2">
+            <nav className="bg-white border-b-2 relative z-50">
                 <div className="mx-auto px-4 sm:px-6 lg:px-10 w-full">
                     <div className="flex items-center justify-between h-16">
                         <div className="flex items-center justify-between w-full">
@@ -97,8 +97,9 @@ function Header() {
                                         leave="transition duration-75 ease-out"
                                         leaveFrom="transform scale-100 opacity-100"
                                         leaveTo="transform scale-95 opacity-0"
+                                        className={'relative z-50'}
                                     >
-                                        <Popover.Panel className="absolute z-10 bg-white px-2 min-w-[150px] py-3 shadow-md right-0 border border-black/50 rounded-md">
+                                        <Popover.Panel className="absolute z-10 bg-white px-2 min-w-[150px] py-3 shadow-md right-0 border rounded-md">
                                             <div className="w-full">
                                                 <div className="w-full">
                                                     <button className="text-white bg-[#df2020] hover:bg-[#df2020]/50 w-full px-4 py-2 rounded-lg">Profile</button>
@@ -169,58 +170,60 @@ function Header() {
                     leaveTo="opacity-0 scale-95"
                 >
                     {isOpen && (
-                        <div className="md:hidden" id="mobile-menu">
-                            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                                <NavLink
-                                    to={"/"}
-                                    className={({ isActive }) =>
-                                        isActive
-                                            ? "text-[#df2020] px-3 py-2 font-semibold leading-5 bg-[#fde4e4] rounded-lg block"
-                                            : "text-[#212245] hover:text-[#df2020] px-3 py-2 font-semibold leading-5 block hover:bg-[#fde4e4] rounded-lg"
-                                    }
-                                >
-                                    Home
-                                </NavLink>
-                                <NavLink
-                                    to={"/cart"}
-                                    className={({ isActive }) =>
-                                        isActive
-                                            ? "text-[#df2020] px-3 py-2 font-semibold leading-5 bg-[#fde4e4] rounded-lg block"
-                                            : "text-[#212245] hover:text-[#df2020] px-3 py-2 font-semibold leading-5 block hover:bg-[#fde4e4] rounded-lg"
-                                    }
-                                >
-                                    Cart
-                                </NavLink>
-                                <NavLink
-                                    to={"/contact"}
-                                    className={({ isActive }) =>
-                                        isActive
-                                            ? "text-[#df2020] px-3 py-2 font-semibold leading-5 bg-[#fde4e4] rounded-lg block"
-                                            : "text-[#212245] hover:text-[#df2020] px-3 py-2 font-semibold leading-5 block hover:bg-[#fde4e4] rounded-lg"
-                                    }
-                                >
-                                    Contact
-                                </NavLink>
-                                <NavLink
-                                    to={"/user-register"}
-                                    className={({ isActive }) =>
-                                        isActive
-                                            ? "text-[#df2020] px-3 py-2 font-semibold leading-5 bg-[#fde4e4] rounded-lg block"
-                                            : "text-[#212245] hover:text-[#df2020] px-3 py-2 font-semibold leading-5 block hover:bg-[#fde4e4] rounded-lg"
-                                    }
-                                >
-                                    Register
-                                </NavLink>
-                                <NavLink
-                                    to={"/user-login"}
-                                    className={({ isActive }) =>
-                                        isActive
-                                            ? "text-[#df2020] px-3 py-2 font-semibold leading-5 bg-[#fde4e4] rounded-lg block"
-                                            : "text-[#212245] hover:text-[#df2020] px-3 py-2 font-semibold leading-5 block hover:bg-[#fde4e4] rounded-lg"
-                                    }
-                                >
-                                    Login
-                                </NavLink>
+                        <div className="w-full flex justify-center">
+                            <div className="md:hidden absolute rounded-lg top-2 w-11/12 bg-white shadow-lg" id="mobile-menu">
+                                <div className="px-2 pt-3 pb-3 space-y-1 sm:px-3">
+                                    <NavLink
+                                        to={"/"}
+                                        className={({ isActive }) =>
+                                            isActive
+                                                ? "text-[#df2020] px-3 py-2 font-semibold leading-5 bg-[#fde4e4] rounded-lg block"
+                                                : "text-[#212245] hover:text-[#df2020] px-3 py-2 font-semibold leading-5 block hover:bg-[#fde4e4] rounded-lg"
+                                        }
+                                    >
+                                        Home
+                                    </NavLink>
+                                    <NavLink
+                                        to={"/cart"}
+                                        className={({ isActive }) =>
+                                            isActive
+                                                ? "text-[#df2020] px-3 py-2 font-semibold leading-5 bg-[#fde4e4] rounded-lg block"
+                                                : "text-[#212245] hover:text-[#df2020] px-3 py-2 font-semibold leading-5 block hover:bg-[#fde4e4] rounded-lg"
+                                        }
+                                    >
+                                        Cart
+                                    </NavLink>
+                                    <NavLink
+                                        to={"/contact"}
+                                        className={({ isActive }) =>
+                                            isActive
+                                                ? "text-[#df2020] px-3 py-2 font-semibold leading-5 bg-[#fde4e4] rounded-lg block"
+                                                : "text-[#212245] hover:text-[#df2020] px-3 py-2 font-semibold leading-5 block hover:bg-[#fde4e4] rounded-lg"
+                                        }
+                                    >
+                                        Contact
+                                    </NavLink>
+                                    <NavLink
+                                        to={"/user-register"}
+                                        className={({ isActive }) =>
+                                            isActive
+                                                ? "text-[#df2020] px-3 py-2 font-semibold leading-5 bg-[#fde4e4] rounded-lg block"
+                                                : "text-[#212245] hover:text-[#df2020] px-3 py-2 font-semibold leading-5 block hover:bg-[#fde4e4] rounded-lg"
+                                        }
+                                    >
+                                        Register
+                                    </NavLink>
+                                    <NavLink
+                                        to={"/user-login"}
+                                        className={({ isActive }) =>
+                                            isActive
+                                                ? "text-[#df2020] px-3 py-2 font-semibold leading-5 bg-[#fde4e4] rounded-lg block"
+                                                : "text-[#212245] hover:text-[#df2020] px-3 py-2 font-semibold leading-5 block hover:bg-[#fde4e4] rounded-lg"
+                                        }
+                                    >
+                                        Login
+                                    </NavLink>
+                                </div>
                             </div>
                         </div>
                     )}

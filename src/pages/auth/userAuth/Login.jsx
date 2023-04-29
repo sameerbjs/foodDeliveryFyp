@@ -68,7 +68,7 @@ const Login = () => {
                                 <div className="intro-x">
                                     <label
                                         htmlFor="email-address"
-                                        className="Regular"
+                                        className="leading-7 text-sm text-gray-600"
                                     >
                                         Email address
                                     </label>
@@ -81,13 +81,13 @@ const Login = () => {
                                         value={info.email}
                                         onChange={handleChangeText}
                                         maxLength={26}
-                                        className="appearance-none rounded-md relative block w-full px-3 py-3 border border-gray-200 placeholder-gray-500 focus:outline-none shadow-sm"
+                                        className="w-full bg-white rounded border border-gray-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                                     />
                                 </div>
                                 <div className="intro-x">
                                     <label
                                         htmlFor="password"
-                                        className="Regular"
+                                        className="leading-7 text-sm text-gray-600"
                                     >
                                         Password
                                     </label>
@@ -103,7 +103,7 @@ const Login = () => {
                                             autoComplete="current-password"
                                             required
                                             maxLength={16}
-                                            className="appearance-none rounded-md relative block w-full px-3 py-3 border border-gray-200 placeholder-gray-500 focus:outline-none shadow-sm"
+                                            className="w-full bg-white rounded border border-gray-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                                         />
                                         <div
                                             onClick={showEyePswd}
