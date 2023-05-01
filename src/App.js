@@ -6,6 +6,7 @@ import Register from "./pages/auth/userAuth/Register";
 import Login from "./pages/auth/userAuth/Login";
 import ContactUs from "./pages/contact/ContactUs";
 import { ProductRest } from "./pages/products/Products";
+import ProductDetail from "./pages/products/ProductDetail";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
 
         {/* products of res */}
         <Route path="/products" element={<ProductRest />} />
+        <Route path="/product/:id" element={<ProductDetail />} />
       </Routes>
     </>
   );
