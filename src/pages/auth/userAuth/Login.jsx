@@ -68,7 +68,7 @@ const Login = () => {
                                 <div className="intro-x">
                                     <label
                                         htmlFor="email-address"
-                                        className="leading-7 text-sm text-gray-600"
+                                        className="leading-7 text-[15px] font-semibold text-[#212245]"
                                     >
                                         Email address
                                     </label>
@@ -80,14 +80,13 @@ const Login = () => {
                                         required
                                         value={info.email}
                                         onChange={handleChangeText}
-                                        maxLength={26}
                                         className="w-full bg-white rounded border border-gray-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                                     />
                                 </div>
                                 <div className="intro-x">
                                     <label
                                         htmlFor="password"
-                                        className="leading-7 text-sm text-gray-600"
+                                        className="leading-7 text-[15px] font-semibold text-[#212245]"
                                     >
                                         Password
                                     </label>

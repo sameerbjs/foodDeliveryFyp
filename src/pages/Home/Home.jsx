@@ -15,7 +15,7 @@ export const HomePage = () => {
                         <div className='mt-10 group'>
                             <button className='bg-[#df2020] flex items-center text-white px-5 py-4 rounded-lg font-semibold hover:bg-[#212245] tracking-widest'>
                                 Explore
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" class="w-5 h-5 group-hover:translate-x-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5 group-hover:translate-x-2">
                                     <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
                                 </svg>
                             </button>

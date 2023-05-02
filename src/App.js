@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
-import Header  from "./components/Header/Header";
+import Header from "./components/Header/Header";
 import { HomePage } from "./pages/Home/Home";
 import Register from "./pages/auth/userAuth/Register";
 import Login from "./pages/auth/userAuth/Login";
@@ -9,6 +9,9 @@ import { ProductRest } from "./pages/products/Products";
 import ProductDetail from "./pages/products/ProductDetail";
 
 function App() {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <>
       <Header />
