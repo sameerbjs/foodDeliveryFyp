@@ -27,7 +27,7 @@ const ProductDetail = () => {
     }
     const handleInput = (event) => {
         const regex = /^[0-9]*$/; // Only allow numbers
-        if (!regex.test(event.target.value) && keyCode !== 8) {
+        if (!regex.test(event.target.value)) {
             event.preventDefault();
         }
       };
