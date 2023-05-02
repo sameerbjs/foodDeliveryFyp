@@ -25,6 +25,10 @@ const ProductDetail = () => {
             event.preventDefault();
         }
     }
+    const handleInput = (event) => {
+        const newValue = event.target.value.replace(/\D/g, '');
+        setQuantity(newValue);
+      };
     return (
         <>
             <section className="text-gray-600 overflow-hidden">
@@ -76,9 +80,9 @@ const ProductDetail = () => {
                                             value={quantity}
                                             onChange={(e) => { setQuantity(e.target.value) }}
                                             maxLength={4}
-                                            onInput={handleKeyPress}
+                                            onInput={handleInput}
                                             onKeyDown={handleKeyPress}
-                                            className="lg:max-w-[50px] md:max-w-[50px] max-w-full bg-white rounded border border-gray-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 text-base outline-none text-gray-700 py-1 px-2 leading-8 transition-colors duration-200 ease-in-out"
+                                            className="max-w-[100px] bg-white rounded border border-gray-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 text-base outline-none text-gray-700 py-1 px-2 leading-8 transition-colors duration-200 ease-in-out"
                                         />
                                     </div>
                                 </div>
