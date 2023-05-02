@@ -16,21 +16,6 @@ const ProductDetail = () => {
         setProductDetail(getProduct);
     }, [id])
 
-
-    const handleKeyPress = (event) => {
-        const keyCode = event.keyCode || event.which;
-        const keyValue = String.fromCharCode(keyCode);
-        const regex = /^[0-9]*$/; // Only allow numbers
-        if (!regex.test(keyValue) && keyCode !== 8) {
-            event.preventDefault();
-        }
-    }
-    const handleInput = (event) => {
-        const regex = /^[0-9]*$/; // Only allow numbers
-        if (!regex.test(event.target.value)) {
-            event.preventDefault();
-        }
-      };
     return (
         <>
             <section className="text-gray-600 overflow-hidden">
@@ -78,13 +63,12 @@ const ProductDetail = () => {
                                         <input
                                             id="quantity"
                                             name="quantity"
-                                            type="text"
+                                            type="number"
+                                            min={1}
                                             value={quantity}
                                             onChange={(e) => { setQuantity(e.target.value) }}
                                             maxLength={4}
-                                            onInput={handleInput}
-                                            onKeyDown={handleKeyPress}
-                                            className="max-w-[100px] bg-white rounded border border-gray-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 text-base outline-none text-gray-700 py-1 px-2 leading-8 transition-colors duration-200 ease-in-out"
+                                            className="max-w-[80px] bg-white rounded border border-gray-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 text-base outline-none text-gray-700 py-1 px-2 leading-8 transition-colors duration-200 ease-in-out"
                                         />
                                     </div>
                                 </div>
