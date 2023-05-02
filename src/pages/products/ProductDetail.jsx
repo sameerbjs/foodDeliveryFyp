@@ -26,8 +26,10 @@ const ProductDetail = () => {
         }
     }
     const handleInput = (event) => {
-        const newValue = event.target.value.replace(/\D/g, '');
-        setQuantity(newValue);
+        const regex = /^[0-9]*$/; // Only allow numbers
+        if (!regex.test(event.target.value) && keyCode !== 8) {
+            event.preventDefault();
+        }
       };
     return (
         <>
