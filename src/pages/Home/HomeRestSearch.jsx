@@ -109,13 +109,13 @@ const HomeRestSearch = ({ selectedCity, setSelectedCity, cities, setSelectedFood
                         </div>
                     </Listbox>
                 </div>
-                <div className='lg:mt-6 mt-0 z-10'>
+                {/* <div className='lg:mt-6 mt-0 z-10'>
                     <button
                         className="relative intro-x w-full bg-[#df2020] hover:bg-[#212245] text-white py-1 flex justify-center px-4 border border-transparent rounded-lg focus:outline-none"
                     >
                         Search here
                     </button>
-                </div>
+                </div> */}
             </div>
         </>
     )

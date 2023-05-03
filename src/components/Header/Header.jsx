@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { Popover, Transition } from "@headlessui/react";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import logo from '../../assets/images/res-logo.png'
+import { useSelector } from "react-redux";
 
 function Header() {
     const [isOpen, setIsOpen] = useState(false);
+    const totalCartProducts = useSelector(store => store.cart.totalCartProducts)
     return (
         <div>
             <nav className="bg-white border-b-2 relative z-50">
@@ -74,14 +76,14 @@ function Header() {
                                 </div>
                             </div>
                             <div className="flex items-center gap-3 lg:mr-0 mr-7 flex-row-reverse">
-                                <div className="relative">
+                                <Link to={"/cart"} className="relative">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-7 h-7 cursor-pointer">
                                         <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
                                     </svg>
                                     <div className="absolute -right-2 -top-2 text-center">
-                                        <p className="w-5 h-5 bg-[#df2020] text-sm text-white rounded-xl">1</p>
+                                        <p className="w-5 h-5 bg-[#df2020] text-sm text-white rounded-xl">{totalCartProducts}</p>
                                     </div>
-                                </div>
+                                </Link>
                                 <Popover className="relative mt-2" as="div">
                                     <Popover.Button>
                                         <div>

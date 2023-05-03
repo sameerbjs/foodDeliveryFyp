@@ -7,9 +7,11 @@ import Login from "./pages/auth/userAuth/Login";
 import ContactUs from "./pages/contact/ContactUs";
 import { ProductRest } from "./pages/products/Products";
 import ProductDetail from "./pages/products/ProductDetail";
+import Cart from "./pages/Cart/Cart";
 
 function App() {
   useEffect(() => {
+    window.history.scrollRestoration = 'manual';
     window.scrollTo(0, 0);
   }, []);
   return (
@@ -28,6 +30,9 @@ function App() {
         {/* products of res */}
         <Route path="/products" element={<ProductRest />} />
         <Route path="/product/:id" element={<ProductDetail />} />
+
+        {/* cart */}
+        <Route path="/cart" element={<Cart />} />
       </Routes>
     </>
   );

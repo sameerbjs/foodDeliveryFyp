@@ -6,10 +6,11 @@ import { useNavigate } from 'react-router-dom'
 export const ProductRest = () => {
     const navigate = useNavigate();
     useEffect(() => {
+        window.history.scrollRestoration = 'manual';
         window.scrollTo(0, 0);
     }, []);
     return (
-        <section className="text-gray-600 body-font">
+        <React.Fragment>
             <div className="container px-5 py-7 mx-auto">
                 <div className='mb-5'>
                     <button onClick={() => navigate(-1)} className="rounded-xl bg-gray-200 hover:bg-gray-300 px-4 py-1 inline-flex gap-1 items-center justify-center text-gray-700">
@@ -25,8 +26,8 @@ export const ProductRest = () => {
                             return (
                                 <div className="p-4" key={data.id}>
                                     <div className="rounded-lg overflow-hidden">
-                                        <div className='h-1/2'>
-                                            <img className="w-full object-contain object-center" src={data.image03} alt="blog" />
+                                        <div className='h-64'>
+                                            <img className="w-full object-contain h-full" src={data.image03} alt="blog" />
                                         </div>
                                         <div className="p-6">
                                             <h2 className="tracking-widest text-xs font-medium text-gray-400 mb-1">CATEGORY</h2>
@@ -61,6 +62,6 @@ export const ProductRest = () => {
                     }
                 </div>
             </div>
-        </section>
+        </React.Fragment>
     )
 }

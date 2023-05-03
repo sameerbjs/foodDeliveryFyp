@@ -14,7 +14,7 @@ import product_04_image_03 from "../../assets/images/product_4.3.png";
 const products = [
 
   {
-    id: "02",
+    id: "2",
     title: "Vegetarian Pizza",
     price: 115.0,
     image01: product_02_image_01,
@@ -26,7 +26,7 @@ const products = [
   },
 
   {
-    id: "03",
+    id: "3",
     title: "Double Cheese Margherita",
     price: 110.0,
     image01: product_03_image_01,
@@ -38,7 +38,7 @@ const products = [
   },
 
   {
-    id: "04",
+    id: "4",
     title: "Maxican Green Wave",
     price: 110.0,
     image01: product_04_image_01,
@@ -50,7 +50,7 @@ const products = [
   },
 
   {
-    id: "07",
+    id: "7",
     title: "Seafood Pizza",
     price: 115.0,
     image01: product_02_image_02,
@@ -62,7 +62,7 @@ const products = [
   },
 
   {
-    id: "08",
+    id: "8",
     title: "Thin Cheese Pizza",
     price: 110.0,
     image01: product_03_image_02,
@@ -74,7 +74,7 @@ const products = [
   },
 
   {
-    id: "09",
+    id: "9",
     title: "Pizza With Mushroom",
     price: 110.0,
     image01: product_04_image_02,

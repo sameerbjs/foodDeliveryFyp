@@ -3,9 +3,10 @@ import deliveryGuy from '../../assets/images/delivery-guy.png'
 import { HomeExplore } from './HomeExplore'
 
 export const HomePage = () => {
+
     return (
         <>
-            <div className='px-8 py-8 w-full'>
+            <div className="container px-5 py-7 mx-auto w-full">
                 <div className='grid lg:grid-cols-2 grid-cols-1 lg:gap-5 gap-10 justify-center bg-[#fde4e4]/50 p-4 rounded-lg'>
                     <div className='h-full flex justify-center flex-col lg:items-start items-center'>
                         <h5 className='lg:text-2xl text-xl text-[#212245] font-medium whitespace-nowrap'>
