@@ -22,7 +22,7 @@ export const HomePage = () => {
                     <div className='banner lg:h-[650px] md:h-[500px] h-[400px]'>
                         <div className='flex justify-center p-4 bg-black/70 h-full'>
                             <div className='h-full flex flex-col justify-center items-center'>
-                                <h1 className='lg:text-6xl md:text-2xl text-xl font-semibold mb-8 text-white'> <span className='text-[#df2020]'>Enjoy</span> your favorite food with<span className='animate'>{text}</span></h1>
+                                <h1 className='lg:text-6xl md:text-2xl text-lg font-semibold lg:mb-8 mb-5 text-white'>Enjoy your favorite food with<span className='text-[#df2020] animate'>{text}</span></h1>
                                 <h5 className='lg:text-3xl md:text-2xl text-base text-white font-semibold whitespace-nowrap'>
                                     Easy order & Delicious food & Fast delivery
                                 </h5>
