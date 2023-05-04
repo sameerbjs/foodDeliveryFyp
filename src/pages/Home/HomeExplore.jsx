@@ -15,7 +15,7 @@ export const HomeExplore = () => {
         <>
             <div>
                 <div className='text-center'>
-                    <p className='font-semibold text-[#212245] lg:text-3xl md:text-2xl text-xl'>Explore foods on different resturants</p>
+                    <p className='font-semibold whitespace-nowrap text-[#212245] lg:text-3xl md:text-2xl text-xl'>Explore foods on different resturants</p>
                     <p className='text-[#212245] font-normal lg:text-lg text-base mt-4'>Take a deep dive and browse foods for family, friends, parties that is healty and tasty for you.</p>
                 </div>
                 <HomeRestSearch selectedCity={selectedCity} setSelectedCity={setSelectedCity} cities={cities} foodCategory={FoodCategory} selectedFood={selectedFood} setSelectedFood={setSelectedFood} />

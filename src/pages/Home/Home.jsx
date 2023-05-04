@@ -23,7 +23,7 @@ export const HomePage = () => {
                         <div className='flex justify-center p-4 bg-black/70 h-full'>
                             <div className='h-full flex flex-col justify-center items-center'>
                                 <h1 className='lg:text-6xl md:text-2xl text-xl font-semibold mb-8 text-white'> <span className='text-[#df2020]'>Enjoy</span> your favorite food with<span className='animate'>{text}</span></h1>
-                                <h5 className='lg:text-3xl text-lg text-white font-semibold whitespace-nowrap'>
+                                <h5 className='lg:text-3xl md:text-2xl text-base text-white font-semibold whitespace-nowrap'>
                                     Easy order & Delicious food & Fast delivery
                                 </h5>
                                 <div className='mt-10 group flex gap-3'>
