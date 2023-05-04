@@ -3,13 +3,18 @@
 @tailwind utilities;
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif&display=swap');
 
 
 /* base style */
 
 body {
   background: #fcfcfc;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Poppins', sans-serif !important;
+}
+
+h1,h2,h3,h4,h5,h6{
+  font-family: 'Noto Serif', serif !important;
 }
 
 .noSelect {
@@ -29,4 +34,39 @@ body {
 .scrollbar-hide {
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
+}
+
+.banner{
+  background-image: url(assets/images/banner.jpg);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+@media (min-width: 1024px) {
+  .transition-linear-out {
+    transition: visibility 0s linear 200ms, opacity 200ms;
+  }
+  .transition-linear-in {
+    transition: visibility 0s linear 0s, opacity 200ms;
+  }
+}
+
+.animate {
+  animation: text-anim 4s ease-in-out infinite;
+}
+
+@keyframes text-anim {
+  0% {
+    opacity: 0;
+  }
+  5% {
+    opacity: 1;
+  }
+  95% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
 }

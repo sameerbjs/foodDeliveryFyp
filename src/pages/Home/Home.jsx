@@ -1,35 +1,49 @@
-import React from 'react'
-import deliveryGuy from '../../assets/images/delivery-guy.png'
+import React, { useEffect, useState } from 'react'
 import { HomeExplore } from './HomeExplore'
+import { Link } from 'react-router-dom'
 
 export const HomePage = () => {
+    const [text, setText] = useState('');
 
+    useEffect(() => {
+        const intervalId = setInterval(() => {
+            setText(' family');
+            setTimeout(() => {
+                setText(' friends');
+            }, 2000);
+        }, 3000);
+
+        return () => clearInterval(intervalId);
+    }, []);
     return (
         <>
-            <div className="container px-5 py-7 mx-auto w-full">
-                <div className='grid lg:grid-cols-2 grid-cols-1 lg:gap-5 gap-10 justify-center bg-[#fde4e4]/50 p-4 rounded-lg'>
-                    <div className='h-full flex justify-center flex-col lg:items-start items-center'>
-                        <h5 className='lg:text-2xl text-xl text-[#212245] font-medium whitespace-nowrap'>
-                            Easy order & fast delivery
-                        </h5>
-                        <h1 className='lg:text-4xl md:text-2xl text-xl font-semibold mt-5 text-[#212245]'> <span className='text-[#df2020]'>Enjoy</span> your favorite FOOD</h1>
-                        <div className='mt-10 group'>
-                            <button className='bg-[#df2020] flex items-center text-white px-5 py-4 rounded-lg font-semibold hover:bg-[#212245] tracking-widest'>
-                                Explore
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5 group-hover:translate-x-2">
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
-                                </svg>
-                            </button>
-                        </div>
-                    </div>
-                    <div className='flex justify-center lg:items-start items-center'>
-                        <div className='lg:w-3/4 md:w-1/2 w-full lg:h-1/2 h-full'>
-                            <img src={deliveryGuy} alt="deliveryGuy" />
+            <div className="mx-auto w-full overflow-hidden">
+                <div className='relative'>
+                    <div className='banner lg:h-[650px] md:h-[500px] h-[400px]'>
+                        <div className='flex justify-center p-4 bg-black/70 h-full'>
+                            <div className='h-full flex flex-col justify-center items-center'>
+                                <h1 className='lg:text-6xl md:text-2xl text-xl font-semibold mb-8 text-white'> <span className='text-[#df2020]'>Enjoy</span> your favorite food with<span className='animate'>{text}</span></h1>
+                                <h5 className='lg:text-3xl text-lg text-white font-semibold whitespace-nowrap'>
+                                    Easy order & Delicious food & Fast delivery
+                                </h5>
+                                <div className='mt-10 group flex gap-3'>
+                                    <Link to={'/user-register'}>
+                                        <button className='bg-[#df2020] flex items-center text-white px-5 py-4 rounded-lg font-semibold hover:bg-[#212245] tracking-widest'>
+                                            Register
+                                        </button>
+                                    </Link>
+                                    <Link to={'/user-login'}>
+                                        <button className='bg-[#df2020] flex items-center text-white px-5 py-4 rounded-lg font-semibold hover:bg-[#212245] tracking-widest'>
+                                            Login
+                                        </button>
+                                    </Link>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <div className='mt-10'>
+                <div className='container mx-auto px-5 py-10'>
                     <HomeExplore />
                 </div>
             </div>

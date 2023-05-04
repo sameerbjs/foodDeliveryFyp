@@ -8,8 +8,8 @@ function Header() {
     const [isOpen, setIsOpen] = useState(false);
     const totalCartProducts = useSelector(store => store.cart.totalCartProducts)
     return (
-        <div>
-            <nav className="bg-white border-b-2 relative z-50">
+        <div className="pb-[65px]">
+            <nav className="bg-white shadow-md fixed w-full z-50">
                 <div className="mx-auto px-4 sm:px-6 lg:px-10 w-full">
                     <div className="flex items-center justify-between h-16">
                         <div className="flex items-center justify-between w-full">
@@ -34,16 +34,6 @@ function Header() {
                                         Home
                                     </NavLink>
                                     <NavLink
-                                        to={"/cart"}
-                                        className={({ isActive }) =>
-                                            isActive
-                                                ? "text-[#df2020] px-3 py-2 font-semibold leading-5 bg-[#fde4e4] rounded-lg"
-                                                : "text-[#212245] hover:text-[#df2020] px-3 py-2 font-semibold leading-5 hover:bg-[#fde4e4] rounded-lg"
-                                        }
-                                    >
-                                        Cart
-                                    </NavLink>
-                                    <NavLink
                                         to={"/contact"}
                                         className={({ isActive }) =>
                                             isActive
@@ -52,26 +42,6 @@ function Header() {
                                         }
                                     >
                                         Contact
-                                    </NavLink>
-                                    <NavLink
-                                        to={"/user-register"}
-                                        className={({ isActive }) =>
-                                            isActive
-                                                ? "text-[#df2020] px-3 py-2 font-semibold leading-5 bg-[#fde4e4] rounded-lg"
-                                                : "text-[#212245] hover:text-[#df2020] px-3 py-2 font-semibold leading-5 hover:bg-[#fde4e4] rounded-lg"
-                                        }
-                                    >
-                                        Register
-                                    </NavLink>
-                                    <NavLink
-                                        to={"/user-login"}
-                                        className={({ isActive }) =>
-                                            isActive
-                                                ? "text-[#df2020] px-3 py-2 font-semibold leading-5 bg-[#fde4e4] rounded-lg"
-                                                : "text-[#212245] hover:text-[#df2020] px-3 py-2 font-semibold leading-5 hover:bg-[#fde4e4] rounded-lg"
-                                        }
-                                    >
-                                        Login
                                     </NavLink>
                                 </div>
                             </div>
@@ -186,16 +156,6 @@ function Header() {
                                         Home
                                     </NavLink>
                                     <NavLink
-                                        to={"/cart"}
-                                        className={({ isActive }) =>
-                                            isActive
-                                                ? "text-[#df2020] px-3 py-2 font-semibold leading-5 bg-[#fde4e4] rounded-lg block"
-                                                : "text-[#212245] hover:text-[#df2020] px-3 py-2 font-semibold leading-5 block hover:bg-[#fde4e4] rounded-lg"
-                                        }
-                                    >
-                                        Cart
-                                    </NavLink>
-                                    <NavLink
                                         to={"/contact"}
                                         className={({ isActive }) =>
                                             isActive
@@ -204,26 +164,6 @@ function Header() {
                                         }
                                     >
                                         Contact
-                                    </NavLink>
-                                    <NavLink
-                                        to={"/user-register"}
-                                        className={({ isActive }) =>
-                                            isActive
-                                                ? "text-[#df2020] px-3 py-2 font-semibold leading-5 bg-[#fde4e4] rounded-lg block"
-                                                : "text-[#212245] hover:text-[#df2020] px-3 py-2 font-semibold leading-5 block hover:bg-[#fde4e4] rounded-lg"
-                                        }
-                                    >
-                                        Register
-                                    </NavLink>
-                                    <NavLink
-                                        to={"/user-login"}
-                                        className={({ isActive }) =>
-                                            isActive
-                                                ? "text-[#df2020] px-3 py-2 font-semibold leading-5 bg-[#fde4e4] rounded-lg block"
-                                                : "text-[#212245] hover:text-[#df2020] px-3 py-2 font-semibold leading-5 block hover:bg-[#fde4e4] rounded-lg"
-                                        }
-                                    >
-                                        Login
                                     </NavLink>
                                 </div>
                             </div>
