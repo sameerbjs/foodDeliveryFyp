@@ -8,6 +8,7 @@ import ContactUs from "./pages/contact/ContactUs";
 import { ProductRest } from "./pages/products/Products";
 import ProductDetail from "./pages/products/ProductDetail";
 import Cart from "./pages/Cart/Cart";
+import Footer from "./components/Footer/Footer";
 
 function App() {
   useEffect(() => {
@@ -16,24 +17,27 @@ function App() {
   }, []);
   return (
     <>
-      <Header />
-      <Routes>
-        <Route path="/" element={<HomePage />} />
+      <div className="min-h-screen relative">
+        <Header />
+        <Routes>
+          <Route path="/" element={<HomePage />} />
 
-        {/* register and login for user routes */}
-        <Route path="/user-register" element={<Register />} />
-        <Route path="/user-login" element={<Login />} />
+          {/* register and login for user routes */}
+          <Route path="/user-register" element={<Register />} />
+          <Route path="/user-login" element={<Login />} />
 
-        {/* contact us */}
-        <Route path="/contact" element={<ContactUs />} />
+          {/* contact us */}
+          <Route path="/contact" element={<ContactUs />} />
 
-        {/* products of res */}
-        <Route path="/products" element={<ProductRest />} />
-        <Route path="/product/:id" element={<ProductDetail />} />
+          {/* products of res */}
+          <Route path="/products" element={<ProductRest />} />
+          <Route path="/product/:id" element={<ProductDetail />} />
 
-        {/* cart */}
-        <Route path="/cart" element={<Cart />} />
-      </Routes>
+          {/* cart */}
+          <Route path="/cart" element={<Cart />} />
+        </Routes>
+        <Footer />
+      </div>
     </>
   );
 }

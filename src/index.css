@@ -3,7 +3,6 @@
 @tailwind utilities;
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Noto+Serif&display=swap');
 
 
 /* base style */
@@ -11,10 +10,6 @@
 body {
   background: #fcfcfc;
   font-family: 'Poppins', sans-serif !important;
-}
-
-h1,h2,h3,h4,h5,h6{
-  font-family: 'Noto Serif', serif !important;
 }
 
 .noSelect {
@@ -49,24 +44,5 @@ h1,h2,h3,h4,h5,h6{
   }
   .transition-linear-in {
     transition: visibility 0s linear 0s, opacity 200ms;
-  }
-}
-
-.animate {
-  animation: text-anim 4s ease-in-out infinite;
-}
-
-@keyframes text-anim {
-  0% {
-    opacity: 0;
-  }
-  5% {
-    opacity: 1;
-  }
-  95% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
   }
 }

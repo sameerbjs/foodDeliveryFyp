@@ -41,7 +41,7 @@ const Cart = () => {
                     </div>
 
                     <div className='mt-7'>
-                        <div className={`grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-5 ${showProducts?.length === 0 && 'h-[calc(100vh-350px)]'}`}>
+                        <div className={`grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-5 ${showProducts?.length > 4 ? '' : 'h-[calc(100vh-250px)]'}`}>
                             {
                                 showProducts?.length ? showProducts.map((cart, index) => {
                                     return (

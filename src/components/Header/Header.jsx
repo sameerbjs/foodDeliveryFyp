@@ -27,18 +27,28 @@ function Header() {
                                         to={"/"}
                                         className={({ isActive }) =>
                                             isActive
-                                                ? "text-[#df2020] px-3 py-2 font-semibold leading-5 bg-[#fde4e4] rounded-lg"
-                                                : "text-[#212245] hover:text-[#df2020] px-3 py-2 font-semibold leading-5 hover:bg-[#fde4e4] rounded-lg"
+                                                ? "text-red-500 px-3 py-2 font-semibold leading-5 bg-[#fde4e4] rounded-lg"
+                                                : "text-[#212245] hover:text-red-500 px-3 py-2 font-semibold leading-5 hover:bg-[#fde4e4] rounded-lg"
                                         }
                                     >
                                         Home
                                     </NavLink>
                                     <NavLink
+                                        to={"/about-us"}
+                                        className={({ isActive }) =>
+                                            isActive
+                                                ? "text-red-500 px-3 py-2 font-semibold leading-5 bg-[#fde4e4] rounded-lg"
+                                                : "text-[#212245] hover:text-red-500 px-3 py-2 font-semibold leading-5 hover:bg-[#fde4e4] rounded-lg"
+                                        }
+                                    >
+                                        About us
+                                    </NavLink>
+                                    <NavLink
                                         to={"/contact"}
                                         className={({ isActive }) =>
                                             isActive
-                                                ? "text-[#df2020] px-3 py-2 font-semibold leading-5 bg-[#fde4e4] rounded-lg"
-                                                : "text-[#212245] hover:text-[#df2020] px-3 py-2 font-semibold leading-5 hover:bg-[#fde4e4] rounded-lg"
+                                                ? "text-red-500 px-3 py-2 font-semibold leading-5 bg-[#fde4e4] rounded-lg"
+                                                : "text-[#212245] hover:text-red-500 px-3 py-2 font-semibold leading-5 hover:bg-[#fde4e4] rounded-lg"
                                         }
                                     >
                                         Contact
@@ -149,18 +159,28 @@ function Header() {
                                         to={"/"}
                                         className={({ isActive }) =>
                                             isActive
-                                                ? "text-[#df2020] px-3 py-2 font-semibold leading-5 bg-[#fde4e4] rounded-lg block"
-                                                : "text-[#212245] hover:text-[#df2020] px-3 py-2 font-semibold leading-5 block hover:bg-[#fde4e4] rounded-lg"
+                                                ? "text-red-500 px-3 py-2 font-semibold leading-5 bg-[#fde4e4] rounded-lg block"
+                                                : "text-[#212245] hover:text-red-500 px-3 py-2 font-semibold leading-5 block hover:bg-[#fde4e4] rounded-lg"
                                         }
                                     >
                                         Home
                                     </NavLink>
                                     <NavLink
+                                        to={"/about-us"}
+                                        className={({ isActive }) =>
+                                            isActive
+                                                ? "text-red-500 px-3 py-2 font-semibold leading-5 bg-[#fde4e4] rounded-lg block"
+                                                : "text-[#212245] hover:text-red-500 px-3 py-2 font-semibold leading-5 block hover:bg-[#fde4e4] rounded-lg"
+                                        }
+                                    >
+                                        About us
+                                    </NavLink>
+                                    <NavLink
                                         to={"/contact"}
                                         className={({ isActive }) =>
                                             isActive
-                                                ? "text-[#df2020] px-3 py-2 font-semibold leading-5 bg-[#fde4e4] rounded-lg block"
-                                                : "text-[#212245] hover:text-[#df2020] px-3 py-2 font-semibold leading-5 block hover:bg-[#fde4e4] rounded-lg"
+                                                ? "text-red-500 px-3 py-2 font-semibold leading-5 bg-[#fde4e4] rounded-lg block"
+                                                : "text-[#212245] hover:text-red-500 px-3 py-2 font-semibold leading-5 block hover:bg-[#fde4e4] rounded-lg"
                                         }
                                     >
                                         Contact

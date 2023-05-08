@@ -119,9 +119,9 @@ const ProductDetail = () => {
 
                 <div className='pt-5 px-5'>
                     <div className='mb-5 ml-[50px]'>
-                        <h1 className='text-[#212245] text-xl'>
+                    <p className='text-[#212245] text-xl'>
                             User Feedback
-                        </h1>
+                        </p>
                     </div>
                     <Comments />
                     <Comments />

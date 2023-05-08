@@ -1,7 +1,7 @@
 import {React, useState} from "react";
 import {ToastContainer, toast} from "react-toastify";
 import {BsEye, BsEyeSlash} from "react-icons/bs";
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
 const Login = () => {
     const [info, setinfo] = useState({
@@ -115,6 +115,13 @@ const Login = () => {
                                             )}
                                         </div>
                                     </div>
+                                </div>
+                                <div className="intro-x">
+                                    <span
+                                        className="leading-7 text-[15px] font-semibold text-[#212245]"
+                                    >
+                                        Don't have an account <Link to={'/user-register'} className="text-blue-500 hover:underline"> Register here</Link>
+                                    </span>
                                 </div>
                                 <button
                                     onClick={handleLogin}
