@@ -1,5 +1,5 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import cartReducer from '../src/redux/CartHandle.js'
+import cartReducer from '../src/redux/CartSlice.js'
 import AsyncStorage from "redux-persist/lib/storage";
 import { persistReducer, persistStore } from 'redux-persist';
 import thunk from 'redux-thunk';

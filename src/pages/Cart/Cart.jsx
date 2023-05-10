@@ -1,14 +1,13 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import products from '../../assets/data/Products';
 import { XMarkIcon } from '@heroicons/react/20/solid';
-import { removeToCartProduct } from '../../redux/CartHandle';
+import { decreaseQuantity, removeToCartProduct, increaseQuantity } from '../../redux/CartSlice';
 import { ToastContainer } from 'react-toastify';
-
 const Cart = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const cartProducts = useSelector(store => store.cart.cartProducts);
 
     useEffect(() => {
         window.history.scrollRestoration = 'manual';
@@ -18,10 +17,12 @@ const Cart = () => {
     const handleRemoveCart = (proId) => {
         dispatch(removeToCartProduct({ id: proId }))
     }
-
-
-    const cartProducts = useSelector(store => store.cart.cartProducts);
-    const showProducts = cartProducts.map(obj => products.find(item => parseInt(item.id) === obj.id));
+    const increaseQuantityHandle = (id) => {
+        dispatch(increaseQuantity({ id: id }))
+    }
+    const decreaseQuantityHandle = (id) => {
+        dispatch(decreaseQuantity({ id: id }))
+    }
     return (
         <>
             <ToastContainer
@@ -41,9 +42,9 @@ const Cart = () => {
                     </div>
 
                     <div className='mt-7'>
-                        <div className={`grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-5 ${showProducts?.length > 4 ? '' : 'h-[calc(100vh-250px)]'}`}>
+                        <div className={`grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-5 ${cartProducts?.length > 4 ? '' : 'h-[calc(100vh-250px)]'}`}>
                             {
-                                showProducts?.length ? showProducts.map((cart, index) => {
+                                cartProducts?.length ? cartProducts.map((cart, index) => {
                                     return (
                                         <div key={index}>
                                             <div className="p-4 w-full relative border">
@@ -53,9 +54,19 @@ const Cart = () => {
                                                 <div className="mt-4">
                                                     <h3 className="text-gray-500 text-xs tracking-widest title-font mb-1">Name</h3>
                                                     <h2 className="text-gray-900 title-font text-lg font-medium">{cart.title}</h2>
-                                                    <p className="mt-1">{cart.price} PKR</p>
+                                                    <p className="mt-1">{cart.price * cart.quantity} PKR</p>
                                                 </div>
-                                                <button onClick={() => handleRemoveCart(parseInt(cart?.id))} className='absolute -right-[10px] -top-[11px] bg-[#df2020] rounded-2xl'>
+                                                <div className='flex items-center gap-3 mt-2 justify-end'>
+                                                    <button onClick={() => decreaseQuantityHandle(cart.id)}>-</button>
+                                                    <input
+                                                        type="text"
+                                                        value={cart.quantity}
+                                                        disabled
+                                                        className='w-20 ml-2 bg-white rounded border border-gray-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out'
+                                                    />
+                                                    <button onClick={() => increaseQuantityHandle(cart.id)}>+</button>
+                                                </div>
+                                                <button onClick={() => handleRemoveCart(cart?.id)} className='absolute -right-[10px] -top-[11px] bg-[#df2020] rounded-2xl'>
                                                     <XMarkIcon className='w-5 h-5 text-white' />
                                                 </button>
                                             </div>

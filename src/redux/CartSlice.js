@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, current } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 
 const initialState = {
@@ -20,17 +20,26 @@ const addToCartSlice = createSlice({
             }
             state.totalCartProducts = state.cartProducts.length;
         },
-        removeToCartProduct : (state,action)=>{
-            const filteredArray = state.cartProducts.filter(el=>el.id !== action.payload.id);
+        removeToCartProduct: (state, action) => {
+            const filteredArray = state.cartProducts.filter((el) => el.id !== action.payload.id);
             state.cartProducts = filteredArray;
             state.totalCartProducts = state.cartProducts.length;
             toast.success('Product remove from cart');
-        }
+        },
+        increaseQuantity: (state, action) => {
+            const { id } = action.payload;
+            const product = state.cartProducts.find((item) => item.id === id);
+            product.quantity += 1;
+        },
+        decreaseQuantity: (state, action) => {
+            const { id } = action.payload;
+            const product = state.cartProducts.find((item) => item.id === id);
+            product.quantity -= 1;
+        },
     },
 })
 
 export const {
-    addToCartProduct,
-    removeToCartProduct
+    addToCartProduct, removeToCartProduct, increaseQuantity, decreaseQuantity
 } = addToCartSlice.actions;
 export default addToCartSlice.reducer;

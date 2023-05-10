@@ -3,7 +3,7 @@ import { ToastContainer, toast } from "react-toastify";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
 import { Link, useNavigate } from "react-router-dom";
 
-const Login = () => {
+const ResturantLogin = () => {
     const [info, setinfo] = useState({
         email: "",
         password: "",
@@ -60,7 +60,7 @@ const Login = () => {
                     <div className="md:grid md:grid-cols-2 flex-grow">
                         <div className="intro-y mb-5 md:mb-0 flex flex-col justify-center items-center relative">
                             <h2 className="text-center lg:text-6xl text-[#212245] text-3xl font-bold italic">
-                                User Login
+                                Resturant Login
                             </h2>
                         </div>
                         <div className="p-10 rounded-xl intro-y">
@@ -120,15 +120,8 @@ const Login = () => {
                                     <span
                                         className="leading-7 text-[15px] font-semibold text-[#212245]"
                                     >
-                                        Don't have an account <Link to={'/user-register'} className="text-blue-500 hover:underline"> Register here</Link>
+                                        Don't have an account <Link to={'/resturant-register'} className="text-blue-500 hover:underline"> Register here</Link>
                                     </span>
-                                </div>
-                                <div className="intro-x">
-                                    <p
-                                        className="leading-7 text-[15px] font-semibold text-[#212245]"
-                                    >
-                                        If you're a restaurant manager and have an account, <Link to={'/resturant-login'} className="text-blue-500 hover:underline">Login here</Link>
-                                    </p>
                                 </div>
                                 <button
                                     onClick={handleLogin}
@@ -145,4 +138,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default ResturantLogin;

@@ -9,6 +9,8 @@ import { ProductRest } from "./pages/products/Products";
 import ProductDetail from "./pages/products/ProductDetail";
 import Cart from "./pages/Cart/Cart";
 import Footer from "./components/Footer/Footer";
+import ResturantRegister from "./pages/auth/resturantAuth/ResturantRegister";
+import ResturantLogin from "./pages/auth/resturantAuth/ResturantLogin";
 
 function App() {
   useEffect(() => {
@@ -35,6 +37,10 @@ function App() {
 
           {/* cart */}
           <Route path="/cart" element={<Cart />} />
+
+          {/* register and login for resturants */}
+          <Route path="/resturant-register" element={<ResturantRegister />} />
+          <Route path="/resturant-login" element={<ResturantLogin />} />
         </Routes>
         <Footer />
       </div>

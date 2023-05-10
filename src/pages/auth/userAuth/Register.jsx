@@ -59,7 +59,7 @@ const Register = () => {
     };
     return (
         <>
-            <div className="min-h-full container px-4 sm:px-6 lg:px-8 lg:mt-0 mt-10 h-[calc(100vh-150px)] flex items-start justify-start lg:justify-center lg:items-center">
+            <div className="min-h-full container px-4 sm:px-6 lg:px-8 lg:mt-0 mt-10 flex items-start justify-start lg:justify-center lg:items-center">
                 <ToastContainer
                     position="top-right"
                     theme="dark"
@@ -69,11 +69,11 @@ const Register = () => {
                     <div className="md:grid md:grid-cols-2 flex-grow">
                         <div className="intro-y mb-5 md:mb-0 flex flex-col justify-center items-center relative">
                             <h2 className="text-center lg:text-6xl text-[#212245] text-3xl font-bold italic">
-                                Register here
+                                User Registration
                             </h2>
                         </div>
                         <div className="p-10 rounded-xl intro-y">
-                            <div className="space-y-5">
+                            <div className="space-y-4">
                                 <div className="intro-x">
                                     <label
                                         htmlFor="email-address"
@@ -181,12 +181,19 @@ const Register = () => {
                                     <span
                                         className="leading-7 text-[15px] font-semibold text-[#212245]"
                                     >
-                                        Have an account <Link to={'/user-login'} className="text-blue-500 hover:underline">Login here</Link>
+                                        Have a user account <Link to={'/user-login'} className="text-blue-500 hover:underline">Login here</Link>
                                     </span>
+                                </div>
+                                <div className="intro-x">
+                                    <p
+                                        className="leading-7 text-[15px] font-semibold text-[#212245]"
+                                    >
+                                        If you're a restaurant manager and want to promote/sale your products please, <Link to={'/resturant-register'} className="text-blue-500 hover:underline">Register here</Link>
+                                    </p>
                                 </div>
                                 <button
                                     onClick={handleRegister}
-                                    className="relative intro-x w-full bg-[#df2020] hover:bg-[#df2020]/70 text-white font-medium tracking-widest flex justify-center py-2.5 px-4 border border-transparent rounded-lg focus:outline-none "
+                                    className="relative intro-x w-full bg-red-500 hover:bg-red-500/70 text-white font-medium tracking-widest flex justify-center py-2.5 px-4 border border-transparent rounded-lg focus:outline-none "
                                 >
                                     Register
                                 </button>
