@@ -2,15 +2,28 @@ import React from 'react'
 import { Tab } from '@headlessui/react'
 import Register from './userAuth/Register'
 import ResturantRegister from './resturantAuth/ResturantRegister'
+import { useSelector, useDispatch } from 'react-redux'
+import { RegisterSelectedTabHandle } from '../../redux/AuthTabSlice'
+import { useLocation } from 'react-router-dom'
 
 const AuthRegisterProcess = () => {
+
+    const selectedTab = useSelector(store => store.tab.RegisterSelectedTab);
+    const dispatch = useDispatch();
+    const location = useLocation();
+    const tabState = location.state?.tab;
+
     React.useEffect(() => {
         window.history.scrollRestoration = 'manual';
         window.scrollTo(0, 0);
-    }, []);
+        if (tabState !== null) {
+            dispatch(RegisterSelectedTabHandle({ tab: tabState }))
+        }
+    }, [dispatch, tabState]);
+
     return (
         <div className="container px-5 py-7 mx-auto overflow-hidden">
-            <Tab.Group>
+            <Tab.Group selectedIndex={selectedTab} onChange={(index) => { dispatch(RegisterSelectedTabHandle({ tab: index })) }}>
                 <Tab.List className={'flex justify-center gap-4 items-center flex-wrap p-1'}>
                     <Tab>
                         {({ selected }) => (

@@ -15,44 +15,43 @@ import AuthRegisterProcess from "./pages/auth/AuthRegisterProcess";
 import AuthLoginProcess from "./pages/auth/AuthLoginProcess";
 
 function App() {
-  useEffect(() => {
-    window.history.scrollRestoration = 'manual';
-    window.scrollTo(0, 0);
-  }, []);
-  return (
-    <>
-      <div className="min-h-screen relative">
-        <Header />
-        <Routes>
-          <Route path="/" element={<HomePage />} />
+	useEffect(() => {
+		window.history.scrollRestoration = 'manual';
+		window.scrollTo(0, 0);
+	}, []);
+	return (
+		<>
+			<div className="min-h-screen relative">
+				<Header />
+				<Routes>
+					<Route path="/" element={<HomePage />} />
 
+					{/* authentication */}
+					<Route path="/auth-register" element={<AuthRegisterProcess />} />
+					<Route path="/auth-login" element={<AuthLoginProcess />} />
 
-          {/* authentication */}
-          <Route path="/auth-register" element={<AuthRegisterProcess />} />
-          <Route path="/auth-login" element={<AuthLoginProcess />} />
+					{/* register and login for user routes */}
+					<Route path="/user-register" element={<Register />} />
+					<Route path="/user-login" element={<Login />} />
 
-          {/* register and login for user routes */}
-          <Route path="/user-register" element={<Register />} />
-          <Route path="/user-login" element={<Login />} />
+					{/* register and login for resturants */}
+					<Route path="/resturant-register" element={<ResturantRegister />} />
+					<Route path="/resturant-login" element={<ResturantLogin />} />
 
-          {/* register and login for resturants */}
-          <Route path="/resturant-register" element={<ResturantRegister />} />
-          <Route path="/resturant-login" element={<ResturantLogin />} />
+					{/* contact us */}
+					<Route path="/contact" element={<ContactUs />} />
 
-          {/* contact us */}
-          <Route path="/contact" element={<ContactUs />} />
+					{/* products of res */}
+					<Route path="/products" element={<ProductRest />} />
+					<Route path="/product/:id" element={<ProductDetail />} />
 
-          {/* products of res */}
-          <Route path="/products" element={<ProductRest />} />
-          <Route path="/product/:id" element={<ProductDetail />} />
-
-          {/* cart */}
-          <Route path="/cart" element={<Cart />} />
-        </Routes>
-        <Footer />
-      </div>
-    </>
-  );
+					{/* cart */}
+					<Route path="/cart" element={<Cart />} />
+				</Routes>
+				<Footer />
+			</div>
+		</>
+	);
 }
 
 export default App;

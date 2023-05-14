@@ -1,5 +1,6 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import cartReducer from '../src/redux/CartSlice.js'
+import tabReducer from '../src/redux/AuthTabSlice.js'
 import AsyncStorage from "redux-persist/lib/storage";
 import { persistReducer, persistStore } from 'redux-persist';
 import thunk from 'redux-thunk';
@@ -7,11 +8,13 @@ import thunk from 'redux-thunk';
 
 const rootReducer = combineReducers({
     cart: cartReducer,
+    tab: tabReducer
 })
 
 const persistConfig = {
     key: 'foodDelivery',
-    storage: AsyncStorage
+    storage: AsyncStorage,
+    blacklist : ['tab']
 }
 
 const persistedReducer = persistReducer(persistConfig, rootReducer)

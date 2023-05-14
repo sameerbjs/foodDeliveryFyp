@@ -120,7 +120,7 @@ const ResturantLogin = () => {
                                     <span
                                         className="leading-7 text-[15px] font-semibold text-[#212245]"
                                     >
-                                        Don't have an account <Link to={'/auth-register'} className="text-blue-500 hover:underline"> Register here</Link>
+                                        Don't have an account <Link to={'/auth-register'} state={{tab:1}} className="text-blue-500 hover:underline"> Register here</Link>
                                     </span>
                                 </div>
                                 <button

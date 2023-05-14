@@ -181,7 +181,7 @@ const Register = () => {
                                     <span
                                         className="leading-7 text-[15px] font-semibold text-[#212245]"
                                     >
-                                        Have a account <Link to={'/auth-login'} className="text-blue-500 hover:underline">Login here</Link>
+                                        Have a account <Link to={'/auth-login'} state={{tab:0}} className="text-blue-500 hover:underline">Login here</Link>
                                     </span>
                                 </div>
                                 <button
