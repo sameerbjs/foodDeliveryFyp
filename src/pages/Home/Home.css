@@ -1,0 +1,7 @@
+.reviewbg {
+    background-image: url(../../assets/images/reviewbg.jpg);
+    background-size: cover;
+    background-blend-mode: overlay;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}

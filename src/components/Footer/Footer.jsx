@@ -2,7 +2,7 @@ import React from 'react'
 const Footer = () => {
     return (
         <>
-            <footer className="text-gray-600 border-t-2 absolute w-full">
+            <footer className="text-gray-600 border-t-2 absolute w-full overflow-hidden">
                 <div className="container px-5 py-2 mx-auto flex items-center sm:flex-row flex-col">
                     <span className="flex items-center md:justify-start justify-center text-gray-900">
                         <span className="ml-3 text-xl">Tasty Treat</span>

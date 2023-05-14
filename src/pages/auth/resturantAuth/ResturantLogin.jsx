@@ -50,7 +50,7 @@ const ResturantLogin = () => {
     };
     return (
         <>
-            <div className="container px-4 sm:px-6 lg:px-8 lg:mt-0 mt-10 h-[calc(100vh-150px)] flex items-start justify-start lg:justify-center lg:items-center">
+            <div className="container px-4 sm:px-6 lg:px-8 lg:mt-0 mt-10 lg:h-[calc(100vh-230px)] md:h-[calc(100vh-170px)] h-[calc(100vh-400px)] flex items-start justify-start lg:justify-center lg:items-center">
                 <ToastContainer
                     position="top-right"
                     theme="dark"
@@ -63,7 +63,7 @@ const ResturantLogin = () => {
                                 Resturant Login
                             </h2>
                         </div>
-                        <div className="p-10 rounded-xl intro-y">
+                        <div className="lg:p-10 md:p-6 p-0 rounded-xl intro-y">
                             <div className="space-y-4">
                                 <div className="intro-x">
                                     <label
@@ -120,7 +120,7 @@ const ResturantLogin = () => {
                                     <span
                                         className="leading-7 text-[15px] font-semibold text-[#212245]"
                                     >
-                                        Don't have an account <Link to={'/resturant-register'} className="text-blue-500 hover:underline"> Register here</Link>
+                                        Don't have an account <Link to={'/auth-register'} className="text-blue-500 hover:underline"> Register here</Link>
                                     </span>
                                 </div>
                                 <button

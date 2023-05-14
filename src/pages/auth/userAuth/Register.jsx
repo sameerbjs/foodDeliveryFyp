@@ -72,7 +72,7 @@ const Register = () => {
                                 User Registration
                             </h2>
                         </div>
-                        <div className="p-10 rounded-xl intro-y">
+                        <div className="lg:p-10 md:p-6 p-0 rounded-xl intro-y">
                             <div className="space-y-4">
                                 <div className="intro-x">
                                     <label
@@ -181,15 +181,8 @@ const Register = () => {
                                     <span
                                         className="leading-7 text-[15px] font-semibold text-[#212245]"
                                     >
-                                        Have a user account <Link to={'/user-login'} className="text-blue-500 hover:underline">Login here</Link>
+                                        Have a account <Link to={'/auth-login'} className="text-blue-500 hover:underline">Login here</Link>
                                     </span>
-                                </div>
-                                <div className="intro-x">
-                                    <p
-                                        className="leading-7 text-[15px] font-semibold text-[#212245]"
-                                    >
-                                        If you're a restaurant manager and want to promote/sale your products please, <Link to={'/resturant-register'} className="text-blue-500 hover:underline">Register here</Link>
-                                    </p>
                                 </div>
                                 <button
                                     onClick={handleRegister}

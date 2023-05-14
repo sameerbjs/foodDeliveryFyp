@@ -73,7 +73,7 @@ const ResturantRegister = () => {
                 Resturant Registration
               </h2>
             </div>
-            <div className="p-10 rounded-xl intro-y">
+            <div className="lg:p-10 md:p-6 p-0 rounded-xl intro-y">
               <div className="space-y-4">
                 <div className="intro-x">
                   <label
@@ -200,7 +200,7 @@ const ResturantRegister = () => {
                   <span
                     className="leading-7 text-[15px] font-semibold text-[#212245]"
                   >
-                    Have a resturant account <Link to={'/resturant-login'} className="text-blue-500 hover:underline">Login here</Link>
+                    Have a account <Link to={'/auth-login'} className="text-blue-500 hover:underline">Login here</Link>
                   </span>
                 </div>
                 <button

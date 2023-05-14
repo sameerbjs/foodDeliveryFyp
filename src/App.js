@@ -11,6 +11,8 @@ import Cart from "./pages/Cart/Cart";
 import Footer from "./components/Footer/Footer";
 import ResturantRegister from "./pages/auth/resturantAuth/ResturantRegister";
 import ResturantLogin from "./pages/auth/resturantAuth/ResturantLogin";
+import AuthRegisterProcess from "./pages/auth/AuthRegisterProcess";
+import AuthLoginProcess from "./pages/auth/AuthLoginProcess";
 
 function App() {
   useEffect(() => {
@@ -24,9 +26,18 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
 
+
+          {/* authentication */}
+          <Route path="/auth-register" element={<AuthRegisterProcess />} />
+          <Route path="/auth-login" element={<AuthLoginProcess />} />
+
           {/* register and login for user routes */}
           <Route path="/user-register" element={<Register />} />
           <Route path="/user-login" element={<Login />} />
+
+          {/* register and login for resturants */}
+          <Route path="/resturant-register" element={<ResturantRegister />} />
+          <Route path="/resturant-login" element={<ResturantLogin />} />
 
           {/* contact us */}
           <Route path="/contact" element={<ContactUs />} />
@@ -37,10 +48,6 @@ function App() {
 
           {/* cart */}
           <Route path="/cart" element={<Cart />} />
-
-          {/* register and login for resturants */}
-          <Route path="/resturant-register" element={<ResturantRegister />} />
-          <Route path="/resturant-login" element={<ResturantLogin />} />
         </Routes>
         <Footer />
       </div>
