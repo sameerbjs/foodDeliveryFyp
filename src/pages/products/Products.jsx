@@ -30,8 +30,8 @@ export const ProductRest = () => {
                                             <img className="w-full object-contain h-full" src={data.image03} alt="blog" />
                                         </div>
                                         <div className="p-6">
-                                            <h2 className="tracking-widest text-xs font-medium text-gray-400 mb-1">CATEGORY</h2>
-                                            <h1 className="text-lg font-medium text-gray-900 mb-3">{data.category}</h1>
+                                            <p className="tracking-widest text-sm font-medium text-gray-600 mb-1">CATEGORY</p>
+                                            <span className="text-lg font-medium text-gray-900 mb-3">{data.category}</span>
                                             <p className="leading-relaxed mb-3">{data.desc.split(' ').slice(0, 20).join(' ')}...</p>
                                             <div className="flex items-center justify-between">
                                                 <Link to={`/product/${data.id}`} className="text-red-500 inline-flex items-center md:mb-2 lg:mb-0">Show details

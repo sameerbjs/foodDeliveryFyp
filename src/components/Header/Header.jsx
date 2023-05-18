@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Popover, Transition } from "@headlessui/react";
+import React, { Fragment, useState } from "react";
+import { Dialog, Popover, Transition } from "@headlessui/react";
 import { Link, NavLink } from "react-router-dom";
 import logo from '../../assets/images/res-logo.png'
 import avatar from '../../assets/images/ava-3.jpg'
@@ -144,54 +144,98 @@ function Header() {
                     </div>
                 </div>
 
-                <Transition
-                    show={isOpen}
-                    enter="transition ease-out duration-100 transform"
-                    enterFrom="opacity-0 scale-95"
-                    enterTo="opacity-100 scale-100"
-                    leave="transition ease-in duration-75 transform"
-                    leaveFrom="opacity-100 scale-100"
-                    leaveTo="opacity-0 scale-95"
-                >
-                    {isOpen && (
-                        <div className="w-full flex justify-center">
-                            <div className="md:hidden absolute rounded-lg top-2 w-11/12 bg-white shadow-lg" id="mobile-menu">
-                                <div className="px-2 pt-3 pb-3 space-y-1 sm:px-3">
-                                    <NavLink
-                                        to={"/"}
-                                        className={({ isActive }) =>
-                                            isActive
-                                                ? "text-red-500 px-3 py-2 font-semibold leading-5 bg-[#fde4e4] rounded-lg block"
-                                                : "text-[#212245] hover:text-red-500 px-3 py-2 font-semibold leading-5 block hover:bg-[#fde4e4] rounded-lg"
-                                        }
-                                    >
-                                        Home
-                                    </NavLink>
-                                    <NavLink
-                                        to={"/about-us"}
-                                        className={({ isActive }) =>
-                                            isActive
-                                                ? "text-red-500 px-3 py-2 font-semibold leading-5 bg-[#fde4e4] rounded-lg block"
-                                                : "text-[#212245] hover:text-red-500 px-3 py-2 font-semibold leading-5 block hover:bg-[#fde4e4] rounded-lg"
-                                        }
-                                    >
-                                        About us
-                                    </NavLink>
-                                    <NavLink
-                                        to={"/contact"}
-                                        className={({ isActive }) =>
-                                            isActive
-                                                ? "text-red-500 px-3 py-2 font-semibold leading-5 bg-[#fde4e4] rounded-lg block"
-                                                : "text-[#212245] hover:text-red-500 px-3 py-2 font-semibold leading-5 block hover:bg-[#fde4e4] rounded-lg"
-                                        }
-                                    >
-                                        Contact
-                                    </NavLink>
-                                </div>
+                <Transition.Root show={isOpen} as={Fragment}>
+                    <Dialog as="div" className="relative z-50" onClose={setIsOpen}>
+                        <Transition.Child
+                            as={Fragment}
+                            enter="ease-in-out duration-500"
+                            enterFrom="opacity-0"
+                            enterTo="opacity-100"
+                            leave="ease-in-out duration-500"
+                            leaveFrom="opacity-100"
+                            leaveTo="opacity-0"
+                        >
+                            <div className="fixed inset-0 bg-[#000]/80 transition-opacity" />
+                        </Transition.Child>
+
+                        <div className="fixed inset-0 overflow-hidden">
+                            <div className="fixed right-0 w-3/4 flex max-w-full pointer-events-none">
+                                <Transition.Child
+                                    as={Fragment}
+                                    enter="transform transition ease-in-out duration-500 sm:duration-700"
+                                    enterFrom="translate-x-full"
+                                    enterTo="translate-x-0"
+                                    leave="transform transition ease-in-out duration-500 sm:duration-700"
+                                    leaveFrom="translate-x-0"
+                                    leaveTo="translate-x-full"
+                                >
+                                    <Dialog.Panel className="relative w-screen h-screen overflow-hidden pointer-events-auto">
+                                        <div className="bg-white shadow-lg py-3 h-full px-4 sm:px-6 divide-y-2 divide-dashed divi">
+                                            <div className="flex justify-between items-center pb-4">
+                                                <p className="font-semibold text-lg pt-2">Tasty Treat</p>
+                                                <button
+                                                    type="button"
+                                                    className="inline-flex items-center justify-center p-1 rounded-3xl text-black"
+                                                    onClick={() => setIsOpen(false)}
+                                                >
+                                                    <svg
+                                                        className="block h-6 w-6"
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                        fill="none"
+                                                        viewBox="0 0 24 24"
+                                                        stroke="currentColor"
+                                                        aria-hidden="true"
+                                                    >
+                                                        <path
+                                                            strokeLinecap="round"
+                                                            strokeLinejoin="round"
+                                                            strokeWidth="2"
+                                                            d="M6 18L18 6M6 6l12 12"
+                                                        />
+                                                    </svg>
+
+                                                    <span className="sr-only">Close panel</span>
+                                                </button>
+                                            </div>
+                                            <div className="pt-5 pb-3 space-y-1 sm:px-3">
+                                                <NavLink
+                                                    to={"/"}
+                                                    className={({ isActive }) =>
+                                                        isActive
+                                                            ? "text-red-500 px-3 py-2 font-semibold leading-5 bg-[#fde4e4] rounded-lg block"
+                                                            : "text-[#212245] hover:text-red-500 px-3 py-2 font-semibold leading-5 block hover:bg-[#fde4e4] rounded-lg"
+                                                    }
+                                                >
+                                                    Home
+                                                </NavLink>
+                                                <NavLink
+                                                    to={"/about-us"}
+                                                    className={({ isActive }) =>
+                                                        isActive
+                                                            ? "text-red-500 px-3 py-2 font-semibold leading-5 bg-[#fde4e4] rounded-lg block"
+                                                            : "text-[#212245] hover:text-red-500 px-3 py-2 font-semibold leading-5 block hover:bg-[#fde4e4] rounded-lg"
+                                                    }
+                                                >
+                                                    About us
+                                                </NavLink>
+                                                <NavLink
+                                                    to={"/contact"}
+                                                    className={({ isActive }) =>
+                                                        isActive
+                                                            ? "text-red-500 px-3 py-2 font-semibold leading-5 bg-[#fde4e4] rounded-lg block"
+                                                            : "text-[#212245] hover:text-red-500 px-3 py-2 font-semibold leading-5 block hover:bg-[#fde4e4] rounded-lg"
+                                                    }
+                                                >
+                                                    Contact
+                                                </NavLink>
+                                            </div>
+                                        </div>
+                                    </Dialog.Panel>
+                                </Transition.Child>
                             </div>
                         </div>
-                    )}
-                </Transition>
+                    </Dialog>
+                </Transition.Root>
             </nav>
         </div>
     );

@@ -49,7 +49,7 @@ const ProductDetail = () => {
                     <div className="lg:w-4/5 mx-auto flex flex-wrap">
                         <img alt={productDetail?.image01} className="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded" src={productDetail?.image01} />
                         <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
-                            <h2 className="text-sm  text-gray-500 tracking-widest">BRAND NAME</h2>
+                            <span className="text-sm text-gray-500 tracking-widest">BRAND NAME</span>
                             <h1 className="text-[#212245] text-3xl  font-medium mb-1">{productDetail?.title}</h1>
                             <div className="flex mb-4">
                                 <span className="flex items-center">
