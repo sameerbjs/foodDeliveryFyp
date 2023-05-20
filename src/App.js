@@ -13,6 +13,8 @@ import ResturantRegister from "./pages/auth/resturantAuth/ResturantRegister";
 import ResturantLogin from "./pages/auth/resturantAuth/ResturantLogin";
 import AuthRegisterProcess from "./pages/auth/AuthRegisterProcess";
 import AuthLoginProcess from "./pages/auth/AuthLoginProcess";
+import PageNotFound from "./pages/PageNotFound/PageNotFound";
+import Resturants from "./pages/Resturants/Resturants";
 
 function App() {
 	useEffect(() => {
@@ -40,6 +42,9 @@ function App() {
 
 					{/* contact us */}
 					<Route path="/contact" element={<ContactUs />} />
+					
+					{/* resturants */}
+					<Route path="/resturants/:city" element={<Resturants />} />
 
 					{/* products of res */}
 					<Route path="/products" element={<ProductRest />} />
@@ -47,6 +52,9 @@ function App() {
 
 					{/* cart */}
 					<Route path="/cart" element={<Cart />} />
+
+					{/* Page not found */}
+					<Route path="*" element={<PageNotFound />} />
 				</Routes>
 				<Footer />
 			</div>

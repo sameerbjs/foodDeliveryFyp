@@ -3,22 +3,23 @@
 @tailwind utilities;
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Lora&display=swap');  
+/* @import url('https://fonts.googleapis.com/css2?family=Lora&display=swap');   */
 
 
 /* base style */
 
 body {
   background: #fcfcfc;
+  font-family: 'Poppins', sans-serif !important;
 }
-
+/* 
 p,span,a,pre,button,label,input,textarea{
   font-family: 'Poppins', sans-serif !important;
 }
 
 h1,h2,h3,h4,h5,h6{
   font-family: 'Lora', serif !important;
-}
+} */
 
 .noSelect {
   -webkit-tap-highlight-color: transparent;
