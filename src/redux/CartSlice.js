@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 const initialState = {
     cartProducts: [],
     totalCartProducts: 0,
+    totalPrice: 0
 }
 
 const addToCartSlice = createSlice({
@@ -36,10 +37,13 @@ const addToCartSlice = createSlice({
             const product = state.cartProducts.find((item) => item.id === id);
             product.quantity -= 1;
         },
+        handleTotalPrice: (state, action) => {
+            state.totalPrice = action.payload.price
+        }
     },
 })
 
 export const {
-    addToCartProduct, removeToCartProduct, increaseQuantity, decreaseQuantity
+    addToCartProduct, removeToCartProduct, increaseQuantity, decreaseQuantity,handleTotalPrice
 } = addToCartSlice.actions;
 export default addToCartSlice.reducer;

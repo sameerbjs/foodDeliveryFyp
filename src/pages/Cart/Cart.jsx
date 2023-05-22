@@ -2,8 +2,9 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { XMarkIcon } from '@heroicons/react/20/solid';
-import { decreaseQuantity, removeToCartProduct, increaseQuantity } from '../../redux/CartSlice';
+import { decreaseQuantity, removeToCartProduct, increaseQuantity, handleTotalPrice } from '../../redux/CartSlice';
 import { ToastContainer } from 'react-toastify';
+
 const Cart = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -22,6 +23,10 @@ const Cart = () => {
     }
     const decreaseQuantityHandle = (id) => {
         dispatch(decreaseQuantity({ id: id }))
+    }
+    const handleCartTotalPrice = (price) => {
+        dispatch(handleTotalPrice({ price: price }));
+        navigate('/checkout');
     }
     return (
         <>
@@ -42,41 +47,69 @@ const Cart = () => {
                     </div>
 
                     <div className='mt-7'>
-                        <div className={`grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-5 ${cartProducts?.length > 4 ? '' : 'h-[calc(100vh-250px)]'}`}>
-                            {
-                                cartProducts?.length ? cartProducts.map((cart, index) => {
-                                    return (
-                                        <div key={index}>
-                                            <div className="p-4 w-full relative border">
-                                                <Link className="block h-48 rounded overflow-hidden">
-                                                    <img alt="ecommerce" className="object-contain h-full w-full" src={cart.image03} />
-                                                </Link>
-                                                <div className="mt-4">
-                                                    <h3 className="text-gray-500 text-xs tracking-widest title-font mb-1">Name</h3>
-                                                    <h2 className="text-gray-900 title-font text-lg font-medium">{cart.title}</h2>
-                                                    <p className="mt-1">{cart.price * cart.quantity} PKR</p>
+                        <div className='grid grid-cols-12 gap-5'>
+                            <div className={`${cartProducts.length !== 0 ? 'lg:col-span-9 col-span-12' : 'col-span-12'} w-full grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5`}>
+                                {
+                                    cartProducts?.length ? cartProducts.map((cart, index) => {
+                                        return (
+                                            <div key={index}>
+                                                <div className="p-4 w-full relative border">
+                                                    <Link className="block h-48 rounded overflow-hidden">
+                                                        <img alt="ecommerce" className="object-contain h-full w-full" src={cart.image03} />
+                                                    </Link>
+                                                    <div className="mt-4">
+                                                        <h3 className="text-gray-500 text-xs tracking-widest title-font mb-1">Name</h3>
+                                                        <h2 className="text-gray-900 title-font text-lg font-medium">{cart.title}</h2>
+                                                        <p className="mt-1">{cart.price * cart.quantity} PKR</p>
+                                                    </div>
+                                                    <div className='flex items-center gap-3 mt-2 justify-end'>
+                                                        <button onClick={() => decreaseQuantityHandle(cart.id)}>-</button>
+                                                        <input
+                                                            type="text"
+                                                            value={cart.quantity}
+                                                            disabled
+                                                            className='w-20 ml-2 bg-white rounded border border-gray-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out'
+                                                        />
+                                                        <button onClick={() => increaseQuantityHandle(cart.id)}>+</button>
+                                                    </div>
+                                                    <button onClick={() => handleRemoveCart(cart?.id)} className='absolute -right-[10px] -top-[11px] bg-[#df2020] rounded-2xl'>
+                                                        <XMarkIcon className='w-5 h-5 text-white' />
+                                                    </button>
                                                 </div>
-                                                <div className='flex items-center gap-3 mt-2 justify-end'>
-                                                    <button onClick={() => decreaseQuantityHandle(cart.id)}>-</button>
-                                                    <input
-                                                        type="text"
-                                                        value={cart.quantity}
-                                                        disabled
-                                                        className='w-20 ml-2 bg-white rounded border border-gray-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out'
-                                                    />
-                                                    <button onClick={() => increaseQuantityHandle(cart.id)}>+</button>
-                                                </div>
-                                                <button onClick={() => handleRemoveCart(cart?.id)} className='absolute -right-[10px] -top-[11px] bg-[#df2020] rounded-2xl'>
-                                                    <XMarkIcon className='w-5 h-5 text-white' />
-                                                </button>
                                             </div>
+                                        )
+                                    }) : <>
+                                        <div className='col-span-3 h-[calc(100vh-240px)] flex justify-center items-center'>
+                                            <h1 className='lg:text-2xl md:text-xl text-lg'>No products found in the cart 🛒</h1>
                                         </div>
-                                    )
-                                }) : <>
-                                    <div className='col-span-4 h-full flex justify-center items-center'>
-                                        <h1 className='lg:text-2xl md:text-xl text-lg'>No products found in the cart 🛒</h1>
+                                    </>
+                                }
+                            </div>
+                            {
+                                cartProducts.length !== 0 &&
+                                <div className='lg:col-span-3 md:col-span-6 col-span-12 border shadow-lg h-max p-4 rounded-lg'>
+                                    <div>
+                                        Total Items : {cartProducts?.length}
+                                        <br />
+                                        Total Price : {cartProducts.reduce(
+                                            (total, item) =>
+                                                total + item.price * item.quantity,
+                                            0
+                                        )}{" "}PKR
                                     </div>
-                                </>
+                                    <div className='mt-3'>
+                                        <button
+                                            onClick={() => handleCartTotalPrice(cartProducts.reduce(
+                                                (total, item) =>
+                                                    total + item.price * item.quantity,
+                                                0
+                                            ))}
+                                            className="relative intro-x w-full bg-red-500 hover:bg-red-500/70 text-white font-medium flex justify-center py-2.5 px-4 border border-transparent rounded-lg focus:outline-none "
+                                        >
+                                            Checkout
+                                        </button>
+                                    </div>
+                                </div>
                             }
                         </div>
                     </div>

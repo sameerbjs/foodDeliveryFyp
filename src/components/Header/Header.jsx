@@ -197,7 +197,7 @@ function Header() {
                                                     <span className="sr-only">Close panel</span>
                                                 </button>
                                             </div>
-                                            <div className="pt-5 pb-3 space-y-1 sm:px-3">
+                                            <div className="pt-5 pb-3 space-y-1">
                                                 <NavLink
                                                     to={"/"}
                                                     className={({ isActive }) =>

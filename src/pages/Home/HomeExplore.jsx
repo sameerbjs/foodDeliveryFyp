@@ -16,7 +16,7 @@ export const HomeExplore = () => {
                 </div>
                 {/* <HomeRestSearch selectedCity={selectedCity} setSelectedCity={setSelectedCity} cities={cities} foodCategory={FoodCategory} selectedFood={selectedFood} setSelectedFood={setSelectedFood} /> */}
                 <div className='mt-10'>
-                    <div className='grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-5'>
+                    <div className='grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-2 grid-cols-1 gap-5'>
                         {
                             cities.map((city, index) => {
                                 return (

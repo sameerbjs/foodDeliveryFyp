@@ -15,6 +15,7 @@ import AuthRegisterProcess from "./pages/auth/AuthRegisterProcess";
 import AuthLoginProcess from "./pages/auth/AuthLoginProcess";
 import PageNotFound from "./pages/PageNotFound/PageNotFound";
 import Resturants from "./pages/Resturants/Resturants";
+import CheckOut from "./pages/Checkout/CheckOut";
 
 function App() {
 	useEffect(() => {
@@ -52,6 +53,9 @@ function App() {
 
 					{/* cart */}
 					<Route path="/cart" element={<Cart />} />
+
+					{/* ChecKout */}
+					<Route path="/checkout" element={<CheckOut />} />
 
 					{/* Page not found */}
 					<Route path="*" element={<PageNotFound />} />

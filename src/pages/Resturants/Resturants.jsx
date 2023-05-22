@@ -37,7 +37,7 @@ const Resturants = () => {
                     <p className='text-[#212245] font-normal lg:text-lg text-base mt-4'>Take a deep dive and browse foods for family, friends, parties that is healty and tasty for you.</p>
                 </div>
                 <div className='mt-10'>
-                    <div className='grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-5'>
+                    <div className='grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-2 grid-cols-1 gap-5'>
                         {
                             resturantsData.map((rest, index) => {
                                 return (
