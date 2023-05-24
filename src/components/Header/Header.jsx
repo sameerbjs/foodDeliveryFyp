@@ -20,7 +20,7 @@ function Header() {
                                     src={logo}
                                     alt="Workflow"
                                 />
-                                <h5 className="text-[#212245] font-semibold text-[1rem]">Tasty Treat</h5>
+                                <h5 className="text-[#212245] font-semibold text-[1rem]">Rapid Cravings</h5>
                             </div>
                             <div className="hidden md:block">
                                 <div className="ml-10 flex items-baseline space-x-4">
@@ -52,7 +52,7 @@ function Header() {
                                                 : "text-[#212245] hover:text-red-500 px-3 py-2 font-semibold leading-5 hover:bg-[#fde4e4] rounded-lg"
                                         }
                                     >
-                                        Contact
+                                        Contact us
                                     </NavLink>
                                 </div>
                             </div>
@@ -85,11 +85,11 @@ function Header() {
                                     >
                                         <Popover.Panel className="absolute z-10 bg-white px-2 min-w-[150px] py-3 shadow-md right-0 border rounded-md">
                                             <div className="w-full">
-                                                <div className="w-full">
-                                                    <button className="text-white bg-[#df2020] hover:bg-[#df2020]/50 w-full px-4 py-2 rounded-lg">Profile</button>
-                                                </div>
+                                                <Link to={'/profile'} className="w-full">
+                                                    <button className="text-white bg-red-500 hover:bg-[#212245] w-full px-4 py-2 rounded-lg">Profile</button>
+                                                </Link>
                                                 <div className="w-full mt-3">
-                                                    <button className="text-white bg-[#df2020] hover:bg-[#df2020]/50 w-full px-4 py-2 rounded-lg">Logout</button>
+                                                    <button className="text-white bg-red-500 hover:bg-[#212245] w-full px-4 py-2 rounded-lg">Logout</button>
                                                 </div>
                                             </div>
                                         </Popover.Panel>
@@ -101,7 +101,7 @@ function Header() {
                             <button
                                 onClick={() => setIsOpen(!isOpen)}
                                 type="button"
-                                className="bg-[#df2020] inline-flex items-center justify-center p-2 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-[#df2020] focus:ring-white"
+                                className="bg-red-500 inline-flex items-center justify-center p-2 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-red-500 focus:ring-white"
                                 aria-controls="mobile-menu"
                                 aria-expanded="false"
                             >
@@ -155,7 +155,7 @@ function Header() {
                             leaveFrom="opacity-100"
                             leaveTo="opacity-0"
                         >
-                            <div className="fixed inset-0 bg-[#000]/80 transition-opacity" />
+                            <div className="fixed inset-0 bg-black bg-opacity-25 transition-opacity" />
                         </Transition.Child>
 
                         <div className="fixed inset-0 overflow-hidden">
@@ -226,7 +226,7 @@ function Header() {
                                                             : "text-[#212245] hover:text-red-500 px-3 py-2 font-semibold leading-5 block hover:bg-[#fde4e4] rounded-lg"
                                                     }
                                                 >
-                                                    Contact
+                                                    Contact us
                                                 </NavLink>
                                             </div>
                                         </div>

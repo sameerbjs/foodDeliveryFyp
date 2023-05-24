@@ -5,7 +5,6 @@ import TypingAnimation from '../../components/TypingEffect/TypingEffect'
 import './Home.css'
 export const HomePage = () => {
     const words = ['Family', 'Friends'];
-    const delay = 1000;
     return (
         <>
             <div className="mx-auto w-full overflow-hidden">
@@ -13,19 +12,19 @@ export const HomePage = () => {
                     <div className='banner lg:h-[700px] md:h-[500px] h-[400px]'>
                         <div className='flex justify-center p-4 bg-black/70 h-full'>
                             <div className='h-full flex flex-col justify-center items-center'>
-                                <h1 className='lg:text-6xl md:text-2xl text-lg font-semibold lg:mb-8 mb-5 text-white'>Enjoy your favorite food  with <TypingAnimation words={words} delay={delay} />
+                                <h1 className='lg:text-6xl md:text-2xl text-lg font-semibold lg:mb-8 mb-5 text-white'>Enjoy your favorite food  with <TypingAnimation words={words} delay={1000} />
                                 </h1>
                                 <h5 className='lg:text-3xl md:text-2xl text-base text-white font-semibold whitespace-nowrap'>
                                     Easy order & Delicious food & Fast delivery
                                 </h5>
                                 <div className='lg:mt-10 md:mt-7 mt-5 group flex gap-3'>
                                     <Link to={'/auth-register'}>
-                                        <button className='bg-red-500 flex items-center text-white px-5 lg:py-3 py-2 rounded-lg font-semibold hover:bg-[#212245] tracking-widest'>
+                                        <button className='bg-red-500 flex items-center text-white px-5 lg:py-3 py-2 rounded-lg hover:bg-[#212245] tracking-widest'>
                                             Register
                                         </button>
                                     </Link>
                                     <Link to={'/auth-login'}>
-                                        <button className='bg-red-500 flex items-center text-white px-5 lg:py-3 py-2 rounded-lg font-semibold hover:bg-[#212245] tracking-widest'>
+                                        <button className='bg-red-500 flex items-center text-white px-5 lg:py-3 py-2 rounded-lg hover:bg-[#212245] tracking-widest'>
                                             Login
                                         </button>
                                     </Link>

@@ -12,6 +12,7 @@ body {
   background: #fcfcfc;
   font-family: 'Poppins', sans-serif !important;
 }
+
 /* 
 p,span,a,pre,button,label,input,textarea{
   font-family: 'Poppins', sans-serif !important;
@@ -25,6 +26,7 @@ h1,h2,h3,h4,h5,h6{
   -webkit-tap-highlight-color: transparent;
   -webkit-touch-callout: none;
 }
+
 .noSelect:focus {
   outline: none !important;
 }
@@ -36,11 +38,13 @@ h1,h2,h3,h4,h5,h6{
 
 /* For IE, Edge and Firefox */
 .scrollbar-hide {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
 }
 
-.banner{
+.banner {
   background-image: url(assets/images/banner.jpg);
   background-position: center;
   background-size: cover;
@@ -51,7 +55,15 @@ h1,h2,h3,h4,h5,h6{
   .transition-linear-out {
     transition: visibility 0s linear 200ms, opacity 200ms;
   }
+
   .transition-linear-in {
     transition: visibility 0s linear 0s, opacity 200ms;
   }
+}
+
+button:focus-within,
+button:focus-visible,
+button:focus {
+  outline: none;
+  border: none;
 }

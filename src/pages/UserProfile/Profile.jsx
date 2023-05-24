@@ -1,18 +1,17 @@
-import {React, useState} from "react";
-import {ToastContainer} from "react-toastify";
-import {BsEye, BsEyeSlash} from "react-icons/bs";
-import {Link, useNavigate} from "react-router-dom";
-import { notify } from "../../../helper";
+import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom';
+import { notify } from '../../helper';
+import { BsEye, BsEyeSlash } from 'react-icons/bs';
 
-const Register = () => {
+const Profile = () => {
+    const navigate = useNavigate();
     const [info, setinfo] = useState({
-        username: "",
-        email: "",
-        password: "",
-        c_password: "",
+        username: "Sameer",
+        email: "abc@gmail.com",
+        password: "123456789",
+        c_password: "123456789",
     });
     const [pswdType, setPswdType] = useState(true);
-    const navigate = useNavigate();
     const showEyePswd = () => {
         setPswdType(!pswdType);
     };
@@ -45,21 +44,24 @@ const Register = () => {
                 return;
             }
         }
-        navigate('/user-login')
+        navigate('/')
     };
     return (
         <>
-            <div className="min-h-full container px-4 sm:px-6 lg:px-8 lg:mt-0 mt-10 flex items-start justify-start lg:justify-center lg:items-center">
-                <ToastContainer
-                    position="top-right"
-                    theme="dark"
-                    autoClose={2000}
-                />
+            <div className='px-5 py-7 mx-auto container'>
+                <div className='mb-5'>
+                    <button onClick={() => navigate(-1)} className="rounded-xl bg-gray-200 hover:bg-gray-300 px-4 py-1 inline-flex gap-1 items-center justify-center text-gray-700">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-4 h-4">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+                        </svg>
+                        Back
+                    </button>
+                </div>
                 <div className="flex items-center flex-grow">
                     <div className="md:grid md:grid-cols-2 flex-grow">
                         <div className="intro-y mb-5 md:mb-0 flex flex-col justify-center items-center relative">
                             <h2 className="text-center lg:text-6xl text-[#212245] text-3xl font-bold italic">
-                                User Registration
+                                User Profile Setting
                             </h2>
                         </div>
                         <div className="lg:p-10 md:p-6 p-0 rounded-xl intro-y">
@@ -167,18 +169,11 @@ const Register = () => {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="intro-x">
-                                    <span
-                                        className="leading-7 text-[15px] font-semibold text-[#212245]"
-                                    >
-                                        Have a account <Link to={'/auth-login'} state={{tab:0}} className="text-blue-500 hover:underline">Login here</Link>
-                                    </span>
-                                </div>
                                 <button
                                     onClick={handleRegister}
                                     className="relative intro-x w-full bg-red-500 hover:bg-[#212245] text-white font-medium tracking-widest flex justify-center py-2.5 px-4 border border-transparent rounded-lg focus:outline-none "
                                 >
-                                    Register
+                                    Edit profile
                                 </button>
                             </div>
                         </div>
@@ -186,7 +181,9 @@ const Register = () => {
                 </div>
             </div>
         </>
-    );
-};
+    )
+}
 
-export default Register;
+export default Profile
+
+

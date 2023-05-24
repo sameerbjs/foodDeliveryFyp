@@ -1,7 +1,8 @@
 import { React, useState } from "react";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
 import { Link, useNavigate } from "react-router-dom";
+import { notify } from "../../../helper";
 
 const ResturantLogin = () => {
     const [info, setinfo] = useState({
@@ -10,17 +11,6 @@ const ResturantLogin = () => {
     });
     const [pswdType, setPswdType] = useState(true);
     const navigate = useNavigate();
-    let notify = (type, message) => {
-        if (type === "error") {
-            return toast.error(message);
-        }
-        if (type === "success") {
-            return toast.success(message);
-        }
-        if (type === "warn") {
-            return toast.warn(message);
-        }
-    };
     const showEyePswd = () => {
         setPswdType(!pswdType);
     };
@@ -120,12 +110,12 @@ const ResturantLogin = () => {
                                     <span
                                         className="leading-7 text-[15px] font-semibold text-[#212245]"
                                     >
-                                        Don't have an account <Link to={'/auth-register'} state={{tab:1}} className="text-blue-500 hover:underline"> Register here</Link>
+                                        Don't have an account <Link to={'/auth-register'} state={{ tab: 1 }} className="text-blue-500 hover:underline"> Register here</Link>
                                     </span>
                                 </div>
                                 <button
                                     onClick={handleLogin}
-                                    className="relative intro-x w-full bg-[#df2020] hover:bg-[#df2020]/70 text-white font-medium tracking-widest flex justify-center py-2.5 px-4 border border-transparent rounded-lg focus:outline-none "
+                                    className="relative intro-x w-full bg-red-500 hover:bg-[#212245] text-white font-medium tracking-widest flex justify-center py-2.5 px-4 border border-transparent rounded-lg focus:outline-none "
                                 >
                                     Login
                                 </button>

@@ -62,7 +62,7 @@ const CheckOut = () => {
                 <div className='w-full flex justify-end mt-5'>
                     <button
                         onClick={() => setIsOpen(true)}
-                        className="relative intro-x bg-red-500 hover:bg-red-500/70 text-white font-medium flex justify-center py-2.5 px-4 border border-transparent rounded-lg focus:outline-none "
+                        className="relative intro-x bg-red-500 hover:bg-[#212245] text-white font-medium flex justify-center py-2.5 px-4 border border-transparent rounded-lg focus:outline-none "
                     >
                         Place Order
                     </button>

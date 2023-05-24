@@ -16,6 +16,8 @@ import AuthLoginProcess from "./pages/auth/AuthLoginProcess";
 import PageNotFound from "./pages/PageNotFound/PageNotFound";
 import Resturants from "./pages/Resturants/Resturants";
 import CheckOut from "./pages/Checkout/CheckOut";
+import Aboutus from "./pages/Aboutus/Aboutus";
+import Profile from "./pages/UserProfile/Profile";
 
 function App() {
 	useEffect(() => {
@@ -24,42 +26,51 @@ function App() {
 	}, []);
 	return (
 		<>
-			<div className="min-h-screen relative">
+			<div className="relative min-h-screen flex flex-col">
 				<Header />
-				<Routes>
-					<Route path="/" element={<HomePage />} />
+				<main className="flex-grow">
+					<Routes>
+						<Route path="/" element={<HomePage />} />
 
-					{/* authentication */}
-					<Route path="/auth-register" element={<AuthRegisterProcess />} />
-					<Route path="/auth-login" element={<AuthLoginProcess />} />
+						{/* authentication */}
+						<Route path="/auth-register" element={<AuthRegisterProcess />} />
+						<Route path="/auth-login" element={<AuthLoginProcess />} />
 
-					{/* register and login for user routes */}
-					<Route path="/user-register" element={<Register />} />
-					<Route path="/user-login" element={<Login />} />
+						{/* register and login for user routes */}
+						<Route path="/user-register" element={<Register />} />
+						<Route path="/user-login" element={<Login />} />
 
-					{/* register and login for resturants */}
-					<Route path="/resturant-register" element={<ResturantRegister />} />
-					<Route path="/resturant-login" element={<ResturantLogin />} />
+						{/* register and login for resturants */}
+						<Route path="/resturant-register" element={<ResturantRegister />} />
+						<Route path="/resturant-login" element={<ResturantLogin />} />
 
-					{/* contact us */}
-					<Route path="/contact" element={<ContactUs />} />
-					
-					{/* resturants */}
-					<Route path="/resturants/:city" element={<Resturants />} />
+						{/*user profile */}
+						<Route path="/profile" element={<Profile />} />
 
-					{/* products of res */}
-					<Route path="/products" element={<ProductRest />} />
-					<Route path="/product/:id" element={<ProductDetail />} />
 
-					{/* cart */}
-					<Route path="/cart" element={<Cart />} />
+						{/* contact us */}
+						<Route path="/contact" element={<ContactUs />} />
 
-					{/* ChecKout */}
-					<Route path="/checkout" element={<CheckOut />} />
+						{/* resturants */}
+						<Route path="/resturants/:city" element={<Resturants />} />
 
-					{/* Page not found */}
-					<Route path="*" element={<PageNotFound />} />
-				</Routes>
+						{/* products of res */}
+						<Route path="/products/:name" element={<ProductRest />} />
+						<Route path="/product/:id" element={<ProductDetail />} />
+
+						{/* cart */}
+						<Route path="/cart" element={<Cart />} />
+
+						{/* Checkout */}
+						<Route path="/checkout" element={<CheckOut />} />
+
+						{/* About us */}
+						<Route path="/about-us" element={<Aboutus />} />
+
+						{/* Page not found */}
+						<Route path="*" element={<PageNotFound />} />
+					</Routes>
+				</main>
 				<Footer />
 			</div>
 		</>

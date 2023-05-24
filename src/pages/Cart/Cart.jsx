@@ -46,9 +46,9 @@ const Cart = () => {
                         </button>
                     </div>
 
-                    <div className='mt-7'>
+                    <div className='mt-7 overflow-hidden'>
                         <div className='grid grid-cols-12 gap-5'>
-                            <div className={`${cartProducts.length !== 0 ? 'lg:col-span-9 col-span-12' : 'col-span-12'} w-full grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5`}>
+                            <div className={`${cartProducts.length !== 0 ? 'lg:col-span-9 col-span-12' : 'col-span-12'} w-full grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5 p-3`}>
                                 {
                                     cartProducts?.length ? cartProducts.map((cart, index) => {
                                         return (
@@ -59,7 +59,7 @@ const Cart = () => {
                                                     </Link>
                                                     <div className="mt-4">
                                                         <h3 className="text-gray-500 text-xs tracking-widest title-font mb-1">Name</h3>
-                                                        <h2 className="text-gray-900 title-font text-lg font-medium">{cart.title}</h2>
+                                                        <h2 className="text-gray-900 title-font text-lg font-medium truncate">{cart.title}</h2>
                                                         <p className="mt-1">{cart.price * cart.quantity} PKR</p>
                                                     </div>
                                                     <div className='flex items-center gap-3 mt-2 justify-end'>
@@ -87,7 +87,7 @@ const Cart = () => {
                             </div>
                             {
                                 cartProducts.length !== 0 &&
-                                <div className='lg:col-span-3 md:col-span-6 col-span-12 border shadow-lg h-max p-4 rounded-lg'>
+                                <div className='lg:col-span-3 md:col-span-6 col-span-12 border shadow-lg h-max p-4 rounded-lg lg:order-none order-first'>
                                     <div>
                                         Total Items : {cartProducts?.length}
                                         <br />
@@ -104,7 +104,7 @@ const Cart = () => {
                                                     total + item.price * item.quantity,
                                                 0
                                             ))}
-                                            className="relative intro-x w-full bg-red-500 hover:bg-red-500/70 text-white font-medium flex justify-center py-2.5 px-4 border border-transparent rounded-lg focus:outline-none "
+                                            className="relative intro-x w-full bg-red-500 hover:bg-[#212245] text-white font-medium flex justify-center py-2.5 px-4 border border-transparent rounded-lg focus:outline-none "
                                         >
                                             Checkout
                                         </button>

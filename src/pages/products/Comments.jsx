@@ -33,7 +33,7 @@ const Comments = () => {
                     </div>
                     <div className="flex justify-end">
                         <button
-                            className="flex items-center bg-red-500 text-white fs-14 px-3 py-2 rounded-lg shadow-md ml-3"
+                            className="flex items-center bg-red-500 hover:bg-[#212245] text-white fs-14 px-3 py-2 rounded-lg shadow-md ml-3"
                         >
                             Delete
                         </button>
