@@ -22,8 +22,8 @@ const CheckOut = () => {
                     Back
                 </button>
             </div>
-            <div>
-                <div className='flex justify-between items-center'>
+            <div className='overflow-hidden'>
+                <div className='flex justify-between items-center whitespace-nowrap flex-wrap'>
                     <h1 className='font-semibold text-[#212245] lg:text-3xl md:text-2xl text-xl'>
                         Products Checkout
                     </h1>
