@@ -4,6 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCartProduct, removeToCartProduct } from '../../redux/CartSlice.js'
 import { ToastContainer } from 'react-toastify';
+import { Helmet } from 'react-helmet';
 
 const ProductDetail = () => {
     const [productDetail, setProductDetail] = React.useState();
@@ -29,6 +30,9 @@ const ProductDetail = () => {
 
     return (
         <>
+            <Helmet>
+                <title>Rapid Cravings - Detail</title>
+            </Helmet>
             <ToastContainer
                 position="top-right"
                 theme="dark"

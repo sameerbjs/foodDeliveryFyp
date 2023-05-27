@@ -3,8 +3,9 @@ import { Tab } from '@headlessui/react'
 import Login from './userAuth/Login'
 import ResturantLogin from './resturantAuth/ResturantLogin'
 import { useDispatch, useSelector } from 'react-redux'
-import { LoginSelectedTabHandle } from '../../redux/AuthTabSlice'
+import { LoginSelectedTabHandle } from '../../redux/SelectedTabSlice'
 import { useLocation } from 'react-router-dom'
+import { Helmet } from 'react-helmet'
 
 const AuthLoginProcess = () => {
 
@@ -22,6 +23,10 @@ const AuthLoginProcess = () => {
         }
     }, [dispatch,tabState]);
     return (
+        <>
+        <Helmet>
+                <title>Rapid Cravings - Login</title>
+            </Helmet>
         <div className="container px-5 py-7 mx-auto overflow-hidden">
             <Tab.Group selectedIndex={selectedTab} onChange={(index) => { dispatch(LoginSelectedTabHandle({ tab: index })) }}>
                 <Tab.List className={'flex justify-center gap-4 items-center flex-wrap p-1'}>
@@ -53,6 +58,7 @@ const AuthLoginProcess = () => {
                 </Tab.Panels>
             </Tab.Group>
         </div>
+        </>
     )
 }
 

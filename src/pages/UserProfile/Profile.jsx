@@ -3,12 +3,16 @@ import { useNavigate } from 'react-router-dom';
 import { Tab } from '@headlessui/react';
 import EditProfile from './EditProfile';
 import UserOrders from './UserOrders';
+import { Helmet } from 'react-helmet';
 
 const Profile = () => {
     const navigate = useNavigate();
 
     return (
         <>
+            <Helmet>
+                <title>Rapid Cravings - Profile</title>
+            </Helmet>
             <div className='px-5 py-7 mx-auto container'>
                 <div className='mb-5'>
                     <button onClick={() => navigate(-1)} className="rounded-xl bg-gray-200 hover:bg-gray-300 px-4 py-1 inline-flex gap-1 items-center justify-center text-gray-700">

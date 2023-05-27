@@ -1,27 +1,26 @@
-import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import cartReducer from '../src/redux/CartSlice.js'
-import tabReducer from '../src/redux/AuthTabSlice.js'
+import {combineReducers, configureStore} from "@reduxjs/toolkit";
+import cartReducer from "../src/redux/CartSlice.js";
+import tabReducer from "../src/redux/SelectedTabSlice.js";
 import AsyncStorage from "redux-persist/lib/storage";
-import { persistReducer, persistStore } from 'redux-persist';
-import thunk from 'redux-thunk';
-
+import {persistReducer, persistStore} from "redux-persist";
+import thunk from "redux-thunk";
 
 const rootReducer = combineReducers({
     cart: cartReducer,
-    tab: tabReducer
-})
+    tab: tabReducer,
+});
 
 const persistConfig = {
-    key: 'foodDelivery',
+    key: "foodDelivery",
     storage: AsyncStorage,
-    blacklist : ['tab']
-}
+    blacklist: ["tab"],
+};
 
-const persistedReducer = persistReducer(persistConfig, rootReducer)
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
     reducer: persistedReducer,
-    middleware: [thunk]
+    middleware: [thunk],
 });
 
-export const persistor = persistStore(store)
+export const persistor = persistStore(store);

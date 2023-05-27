@@ -3,10 +3,14 @@ import { HomeExplore } from './HomeExplore'
 import { Link } from 'react-router-dom'
 import TypingAnimation from '../../components/TypingEffect/TypingEffect'
 import './Home.css'
+import { Helmet } from 'react-helmet'
 export const HomePage = () => {
     const words = ['Family', 'Friends'];
     return (
         <>
+            <Helmet>
+                <title>Rapid Cravings</title>
+            </Helmet>
             <div className="mx-auto w-full overflow-hidden">
                 <div className='relative h-full'>
                     <div className='banner lg:h-[700px] md:h-[500px] h-[400px]'>

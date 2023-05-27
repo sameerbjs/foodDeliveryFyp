@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { XMarkIcon } from '@heroicons/react/20/solid';
 import { decreaseQuantity, removeToCartProduct, increaseQuantity, handleTotalPrice } from '../../redux/CartSlice';
 import { ToastContainer } from 'react-toastify';
+import { Helmet } from 'react-helmet';
 
 const Cart = () => {
     const navigate = useNavigate();
@@ -35,6 +36,9 @@ const Cart = () => {
                 theme="dark"
                 autoClose={1000}
             />
+            <Helmet>
+                <title>Rapid Cravings - Cart</title>
+            </Helmet>
             <React.Fragment>
                 <div className="container px-5 py-7 mx-auto">
                     <div className='mb-5'>

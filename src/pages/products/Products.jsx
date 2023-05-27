@@ -6,6 +6,7 @@ import { Tab } from '@headlessui/react'
 import Comments from './Comments'
 import ReactStars from 'react-stars'
 import { useState } from 'react'
+import { Helmet } from 'react-helmet'
 
 export const ProductRest = () => {
     const navigate = useNavigate();
@@ -19,6 +20,9 @@ export const ProductRest = () => {
     }
     return (
         <React.Fragment>
+            <Helmet>
+                <title>Rapid Cravings - Products</title>
+            </Helmet>
             <div className="container px-5 py-7 mx-auto overflow-hidden">
                 <div>
                     <button onClick={() => navigate(-1)} className="rounded-xl bg-gray-200 hover:bg-gray-300 px-4 py-1 inline-flex gap-1 items-center justify-center text-gray-700">

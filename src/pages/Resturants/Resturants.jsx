@@ -3,6 +3,7 @@ import resturantsData from '../../assets/data/Resturants'
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { BsFillStarFill } from 'react-icons/bs';
 import { convertToSlug } from '../../helper';
+import { Helmet } from 'react-helmet';
 
 const Resturants = () => {
     const cityName = useParams().city;
@@ -23,6 +24,9 @@ const Resturants = () => {
     }, [])
     return (
         <>
+            <Helmet>
+                <title>Rapid Cravings - Resturants</title>
+            </Helmet>
             <div className='px-5 py-7 mx-auto container'>
                 <div className='mb-5'>
                     <button onClick={() => navigate(-1)} className="rounded-xl bg-gray-200 hover:bg-gray-300 px-4 py-1 inline-flex gap-1 items-center justify-center text-gray-700">
