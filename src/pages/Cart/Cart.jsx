@@ -88,10 +88,10 @@ const Cart = () => {
                             {
                                 cartProducts.length !== 0 &&
                                 <div className='lg:col-span-3 md:col-span-6 col-span-12 border shadow-lg h-max p-4 rounded-lg lg:order-none order-first'>
-                                    <div>
-                                        Total Items : {cartProducts?.length}
+                                    <div className='font-semibold text-[#212245]'>
+                                        Total items : {cartProducts?.length}
                                         <br />
-                                        Total Price : {cartProducts.reduce(
+                                        Total items price : {cartProducts.reduce(
                                             (total, item) =>
                                                 total + item.price * item.quantity,
                                             0

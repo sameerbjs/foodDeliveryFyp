@@ -7,10 +7,12 @@ const CheckOut = () => {
     const navigate = useNavigate();
     const totalPrice = useSelector(store => store.cart.totalPrice)
     const [isOpen, setIsOpen] = useState(false);
+    const [deliveryCharges, setDeliveryCharges] = useState(200)
 
     useEffect(() => {
         window.history.scrollRestoration = 'manual';
         window.scrollTo(0, 0);
+        setDeliveryCharges(200);
     }, []);
     return (
         <div className="container px-5 py-7 mx-auto">
@@ -26,10 +28,6 @@ const CheckOut = () => {
                 <div className='flex justify-between items-center whitespace-nowrap flex-wrap'>
                     <h1 className='font-semibold text-[#212245] lg:text-3xl md:text-2xl text-xl'>
                         Products Checkout
-                    </h1>
-                    <h1 className='font-semibold text-[#212245]'>
-                        Total Price : {totalPrice} {""}
-                        (Cash on Delivery)
                     </h1>
                 </div>
 
@@ -59,10 +57,19 @@ const CheckOut = () => {
                         <input type="text" id="number" name="number" className="w-full bg-white rounded border border-gray-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
                     </div>
                 </div>
-                <div className='w-full flex justify-end mt-5'>
+                <div className='max-w-max ml-auto space-y-2 mt-5 rounded-lg text-left'>
+                    <h1 className='font-semibold text-[#212245]'>
+                        Payment : Cash on Delivery
+                    </h1>
+                    <h1 className='font-semibold text-[#212245]'>
+                        Delivery charges : {deliveryCharges}
+                    </h1>
+                    <h1 className='font-semibold text-[#212245]'>
+                        Total Price : {totalPrice + deliveryCharges} {""}
+                    </h1>
                     <button
                         onClick={() => setIsOpen(true)}
-                        className="relative intro-x bg-red-500 hover:bg-[#212245] text-white font-medium flex justify-center py-2.5 px-4 border border-transparent rounded-lg focus:outline-none "
+                        className="relative bg-red-500 hover:bg-[#212245] text-white font-medium flex justify-center py-2.5 px-4 border border-transparent rounded-lg focus:outline-none "
                     >
                         Place Order
                     </button>
@@ -108,14 +115,14 @@ const CheckOut = () => {
 
                                     <div className="mt-4">
                                         <button
-                                            onClick={()=>setIsOpen(false)}
+                                            onClick={() => setIsOpen(false)}
                                             type="button"
                                             className="inline-flex mr-2 justify-center rounded-md border border-transparent bg-gray-100 px-4 py-2 text-sm font-medium text-gray-900 hover:bg-gray-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                                         >
                                             Cancel
                                         </button>
                                         <button
-                                            onClick={()=>setIsOpen(false)}
+                                            onClick={() => setIsOpen(false)}
                                             type="button"
                                             className="inline-flex justify-center rounded-md border border-transparent bg-green-100 px-4 py-2 text-sm font-medium text-green-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                                         >

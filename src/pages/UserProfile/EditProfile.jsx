@@ -3,7 +3,7 @@ import { BsEye, BsEyeSlash } from 'react-icons/bs';
 import { notify } from '../../helper';
 
 
-const EditProfile = ({navigate}) => {
+const EditProfile = ({ navigate }) => {
     const [pswdType, setPswdType] = useState(true);
     const [info, setinfo] = useState({
         username: "Sameer",

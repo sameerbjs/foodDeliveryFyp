@@ -1,7 +1,7 @@
-import {React, useState} from "react";
-import {ToastContainer} from "react-toastify";
-import {BsEye, BsEyeSlash} from "react-icons/bs";
-import {Link, useNavigate} from "react-router-dom";
+import { React, useState } from "react";
+import { ToastContainer } from "react-toastify";
+import { BsEye, BsEyeSlash } from "react-icons/bs";
+import { Link, useNavigate } from "react-router-dom";
 import { notify } from "../../../helper";
 
 const Register = () => {
@@ -171,7 +171,7 @@ const Register = () => {
                                     <span
                                         className="leading-7 text-[15px] font-semibold text-[#212245]"
                                     >
-                                        Have a account <Link to={'/auth-login'} state={{tab:0}} className="text-blue-500 hover:underline">Login here</Link>
+                                        Have a account <Link to={'/auth-login'} state={{ tab: 0 }} className="text-blue-500 hover:underline">Login here</Link>
                                     </span>
                                 </div>
                                 <button

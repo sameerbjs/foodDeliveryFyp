@@ -43,7 +43,7 @@ const Profile = () => {
                         </Tab.Panel>
                         <Tab.Panel>
                             <div className='overflow-hidden'>
-                            <UserOrders />
+                                <UserOrders />
                             </div>
                         </Tab.Panel>
                     </Tab.Panels>

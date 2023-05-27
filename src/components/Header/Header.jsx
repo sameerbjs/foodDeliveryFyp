@@ -14,14 +14,14 @@ function Header() {
                 <div className="mx-auto px-4 sm:px-6 lg:px-10 w-full">
                     <div className="flex items-center justify-between h-16">
                         <div className="flex items-center justify-between w-full">
-                            <div className="flex items-center gap-3">
+                            <Link to={'/'} className="flex items-center gap-3">
                                 <img
                                     className="h-10 w-10"
                                     src={logo}
                                     alt="Workflow"
                                 />
                                 <h5 className="text-[#212245] font-semibold text-[1rem]">Rapid Cravings</h5>
-                            </div>
+                            </Link>
                             <div className="hidden md:block">
                                 <div className="ml-10 flex items-baseline space-x-4">
                                     <NavLink

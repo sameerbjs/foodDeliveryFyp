@@ -4,12 +4,10 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCartProduct, removeToCartProduct } from '../../redux/CartSlice.js'
 import { ToastContainer } from 'react-toastify';
-import Comments from './Comments';
 
 const ProductDetail = () => {
     const [productDetail, setProductDetail] = React.useState();
     const [favSvg, setFavSvg] = React.useState(false);
-    // const [quantity, setQuantity] = React.useState(1);
 
     const dispatch = useDispatch();
     const cartProducts = useSelector(store => store.cart.cartProducts);
@@ -26,7 +24,7 @@ const ProductDetail = () => {
         dispatch(addToCartProduct(product))
     }
     const handleRemoveCart = (id) => {
-        dispatch(removeToCartProduct({id:id}))
+        dispatch(removeToCartProduct({ id: id }))
     }
 
     return (
@@ -72,25 +70,6 @@ const ProductDetail = () => {
                                 </span>
                             </div>
                             <p className="leading-relaxed items-center pb-5 border-b-2 border-gray-100 mb-5">{productDetail?.desc}.</p>
-                            {/* <div className="flex mt-6 items-center pb-5 border-b-2 border-gray-100 mb-5">
-                                <div className="flex">
-                                    <span className="mr-3">Quantity</span>
-                                </div>
-                                <div className="flex ml-6 items-center">
-                                    <div>
-                                        <input
-                                            id="quantity"
-                                            name="quantity"
-                                            type="number"
-                                            min={1}
-                                            value={quantity}
-                                            onChange={(e) => { setQuantity(e.target.value) }}
-                                            maxLength={4}
-                                            className="max-w-[80px] bg-white rounded border border-gray-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 text-base outline-none text-gray-700 py-1 px-2 leading-8 transition-colors duration-200 ease-in-out"
-                                        />
-                                    </div>
-                                </div>
-                            </div> */}
                             <div className="flex justify-between items-center">
                                 <span className=" font-medium text-2xl text-gray-900">{productDetail?.price} pkr</span>
                                 <div>
@@ -115,17 +94,6 @@ const ProductDetail = () => {
                             </div>
                         </div>
                     </div>
-                </div>
-
-                <div className='pt-5 px-5'>
-                    <div className='mb-5 lg:ml-[50px] ml-0'>
-                    <p className='text-[#212245] text-xl'>
-                            User Feedback
-                        </p>
-                    </div>
-                    <Comments />
-                    <Comments />
-                    <Comments />
                 </div>
             </section>
         </>
