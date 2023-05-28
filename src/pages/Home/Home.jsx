@@ -4,8 +4,13 @@ import { Link } from 'react-router-dom'
 import TypingAnimation from '../../components/TypingEffect/TypingEffect'
 import './Home.css'
 import { Helmet } from 'react-helmet'
+import { useDispatch } from 'react-redux'
+import { handleUserAuth } from '../../redux/AuthSlice'
+
 export const HomePage = () => {
     const words = ['Family', 'Friends'];
+
+    const dispatch = useDispatch();
     return (
         <>
             <Helmet>
@@ -21,7 +26,7 @@ export const HomePage = () => {
                                 <h5 className='lg:text-3xl md:text-2xl text-base text-white font-semibold whitespace-nowrap'>
                                     Easy order & Delicious food & Fast delivery
                                 </h5>
-                                <div className='lg:mt-10 md:mt-7 mt-5 group flex gap-3'>
+                                <div className='lg:mt-10 md:mt-7 mt-5 group flex gap-3 flex-wrap'>
                                     <Link to={'/auth-register'}>
                                         <button className='bg-red-500 flex items-center text-white px-5 lg:py-3 py-2 rounded-lg hover:bg-[#212245] tracking-widest'>
                                             Register
@@ -32,6 +37,11 @@ export const HomePage = () => {
                                             Login
                                         </button>
                                     </Link>
+                                    <div>
+                                        <button onClick={() => dispatch(handleUserAuth({ user: false }))} className='bg-red-500 flex items-center text-white px-5 lg:py-3 py-2 rounded-lg hover:bg-[#212245] tracking-widest'>
+                                            Go to Resturant
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>

@@ -1,7 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 function PageNotFound() {
+    useEffect(() => {
+        window.history.scrollRestoration = 'manual';
+        window.scrollTo(0, 0);
+    }, [])
     return (
         <div className="flex flex-col items-center justify-center h-[calc(100vh-120px)]">
             <p className="text-5xl font-bold text-gray-800">404</p>
