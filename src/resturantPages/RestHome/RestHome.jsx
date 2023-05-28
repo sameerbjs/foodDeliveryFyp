@@ -5,7 +5,7 @@ import { RiShoppingCart2Line } from 'react-icons/ri'
 const RestHome = () => {
     return (
         <div>
-            <section className="text-gray-600 body-font">
+            <section className="container px-5 py-7 mx-auto overflow-hidden">
                 <div className="mx-auto">
                     <div className="flex flex-col mb-10 text-center">
                         <h1 className="sm:text-3xl text-2xl font-medium mb-4 text-gray-900">Welcome to rapid cravings resturant dashboard</h1>

@@ -1,14 +1,18 @@
 import React from 'react'
+import products from '../../assets/data/Products'
+import { Link } from 'react-router-dom'
+
 const AllProducts = () => {
     return (
         <>
-            <div>
-                <div>
-                    <h1 className='lg:text-2xl md:text-xl text-lg'>Here is your all products</h1>
+            <div className="container px-5 py-7 mx-auto overflow-hidden">
+                <div className='flex justify-between items-center flex-wrap gap-3'>
+                    <h1 className='lg:text-2xl md:text-xl text-lg font-semibold'>Here is your all products</h1>
+                    <Link to={'/add-pro'} className="flex items-center bg-red-500 hover:bg-[#212245] text-white fs-14 px-3 py-2 rounded-lg shadow-md">Add New Product</Link>
                 </div>
                 <div class="relative overflow-x-auto mt-5">
                     <table class="w-full text-sm text-left">
-                        <thead class="text-black uppercase">
+                        <thead class="border text-xs text-gray-700 uppercase bg-gray-50">
                             <tr>
                                 <th scope="col" class="px-6 py-3">
                                     Product name
@@ -27,28 +31,34 @@ const AllProducts = () => {
                                 </th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr class="border-b bg-slate-800">
-                                <th scope="row" class="px-6 py-4 font-normal whitespace-nowrap text-white">
-                                    Apple MacBook Pro 17"
-                                </th>
-                                <td class="px-6 py-4 text-white">
-                                    Desi
-                                </td>
-                                <td class="px-6 py-4 text-white">
-                                    20
-                                </td>
-                                <td class="px-6 py-4 text-white">
-                                    900 pkr
-                                </td>
-                                <td class="px-6 py-4 text-white">
-                                    <div className='flex gap-2 items-center'>
-                                        <button className='border px-2 py-1 hover:bg-slate-200/60'>Edit</button>
-                                        <button className='border px-2 py-1 hover:bg-slate-200/60'>View</button>
-                                        <button className='border px-2 py-1 hover:bg-slate-200/60'>Delete</button>
-                                    </div>
-                                </td>
-                            </tr>
+                        <tbody className=''>
+                            {
+                                products.map((item) => {
+                                    return (
+                                        <tr class="border" key={item.id}>
+                                            <th scope="row" class="px-6 py-4 font-normal whitespace-nowrap">
+                                                {item.title}
+                                            </th>
+                                            <td class="px-6 py-4">
+                                                {item.category}
+                                            </td>
+                                            <td class="px-6 py-4">
+                                                20
+                                            </td>
+                                            <td class="px-6 py-4">
+                                                {item.price} pkr
+                                            </td>
+                                            <td class="px-6 py-4">
+                                                <div className='flex gap-2 items-center'>
+                                                    <Link to={`/edit-pro/${item.id}`} className='border px-2 py-1 hover:bg-slate-200/60'>Edit</Link>
+                                                    <Link to={`/pro-view/${item.id}`} className='border px-2 py-1 hover:bg-slate-200/60'>View</Link>
+                                                    <button className='border px-2 py-1 hover:bg-slate-200/60'>Delete</button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    )
+                                })
+                            }
                         </tbody>
                     </table>
                 </div>

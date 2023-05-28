@@ -21,7 +21,14 @@ import {
     Header,
 } from "./pages";
 import {useSelector} from "react-redux";
-import {Sidebar, HeaderRest, RestHome, AllProducts} from "./resturantPages";
+import {
+    HeaderRest,
+    RestHome,
+    AllProducts,
+    ProductView,
+    AddProduct,
+    EditProduct,
+} from "./resturantPages";
 
 function App() {
     const isUser = useSelector((store) => store.authUser.isUser);
@@ -104,26 +111,32 @@ function App() {
                 </div>
             ) : (
                 <>
-                    <div className="flex h-screen overflow-hidden">
-                        <Sidebar />
-                        <div className="relative flex flex-col w-full overflow-y-auto overflow-x-hidden">
-                            <HeaderRest />
-                            <main className="px-6 py-8">
-                                <Routes>
-                                    <Route path="/" element={<RestHome />} />
-                                    <Route
-                                        path="/products"
-                                        element={<AllProducts />}
-                                    />
+                    <div className="relative min-h-screen flex flex-col">
+                        <HeaderRest />
+                        <main className="flex-grow">
+                            <Routes>
+                                <Route path="/" element={<RestHome />} />
+                                <Route
+                                    path="/products"
+                                    element={<AllProducts />}
+                                />
+                                <Route
+                                    path="/pro-view/:id"
+                                    element={<ProductView />}
+                                />
+                                <Route
+                                    path="/add-pro"
+                                    element={<AddProduct />}
+                                />
+                                <Route
+                                    path="/edit-pro/:id"
+                                    element={<EditProduct />}
+                                />
 
-                                    {/* Page not found */}
-                                    <Route
-                                        path="*"
-                                        element={<PageNotFound />}
-                                    />
-                                </Routes>
-                            </main>
-                        </div>
+                                {/* Page not found */}
+                                <Route path="*" element={<PageNotFound />} />
+                            </Routes>
+                        </main>
                     </div>
                 </>
             )}

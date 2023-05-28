@@ -1,6 +1,15 @@
 import HeaderRest from "./Header/Header";
+import AddProduct from "./Products/AddProduct";
+import EditProduct from "./Products/EditProduct";
+import ProductView from "./Products/ProductView";
 import AllProducts from "./Products/Products";
 import RestHome from "./RestHome/RestHome";
-import Sidebar from "./Sidebar/Sidebar";
 
-export {Sidebar, HeaderRest, RestHome,AllProducts};
+export {
+    HeaderRest,
+    RestHome,
+    AllProducts,
+    ProductView,
+    AddProduct,
+    EditProduct,
+};
