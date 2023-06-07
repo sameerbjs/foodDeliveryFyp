@@ -10,6 +10,7 @@ import { ToastContainer } from 'react-toastify';
 const ProductView = () => {
     const [productDetail, setProductDetail] = useState();
     const [productId, setProductId] = useState(null);
+    const [isLoading, setIsloading] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
 
     const { id } = useParams();
@@ -17,9 +18,11 @@ const ProductView = () => {
 
     useEffect(() => {
         window.scrollTo(0, 0);
+        setIsloading(true);
         const getProduct = async () => {
             const response = await Api.getSpecificProduct(id);
             setProductDetail(response?.data);
+            setIsloading(false);
         }
         getProduct();
     }, [id])
@@ -30,14 +33,25 @@ const ProductView = () => {
     }
 
     const handleDeleteProduct = async () => {
+        setIsloading(true);
         const response = await Api.deleteProduct(productId);
         if (response?.data?.message) {
+            setIsloading(false);
             navigate('/products')
         } else {
+            setIsloading(false);
             notify('success', response?.data?.error);
         }
     }
 
+    
+    if (isLoading) {
+        return (
+            <div className="flex justify-center items-center h-[calc(100vh-100px)] overflow-hidden">
+                <Loader width="w-16" height="h-16" />
+            </div>
+        );
+    }
     return (
         <>
             <ToastContainer
