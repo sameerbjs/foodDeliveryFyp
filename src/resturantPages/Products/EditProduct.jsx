@@ -6,12 +6,14 @@ import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
 import { useNavigate, useParams } from 'react-router-dom';
 import Api from "../../services/api";
 import { ToastContainer } from "react-toastify";
+import Loader from "../../components/loader/Loader";
 
 const EditProduct = () => {
     const navigate = useNavigate();
     const { id } = useParams();
 
     const [file, setFile] = useState(null);
+    const [isLoading, setIsloading] = useState(false);
     const [imageUrl, setImageUrl] = useState(null);
     const [selectedFood, setSelectedFood] = useState(FoodCategory[0])
     const [dataInp, setDataInp] = useState({
@@ -27,6 +29,7 @@ const EditProduct = () => {
         });
     };
     useEffect(() => {
+        setIsloading(true);
         window.scrollTo(0, 0);
         const getProduct = async () => {
             const response = await Api.getSpecificProduct(id);
@@ -43,6 +46,7 @@ const EditProduct = () => {
             if (matchingCategory) {
                 setSelectedFood(matchingCategory);
             }
+            setIsloading(false);
         }
         getProduct();
     }, [id])
@@ -61,6 +65,7 @@ const EditProduct = () => {
     };
 
     const editProductHandle = async () => {
+        setIsloading(true);
         const formData = new FormData();
         formData.append("title", dataInp.title);
         formData.append("description", dataInp.description);
@@ -70,10 +75,29 @@ const EditProduct = () => {
 
         const response = await Api.updateProduct(id, formData);
         if (response?.data?.message) {
+            notify('success', response.data.message);
+            setDataInp({
+                title: "",
+                description: "",
+                price: "",
+            })
+            setSelectedFood(FoodCategory[0]);
+            setImageUrl(null);
+            setFile(null)
+            setIsloading(false);
             navigate('/products');
         } else {
+            setIsloading(false);
             notify("error", response?.data?.error);
         }
+    }
+
+    if(isLoading){
+        return(
+            <div className='flex justify-center items-center h-[calc(100vh-100px)] overflow-hidden'>
+                <Loader width="w-16" height="h-16" />
+            </div>
+        )
     }
     return (
         <>
@@ -297,7 +321,9 @@ const EditProduct = () => {
                                 onClick={editProductHandle}
                                 className="relative intro-x w-full bg-red-500 hover:bg-[#212245] text-white font-medium flex justify-center py-2.5 px-4 border border-transparent rounded-lg focus:outline-none "
                             >
-                                Edit product
+                                {
+                                    isLoading ? <Loader width={'w-8'} height={'h-8'} /> : "Edit product"
+                                }
                             </button>
                         </div>
                     </div>
