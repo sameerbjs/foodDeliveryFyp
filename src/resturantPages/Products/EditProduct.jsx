@@ -4,10 +4,10 @@ import { Listbox, Transition } from "@headlessui/react";
 import FoodCategory from "../../assets/data/FoodCategory";
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
 import { useNavigate, useParams } from 'react-router-dom';
-import products from "../../assets/data/Products";
+import Api from "../../services/api";
+import { ToastContainer } from "react-toastify";
 
 const EditProduct = () => {
-    const [productDetail, setProductDetail] = React.useState();
     const navigate = useNavigate();
     const { id } = useParams();
 
@@ -17,10 +17,7 @@ const EditProduct = () => {
     const [dataInp, setDataInp] = useState({
         title: "",
         description: "",
-        picture: "",
         price: "",
-        category: "",
-        createdDate: new Date(),
     });
 
     const handleChange = (event) => {
@@ -31,18 +28,24 @@ const EditProduct = () => {
     };
     useEffect(() => {
         window.scrollTo(0, 0);
-        const getProduct = products.find(el => el.id === id);
-        setProductDetail(getProduct);
-        if (getProduct || productDetail) {
+        const getProduct = async () => {
+            const response = await Api.getSpecificProduct(id);
             setDataInp({
-                title: getProduct?.title,
-                price: getProduct?.price,
-                description: getProduct?.desc
+                title: response?.data?.title,
+                description: response?.data?.description,
+                price: response?.data?.price,
             })
-            setImageUrl(getProduct?.image01);
-            setFile(getProduct?.image01)
+            setImageUrl(`${process.env.REACT_APP_SERVER_URL}/${response?.data?.productPath}`);
+            setFile(`${process.env.REACT_APP_SERVER_URL}/${response?.data?.productPath}`);
+            const selectedCategoryName = response?.data?.category;
+            const matchingCategory = FoodCategory.find(category => category.name === selectedCategoryName);
+
+            if (matchingCategory) {
+                setSelectedFood(matchingCategory);
+            }
         }
-    }, [id,productDetail])
+        getProduct();
+    }, [id])
 
     const onUploadImages = (event) => {
         const fileType = event.target.files[0].type;
@@ -57,8 +60,28 @@ const EditProduct = () => {
         }
     };
 
+    const editProductHandle = async () => {
+        const formData = new FormData();
+        formData.append("title", dataInp.title);
+        formData.append("description", dataInp.description);
+        formData.append("category", selectedFood.name);
+        formData.append("price", dataInp.price);
+        formData.append("productPic", file);
+
+        const response = await Api.updateProduct(id, formData);
+        if (response?.data?.message) {
+            navigate('/products');
+        } else {
+            notify("error", response?.data?.error);
+        }
+    }
     return (
         <>
+            <ToastContainer
+                position="top-right"
+                theme="dark"
+                autoClose={1500}
+            />
             <div className="container px-5 py-7 mx-auto overflow-hidden">
                 <div className='mb-5'>
                     <button onClick={() => navigate(-1)} className="rounded-xl bg-gray-200 hover:bg-gray-300 px-4 py-1 inline-flex gap-1 items-center justify-center text-gray-700">
@@ -271,9 +294,10 @@ const EditProduct = () => {
                     <div className="flex justify-end mt-3">
                         <div>
                             <button
+                                onClick={editProductHandle}
                                 className="relative intro-x w-full bg-red-500 hover:bg-[#212245] text-white font-medium flex justify-center py-2.5 px-4 border border-transparent rounded-lg focus:outline-none "
                             >
-                                Create product
+                                Edit product
                             </button>
                         </div>
                     </div>

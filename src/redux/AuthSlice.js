@@ -1,18 +1,25 @@
-import {createSlice} from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     isUser: true,
+    resturantAuth: [],
 };
 
 const authUserSlice = createSlice({
     name: "selectedtabindex",
     initialState,
     reducers: {
-        handleUserAuth: (state, action) => {
-            state.isUser = action.payload.user;
+        handleRestAuth: (state, action) => {
+            state.isUser = action.payload.isUser;
+            state.resturantAuth = action.payload.resturant;
         },
+
+        handleRestLogout: (state, action) => {
+            state.isUser = action.payload.isUser
+            state.resturantAuth = action.payload.resturant;
+        }
     },
 });
 
-export const {handleUserAuth} = authUserSlice.actions;
+export const { handleRestAuth, handleRestLogout } = authUserSlice.actions;
 export default authUserSlice.reducer;

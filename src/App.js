@@ -1,41 +1,23 @@
 import React, {useEffect} from "react";
 import {Routes, Route} from "react-router-dom";
-import {
-    Profile,
-    Aboutus,
-    CheckOut,
-    Resturants,
-    PageNotFound,
-    AuthLoginProcess,
-    AuthRegisterProcess,
-    ResturantLogin,
-    ResturantRegister,
-    Footer,
-    Cart,
-    ProductDetail,
-    ProductRest,
-    ContactUs,
-    Login,
-    Register,
-    HomePage,
-    Header,
-} from "./pages";
-import {useSelector} from "react-redux";
-import {
-    HeaderRest,
-    RestHome,
-    AllProducts,
-    ProductView,
-    AddProduct,
-    EditProduct,
-} from "./resturantPages";
+import {PageNotFound, Footer, Header} from "./pages";
+import {connect, useSelector} from "react-redux";
+import {HeaderRest} from "./resturantPages";
+import {ResturantsRoutes, UserRoutes} from "./Router";
+import Api from "./services/api";
 
-function App() {
+function App(props) {
     const isUser = useSelector((store) => store.authUser.isUser);
     useEffect(() => {
         window.history.scrollRestoration = "manual";
         window.scrollTo(0, 0);
     }, []);
+
+    const {token} = props;
+    if (token) {
+        Api.setResturantToken({token});
+    }
+
     return (
         <>
             {isUser ? (
@@ -43,67 +25,13 @@ function App() {
                     <Header />
                     <main className="flex-grow">
                         <Routes>
-                            <Route path="/" element={<HomePage />} />
-
-                            {/* authentication */}
-                            <Route
-                                path="/auth-register"
-                                element={<AuthRegisterProcess />}
-                            />
-                            <Route
-                                path="/auth-login"
-                                element={<AuthLoginProcess />}
-                            />
-
-                            {/* register and login for user routes */}
-                            <Route
-                                path="/user-register"
-                                element={<Register />}
-                            />
-                            <Route path="/user-login" element={<Login />} />
-
-                            {/* register and login for resturants */}
-                            <Route
-                                path="/resturant-register"
-                                element={<ResturantRegister />}
-                            />
-                            <Route
-                                path="/resturant-login"
-                                element={<ResturantLogin />}
-                            />
-
-                            {/*user profile */}
-                            <Route path="/profile" element={<Profile />} />
-
-                            {/* contact us */}
-                            <Route path="/contact" element={<ContactUs />} />
-
-                            {/* resturants */}
-                            <Route
-                                path="/resturants/:city"
-                                element={<Resturants />}
-                            />
-
-                            {/* products of res */}
-                            <Route
-                                path="/products/:name"
-                                element={<ProductRest />}
-                            />
-                            <Route
-                                path="/product/:id"
-                                element={<ProductDetail />}
-                            />
-
-                            {/* cart */}
-                            <Route path="/cart" element={<Cart />} />
-
-                            {/* Checkout */}
-                            <Route path="/checkout" element={<CheckOut />} />
-
-                            {/* About us */}
-                            <Route path="/about-us" element={<Aboutus />} />
-
-                            {/* Page not found */}
+                            {UserRoutes.map((route, index) => (
+                                <Route
+                                    key={index}
+                                    path={route.path}
+                                    element={route.component}
+                                />
+                            ))}
                             <Route path="*" element={<PageNotFound />} />
                         </Routes>
                     </main>
@@ -115,25 +43,13 @@ function App() {
                         <HeaderRest />
                         <main className="flex-grow">
                             <Routes>
-                                <Route path="/" element={<RestHome />} />
-                                <Route
-                                    path="/products"
-                                    element={<AllProducts />}
-                                />
-                                <Route
-                                    path="/pro-view/:id"
-                                    element={<ProductView />}
-                                />
-                                <Route
-                                    path="/add-pro"
-                                    element={<AddProduct />}
-                                />
-                                <Route
-                                    path="/edit-pro/:id"
-                                    element={<EditProduct />}
-                                />
-
-                                {/* Page not found */}
+                                {ResturantsRoutes.map((route, index) => (
+                                    <Route
+                                        key={index}
+                                        path={route.path}
+                                        element={route.component}
+                                    />
+                                ))}
                                 <Route path="*" element={<PageNotFound />} />
                             </Routes>
                         </main>
@@ -144,4 +60,10 @@ function App() {
     );
 }
 
-export default App;
+const mapStateToProps = (store) => {
+    return {
+        token: store.authUser?.resturantAuth?.token,
+    };
+};
+
+export default connect(mapStateToProps, null)(App);

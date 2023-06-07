@@ -2,17 +2,18 @@ import React, { Fragment, useState } from "react";
 import { Dialog, Popover, Transition } from "@headlessui/react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import logo from '../../assets/images/res-logo.png'
-import avatar from '../../assets/images/ava-3.jpg'
-import { useDispatch } from "react-redux";
-import { handleUserAuth } from "../../redux/AuthSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { handleRestLogout } from "../../redux/AuthSlice";
 
 const HeaderRest = () => {
     const [isOpen, setIsOpen] = useState(false);
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const restAuth = useSelector(store => store.authUser.resturantAuth);
+
     return (
         <div className="pb-[65px]">
-            <nav className="bg-white shadow-md fixed w-full z-50">
+            <nav className="bg-white shadow-md fixed w-full z-[99]">
                 <div className="mx-auto px-4 sm:px-6 lg:px-10 w-full">
                     <div className="flex items-center justify-between h-16">
                         <div className="flex items-center justify-between w-full">
@@ -61,10 +62,10 @@ const HeaderRest = () => {
                             <div className="flex items-center gap-3 lg:mr-0 mr-7 flex-row-reverse">
                                 <Popover className="relative mt-2" as="div">
                                     <Popover.Button className={'flex items-center gap-3'}>
-                                        <div className="w-8 h-8">
-                                            <img src={avatar} alt="avatar" className="w-full rounded-3xl object-cover object-center h-full" />
+                                        <div className="w-9 h-9">
+                                            <img src={`${process.env.REACT_APP_SERVER_URL}/${restAuth.profilePath.replace(/\\/g, '/')}`} alt="avatar" className="w-full rounded-3xl object-cover object-center h-full" />
                                         </div>
-                                        <span>Sameer</span>
+                                        <span>{restAuth?.name}</span>
                                     </Popover.Button>
                                     <Transition
                                         enter="transition duration-100 ease-out"
@@ -75,13 +76,13 @@ const HeaderRest = () => {
                                         leaveTo="transform scale-95 opacity-0"
                                         className={'relative z-50'}
                                     >
-                                        <Popover.Panel className="absolute top-3 z-10 bg-white px-2 min-w-[150px] py-3 shadow-md right-0 border rounded-md">
+                                        <Popover.Panel className="absolute top-3 bg-white px-2 min-w-[150px] py-3 shadow-md right-0 border rounded-md">
                                             <div className="w-full">
                                                 <Link to={'/profile'} className="w-full">
                                                     <button className="text-white bg-red-500 hover:bg-[#212245] w-full px-4 py-2 rounded-lg">Profile</button>
                                                 </Link>
                                                 <div className="w-full mt-3">
-                                                    <button onClick={() => {dispatch(handleUserAuth({ user: true })); navigate('/')}} className="text-white bg-red-500 hover:bg-[#212245] w-full px-4 py-2 rounded-lg">Logout</button>
+                                                    <button onClick={() => { dispatch(handleRestLogout({ resturant: [], isUser: true })); navigate('/') }} className="text-white bg-red-500 hover:bg-[#212245] w-full px-4 py-2 rounded-lg">Logout</button>
                                                 </div>
                                             </div>
                                         </Popover.Panel>

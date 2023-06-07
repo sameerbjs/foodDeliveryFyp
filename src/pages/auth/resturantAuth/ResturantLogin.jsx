@@ -3,6 +3,10 @@ import { ToastContainer } from "react-toastify";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
 import { Link, useNavigate } from "react-router-dom";
 import { notify } from "../../../helper";
+import Api from "../../../services/api";
+import { handleRestAuth } from "../../../redux/AuthSlice";
+import { useDispatch } from "react-redux";
+import Loader from "../../../components/loader/Loader";
 
 const ResturantLogin = () => {
     const [info, setinfo] = useState({
@@ -10,7 +14,10 @@ const ResturantLogin = () => {
         password: "",
     });
     const [pswdType, setPswdType] = useState(true);
+    const dispatch = useDispatch();
     const navigate = useNavigate();
+    const [isLoading, setIsLoading] = useState(false);
+
     const showEyePswd = () => {
         setPswdType(!pswdType);
     };
@@ -36,11 +43,28 @@ const ResturantLogin = () => {
                 return;
             }
         }
-        navigate('/user-register')
+
+        const data = {
+            email: info.email,
+            password: info.password
+        }
+
+        setIsLoading(true)
+
+        const response = await Api.resturantLogin(data);
+
+        if (response?.status === 200) {
+            setIsLoading(false)
+            navigate('/')
+            dispatch(handleRestAuth({ resturant: response?.data, isUser: response?.data?.isUser }));
+        } else {
+            setIsLoading(false)
+            notify('error', response?.data?.error)
+        }
     };
     return (
         <>
-            <div className="container px-4 sm:px-6 lg:px-8 lg:mt-0 mt-10 lg:h-[calc(100vh-230px)] md:h-[calc(100vh-170px)] h-[calc(100vh-400px)] flex items-start justify-start lg:justify-center lg:items-center">
+            <div className="container px-4 sm:px-6 lg:px-8 lg:mt-0 mt-10 flex items-start justify-start lg:justify-center lg:items-center">
                 <ToastContainer
                     position="top-right"
                     theme="dark"
@@ -117,7 +141,9 @@ const ResturantLogin = () => {
                                     onClick={handleLogin}
                                     className="relative intro-x w-full bg-red-500 hover:bg-[#212245] text-white font-medium tracking-widest flex justify-center py-2.5 px-4 border border-transparent rounded-lg focus:outline-none "
                                 >
-                                    Login
+                                    {
+                                        isLoading ? <Loader width="w-8" height="h-8" /> : 'Login'
+                                    }
                                 </button>
                             </div>
                         </div>

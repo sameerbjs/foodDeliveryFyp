@@ -4,19 +4,22 @@ import { Listbox, Transition } from "@headlessui/react";
 import FoodCategory from "../../assets/data/FoodCategory";
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import Api from "../../services/api";
+import { ToastContainer } from "react-toastify";
+import Loader from "../../components/loader/Loader";
 
 const AddProduct = () => {
+    const rest_id = useSelector(store => store.authUser?.resturantAuth?._id);
     const [file, setFile] = useState(null);
+    const [isLoading, setIsLoading] = useState(false)
     const [imageUrl, setImageUrl] = useState(null);
     const [selectedFood, setSelectedFood] = useState(FoodCategory[0])
     const navigate = useNavigate();
     const [dataInp, setDataInp] = useState({
         title: "",
         description: "",
-        picture: "",
         price: "",
-        category: "",
-        createdDate: new Date(),
     });
 
     const handleChange = (event) => {
@@ -39,8 +42,45 @@ const AddProduct = () => {
         }
     };
 
+    const handleAddProduct = async () => {
+        setIsLoading(true);
+        const { title, description, price } = dataInp;
+
+        const productData = new FormData();
+        productData.append('rest_id', rest_id)
+        productData.append('title', title);
+        productData.append('description', description);
+        productData.append('price', price);
+        productData.append('category', selectedFood?.name);
+        productData.append('productPic', file);
+
+        const response = await Api.addProduct(productData);
+        if (response?.data?.message) {
+            setIsLoading(false);
+            notify('success', response.data.message);
+            setDataInp({
+                title: "",
+                description: "",
+                price: "",
+            })
+            setSelectedFood(FoodCategory[0]);
+            setImageUrl(null);
+            setFile(null)
+            navigate('/products')
+        } else {
+            setIsLoading(false);
+            notify('error', response?.data?.error)
+        }
+    }
+
+
     return (
         <>
+            <ToastContainer
+                position="top-right"
+                theme="dark"
+                autoClose={1500}
+            />
             <div className="container px-5 py-7 mx-auto overflow-hidden">
                 <div className='mb-5'>
                     <button onClick={() => navigate(-1)} className="rounded-xl bg-gray-200 hover:bg-gray-300 px-4 py-1 inline-flex gap-1 items-center justify-center text-gray-700">
@@ -253,9 +293,13 @@ const AddProduct = () => {
                     <div className="flex justify-end mt-3">
                         <div>
                             <button
+                                onClick={handleAddProduct}
                                 className="relative intro-x w-full bg-red-500 hover:bg-[#212245] text-white font-medium flex justify-center py-2.5 px-4 border border-transparent rounded-lg focus:outline-none "
                             >
-                                Create product
+                                {
+                                    isLoading ? <Loader width={'w-8'} height={'h-8'} /> : "Create product"
+                                }
+
                             </button>
                         </div>
                     </div>
