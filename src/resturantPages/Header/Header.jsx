@@ -10,6 +10,7 @@ const HeaderRest = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const restAuth = useSelector(store => store.authUser.resturantAuth);
+    const rest_id = useSelector(store => store.authUser?.resturantAuth?._id);
 
     return (
         <div className="pb-[65px]">
@@ -78,7 +79,7 @@ const HeaderRest = () => {
                                     >
                                         <Popover.Panel className="absolute top-3 bg-white px-2 min-w-[150px] py-3 shadow-md right-0 border rounded-md">
                                             <div className="w-full">
-                                                <Link to={'/profile'} className="w-full">
+                                                <Link to={`/edit-resturant/${rest_id}`} className="w-full">
                                                     <button className="text-white bg-red-500 hover:bg-[#212245] w-full px-4 py-2 rounded-lg">Profile</button>
                                                 </Link>
                                                 <div className="w-full mt-3">

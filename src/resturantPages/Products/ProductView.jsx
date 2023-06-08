@@ -76,7 +76,7 @@ const ProductView = () => {
                         {
                             productDetail ?
                                 <>
-                                    <img alt={productDetail} className="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded" src={`${process.env.REACT_APP_SERVER_URL}/${productDetail?.productPath?.replace(/\\/g, '/')}`} />
+                                    <img alt={productDetail} className="lg:w-1/2 w-full lg:h-auto h-64 object-contain object-center rounded" src={`${process.env.REACT_APP_SERVER_URL}/${productDetail?.productPath?.replace(/\\/g, '/')}`} />
                                     <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
                                         <span className="text-sm text-gray-500 tracking-widest">PRODUCT NAME</span>
                                         <h1 className="text-[#212245] text-3xl  font-medium mb-1">{productDetail?.title}</h1>

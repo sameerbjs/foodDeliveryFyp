@@ -1,9 +1,9 @@
-import React, {useEffect} from "react";
-import {Routes, Route} from "react-router-dom";
-import {PageNotFound, Footer, Header} from "./pages";
-import {connect, useSelector} from "react-redux";
-import {HeaderRest} from "./resturantPages";
-import {ResturantsRoutes, UserRoutes} from "./Router";
+import React, { useEffect } from "react";
+import { Routes, Route } from "react-router-dom";
+import { PageNotFound, Footer, Header } from "./pages";
+import { connect, useSelector } from "react-redux";
+import { HeaderRest } from "./resturantPages";
+import { ResturantsRoutes, UserRoutes } from "./Router";
 import Api from "./services/api";
 
 function App(props) {
@@ -13,9 +13,9 @@ function App(props) {
         window.scrollTo(0, 0);
     }, []);
 
-    const {token} = props;
+    const { token } = props;
     if (token) {
-        Api.setResturantToken({token});
+        Api.setResturantToken({ token });
     }
 
     return (

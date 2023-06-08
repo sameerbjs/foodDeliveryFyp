@@ -4,6 +4,7 @@ import AddProduct from "./Products/AddProduct";
 import EditProduct from "./Products/EditProduct";
 import ProductView from "./Products/ProductView";
 import AllProducts from "./Products/Products";
+import EditResturant from "./Profile/EditProfile";
 import RestHome from "./RestHome/RestHome";
 export {
     HeaderRest,
@@ -13,4 +14,5 @@ export {
     AddProduct,
     EditProduct,
     Orders,
+    EditResturant
 };

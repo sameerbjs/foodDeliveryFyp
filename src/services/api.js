@@ -26,6 +26,7 @@ export default class Api {
         );
     };
 
+    // resturants apis
     static resturantRegister = async (data) => {
         try {
             const response = await this._api.post("/api/rest-register", data);
@@ -34,7 +35,14 @@ export default class Api {
             return error.response;
         }
     };
-
+    static emailVerificationRest = async (token) => {
+        try {
+            const response = await this._api.get(`/api/verify?token=${token}`);
+            return response;
+        } catch (error) {
+            return error.response;
+        }
+    };
     static resturantLogin = async (data) => {
         try {
             const response = await this._api.post("/api/rest-login", data);
@@ -43,7 +51,17 @@ export default class Api {
             return error.response;
         }
     };
+    static resturantDetail = async (id) => {
+        console.log('id :>> ', id);
+        try {
+            const response = await this._api.get(`/api/get-resturant/${id}`);
+            return response;
+        } catch (error) {
+            return error.response;
+        }
+    };
 
+    // products apis
     static addProduct = async (data) => {
         try {
             const response = await this._api.post("/api/add-product", data);
@@ -52,8 +70,7 @@ export default class Api {
             return error.response;
         }
     };
-
-    static getAllProducts = async (page, limit,id) => {
+    static getAllProducts = async (page, limit, id) => {
         try {
             const response = await this._api.get(`/api/get-all/${id}`, {
                 params: { page, limit },
@@ -63,7 +80,14 @@ export default class Api {
             return error.response;
         }
     };
-
+    static getProductsLength = async () => {
+        try {
+            const response = await this._api.get('/api/get-length');
+            return response;
+        } catch (error) {
+            return error.response;
+        }
+    };
     static getSpecificProduct = async (id) => {
         try {
             const response = await this._api.get(`/api/get-product/${id}`);
@@ -72,7 +96,6 @@ export default class Api {
             return error.response;
         }
     };
-
     static updateProduct = async (id, data) => {
         try {
             const response = await this._api.post(
@@ -84,7 +107,6 @@ export default class Api {
             return error.response;
         }
     };
-
     static deleteProduct = async (id) => {
         try {
             const response = await this._api.delete(`/api/delete-product/${id}`);

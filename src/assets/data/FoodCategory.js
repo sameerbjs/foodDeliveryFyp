@@ -27,6 +27,10 @@ const FoodCategory = [
         "id" : "7",
         "name": "Tea and Coffee",
     },
+    {
+        "id" : "8",
+        "name": "Desi",
+    },
 ]
 
 export default FoodCategory;

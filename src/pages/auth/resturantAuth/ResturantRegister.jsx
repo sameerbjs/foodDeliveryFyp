@@ -74,7 +74,7 @@ const ResturantRegister = () => {
     const response = await Api.resturantRegister(formData);
     if (response?.data?.message) {
       setIsLoading(false)
-      notify('success', `${response?.data?.message} you can login now`)
+      notify('success', `${response?.data?.message}`)
       setinfo({
         username: "",
         email: "",
