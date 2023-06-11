@@ -52,7 +52,6 @@ export default class Api {
         }
     };
     static resturantDetail = async (id) => {
-        console.log('id :>> ', id);
         try {
             const response = await this._api.get(`/api/get-resturant/${id}`);
             return response;
@@ -60,6 +59,14 @@ export default class Api {
             return error.response;
         }
     };
+    static resturantEdit = async (data,id) => {
+        try {
+            const response = await this._api.post(`/api/rest-edit/${id}`,data);
+            return response;
+        } catch (error) {
+            return error.response;
+        }
+    }
 
     // products apis
     static addProduct = async (data) => {

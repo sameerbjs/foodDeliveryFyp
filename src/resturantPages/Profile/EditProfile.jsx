@@ -5,6 +5,8 @@ import Loader from "../../components/loader/Loader";
 import {ToastContainer} from "react-toastify";
 import {BsEye, BsEyeSlash} from "react-icons/bs";
 import {useParams} from "react-router-dom";
+import {handleRestAuth} from "../../redux/AuthSlice";
+import {useDispatch} from "react-redux";
 
 const EditResturant = () => {
     const [info, setinfo] = useState({
@@ -14,13 +16,14 @@ const EditResturant = () => {
         city: "",
         phone: "",
         password: "",
-        c_password: "",
+        current_password: "",
     });
     const [pswdType, setPswdType] = useState(true);
     const [file, setFile] = useState(null);
     const [imageUrl, setImageUrl] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const {id} = useParams();
+    const dispatch = useDispatch();
 
     useEffect(() => {
         setIsLoading(true);
@@ -60,11 +63,10 @@ const EditResturant = () => {
         });
     };
 
-    const handleRegister = async () => {
+    const handleEditRest = async () => {
         if (
             !info.username ||
             !info.email ||
-            !info.password ||
             !info.address ||
             !info.city ||
             !info.phone
@@ -81,40 +83,29 @@ const EditResturant = () => {
                 return;
             }
         }
-        if (info.password.length < 8) {
-            notify("error", "Password must be 8 characters");
-            return;
-        }
+
         setIsLoading(true);
         const formData = new FormData();
         formData.append("name", info.username);
         formData.append("email", info.email);
-        formData.append("password", info.password);
+        if (info.password) {
+            formData.append("password", info.password);
+            formData.append("current_password", info.current_password);
+        }
         formData.append("city", info.city);
         formData.append("address", info.address);
         formData.append("phone", info.phone);
         formData.append("profilePic", file);
-        formData.append("isUser", false);
 
-        // const response = await Api.EditResturant(formData);
-        // if (response?.data?.message) {
-        //   setIsLoading(false)
-        //   notify('success', `${response?.data?.message}`)
-        //   setinfo({
-        //     username: "",
-        //     email: "",
-        //     address: "",
-        //     city: "",
-        //     phone: "",
-        //     password: "",
-        //     c_password: "",
-        //   })
-        //   setImageUrl(null);
-        //   setFile(null);
-        // } else {
-        //   setIsLoading(false)
-        //   notify('error', response?.data?.error)
-        // }
+        const response = await Api.resturantEdit(formData, id);
+        if (response?.data?.message) {
+            setIsLoading(false);
+            notify("success", `${response?.data?.message}`);
+            dispatch(handleRestAuth({resturant: response?.data?.data}));
+        } else {
+            setIsLoading(false);
+            notify("error", response?.data?.error);
+        }
     };
 
     const onUploadImages = (event) => {
@@ -252,21 +243,21 @@ const EditResturant = () => {
                                 </div>
                                 <div className="intro-x">
                                     <label
-                                        htmlFor="password"
+                                        htmlFor="current_password"
                                         className="leading-7 text-[15px] font-semibold text-[#212245]"
                                     >
                                         Current Password
                                     </label>
                                     <div className="flex items-center relative">
                                         <input
-                                            id="password"
-                                            name="password"
-                                            value={info.c_password}
+                                            id="current_password"
+                                            name="current_password"
+                                            value={info.current_password}
                                             onChange={handleChangeText}
                                             type={
                                                 pswdType ? "password" : "text"
                                             }
-                                            autoComplete="current-password"
+                                            autoComplete="current_password"
                                             required
                                             maxLength={16}
                                             className="w-full bg-white rounded border border-gray-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
@@ -285,21 +276,21 @@ const EditResturant = () => {
                                 </div>
                                 <div className="intro-x">
                                     <label
-                                        htmlFor="confirm_password"
+                                        htmlFor="password"
                                         className="leading-7 text-[15px] font-semibold text-[#212245]"
                                     >
                                         New Password
                                     </label>
                                     <div className="flex items-center relative">
                                         <input
-                                            id="confirm_password"
-                                            name="c_password"
+                                            id="password"
+                                            name="password"
                                             type={
                                                 pswdType ? "password" : "text"
                                             }
                                             value={info.password}
                                             onChange={handleChangeText}
-                                            autoComplete="current-password"
+                                            autoComplete="password"
                                             required
                                             maxLength={16}
                                             className="w-full bg-white rounded border border-gray-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
@@ -419,7 +410,7 @@ const EditResturant = () => {
                                     </div>
                                 </div>
                                 <button
-                                    onClick={handleRegister}
+                                    onClick={handleEditRest}
                                     className="relative intro-x w-full bg-red-500 hover:bg-[#212245] text-white font-medium tracking-widest flex justify-center py-2.5 px-4 border border-transparent rounded-lg focus:outline-none "
                                 >
                                     {isLoading ? (
