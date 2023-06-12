@@ -13,7 +13,6 @@ export default class Api {
             return error;
         }
     };
-
     static setResturantToken = ({ token }) => {
         this._api.interceptors.request.use(
             function (config) {
@@ -25,8 +24,18 @@ export default class Api {
             }
         );
     };
+    static setUserToken = ({ token }) => {
+        this._api.interceptors.request.use(
+            function (config) {
+                config.headers.Authorization = `Bearer ${token}`;
+                return config;
+            },
+            function (error) {
+                return Promise.reject(error);
+            }
+        );
+    };
 
-    // resturants apis
     static resturantRegister = async (data) => {
         try {
             const response = await this._api.post("/api/rest-register", data);
@@ -59,16 +68,15 @@ export default class Api {
             return error.response;
         }
     };
-    static resturantEdit = async (data,id) => {
+    static resturantEdit = async (data, id) => {
         try {
-            const response = await this._api.post(`/api/rest-edit/${id}`,data);
+            const response = await this._api.post(`/api/rest-edit/${id}`, data);
             return response;
         } catch (error) {
             return error.response;
         }
     }
 
-    // products apis
     static addProduct = async (data) => {
         try {
             const response = await this._api.post("/api/add-product", data);
@@ -117,6 +125,33 @@ export default class Api {
     static deleteProduct = async (id) => {
         try {
             const response = await this._api.delete(`/api/delete-product/${id}`);
+            return response;
+        } catch (error) {
+            return error.response;
+        }
+    };
+
+    static userRegister = async (data) => {
+        try {
+            const response = await this._api.post("/api/user-register", data);
+            return response;
+        } catch (error) {
+            return error.response;
+        }
+    }
+
+    static emailVerificationUser = async (token) => {
+        try {
+            const response = await this._api.get(`/api/verify-user?token=${token}`);
+            return response;
+        } catch (error) {
+            return error.response;
+        }
+    };
+
+    static userLogin = async (data) => {
+        try {
+            const response = await this._api.post("/api/user-login", data);
             return response;
         } catch (error) {
             return error.response;

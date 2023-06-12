@@ -1,8 +1,12 @@
-import { React, useState } from "react";
-import { ToastContainer } from "react-toastify";
-import { BsEye, BsEyeSlash } from "react-icons/bs";
-import { Link, useNavigate } from "react-router-dom";
-import { notify } from "../../../helper";
+import {React, useState} from "react";
+import {ToastContainer} from "react-toastify";
+import {BsEye, BsEyeSlash} from "react-icons/bs";
+import {Link, useNavigate} from "react-router-dom";
+import {notify} from "../../../helper";
+import Api from "../../../services/api";
+import Loader from "../../../components/loader/Loader";
+import {useDispatch} from "react-redux";
+import {handleUserAuth} from "../../../redux/AuthSlice";
 
 const Login = () => {
     const [info, setinfo] = useState({
@@ -10,7 +14,10 @@ const Login = () => {
         password: "",
     });
     const [pswdType, setPswdType] = useState(true);
+    const dispatch = useDispatch();
     const navigate = useNavigate();
+    const [isLoading, setIsLoading] = useState(false);
+
     const showEyePswd = () => {
         setPswdType(!pswdType);
     };
@@ -36,7 +43,36 @@ const Login = () => {
                 return;
             }
         }
-        navigate('/user-register')
+        const data = {
+            email: info.email,
+            password: info.password,
+        };
+
+        setIsLoading(true);
+
+        const response = await Api.userLogin(data);
+
+        if (response?.status === 200) {
+            if (response?.data?.isVerified === false) {
+                setIsLoading(false);
+                notify(
+                    "error",
+                    "User already registered with this email but not verify, Verify email please"
+                );
+                return;
+            }
+            setIsLoading(false);
+            navigate("/");
+            dispatch(
+                handleUserAuth({
+                    user: response?.data,
+                    isUser: response?.data?.isUser,
+                })
+            );
+        } else {
+            setIsLoading(false);
+            notify("error", response?.data?.error);
+        }
     };
     return (
         <>
@@ -107,17 +143,27 @@ const Login = () => {
                                     </div>
                                 </div>
                                 <div className="intro-x">
-                                    <span
-                                        className="leading-7 text-[15px] font-semibold text-[#212245]"
-                                    >
-                                        Don't have an account <Link to={'/auth-register'} state={{tab:0}} className="text-blue-500 hover:underline"> Register here</Link>
+                                    <span className="leading-7 text-[15px] font-semibold text-[#212245]">
+                                        Don't have an account{" "}
+                                        <Link
+                                            to={"/auth-register"}
+                                            state={{tab: 0}}
+                                            className="text-blue-500 hover:underline"
+                                        >
+                                            {" "}
+                                            Register here
+                                        </Link>
                                     </span>
                                 </div>
                                 <button
                                     onClick={handleLogin}
                                     className="relative intro-x w-full bg-red-500 hover:bg-[#212245] text-white font-medium tracking-widest flex justify-center py-2.5 px-4 border border-transparent rounded-lg focus:outline-none "
                                 >
-                                    Login
+                                    {isLoading ? (
+                                        <Loader width="w-8" height="h-8" />
+                                    ) : (
+                                        "Login"
+                                    )}
                                 </button>
                             </div>
                         </div>

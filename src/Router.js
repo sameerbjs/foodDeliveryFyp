@@ -1,4 +1,5 @@
 import EmailVerification from "./components/Email/EmailVerify";
+import UserEmailVerification from "./components/Email/UserEmailVerify";
 import {
     Profile,
     Aboutus,
@@ -43,7 +44,8 @@ export const UserRoutes = [
     { path: "/user-register", component: <Register /> },
     { path: "/auth-login", component: <AuthLoginProcess /> },
     { path: "/auth-register", component: <AuthRegisterProcess /> },
-    { path: "/verify", component: <EmailVerification /> },
+    { path: "/verify-rest", component: <EmailVerification /> },
+    { path: "/verify-user", component: <UserEmailVerification /> },
 ];
 
 export const ResturantsRoutes = [

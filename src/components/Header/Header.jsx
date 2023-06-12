@@ -1,11 +1,14 @@
 import React, {Fragment, useState} from "react";
 import {Dialog, Popover, Transition} from "@headlessui/react";
-import {Link, NavLink} from "react-router-dom";
+import {Link, NavLink, useNavigate} from "react-router-dom";
 import logo from "../../assets/images/res-logo.png";
-import {useSelector} from "react-redux";
+import {useSelector, useDispatch} from "react-redux";
+import {handleUserLogout} from "../../redux/AuthSlice";
 
 function Header() {
     const [isOpen, setIsOpen] = useState(false);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
     const totalCartProducts = useSelector(
         (store) => store.cart.totalCartProducts
     );
@@ -61,7 +64,7 @@ function Header() {
                                 </div>
                             </div>
                             <div className="flex items-center gap-3 lg:mr-0 mr-7 flex-row-reverse">
-                                {isUserLogin && isUserLogin.length !== 0 && (
+                                {isUserLogin && isUserLogin?.isVerified && (
                                     <Link to={"/cart"} className="relative">
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"
@@ -87,11 +90,26 @@ function Header() {
                                 <Popover className="relative mt-2" as="div">
                                     <Popover.Button>
                                         <div className="w-8 h-8">
-                                            <img
-                                                src="https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg"
-                                                alt="avatar"
-                                                className="w-full rounded-3xl object-cover object-center h-full"
-                                            />
+                                            {isUserLogin &&
+                                            isUserLogin?.isVerified ? (
+                                                <img
+                                                    src={`${
+                                                        process.env
+                                                            .REACT_APP_SERVER_URL
+                                                    }/${isUserLogin.profilePath.replace(
+                                                        /\\/g,
+                                                        "/"
+                                                    )}`}
+                                                    alt="avatar"
+                                                    className="w-full rounded-3xl object-cover object-center h-full"
+                                                />
+                                            ) : (
+                                                <img
+                                                    src="https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg"
+                                                    alt="avatar"
+                                                    className="w-full rounded-3xl object-cover object-center h-full"
+                                                />
+                                            )}
                                         </div>
                                     </Popover.Button>
                                     <Transition
@@ -105,7 +123,7 @@ function Header() {
                                     >
                                         <Popover.Panel className="absolute z-10 bg-white px-2 min-w-[150px] py-3 shadow-md right-0 border rounded-md">
                                             {isUserLogin &&
-                                            isUserLogin.length !== 0 ? (
+                                            isUserLogin?.isVerified ? (
                                                 <div className="w-full">
                                                     <Link
                                                         to={"/profile"}
@@ -116,7 +134,20 @@ function Header() {
                                                         </button>
                                                     </Link>
                                                     <div className="w-full mt-3">
-                                                        <button className="text-white bg-red-500 hover:bg-[#212245] w-full px-4 py-2 rounded-lg">
+                                                        <button
+                                                            onClick={() => {
+                                                                dispatch(
+                                                                    handleUserLogout(
+                                                                        {
+                                                                            user: [],
+                                                                            isUser: true,
+                                                                        }
+                                                                    )
+                                                                );
+                                                                navigate("/");
+                                                            }}
+                                                            className="text-white bg-red-500 hover:bg-[#212245] w-full px-4 py-2 rounded-lg"
+                                                        >
                                                             Logout
                                                         </button>
                                                     </div>

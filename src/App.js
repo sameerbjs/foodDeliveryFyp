@@ -8,15 +8,21 @@ import Api from "./services/api";
 
 function App(props) {
     const isUser = useSelector((store) => store.authUser.isUser);
+    const { restToken, userToken } = props;
+
     useEffect(() => {
         window.history.scrollRestoration = "manual";
         window.scrollTo(0, 0);
     }, []);
 
-    const { token } = props;
-    if (token) {
-        Api.setResturantToken({ token });
-    }
+    useEffect(() => {
+        if (restToken) {
+            Api.setResturantToken({ restToken });
+        } else {
+            Api.setUserToken({ userToken });
+        }
+    }, [userToken, restToken]);
+
 
     return (
         <>
@@ -62,7 +68,8 @@ function App(props) {
 
 const mapStateToProps = (store) => {
     return {
-        token: store.authUser?.resturantAuth?.token,
+        restToken: store.authUser?.resturantAuth?.token,
+        userToken: store.authUser?.userAuth?.token,
     };
 };
 

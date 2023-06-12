@@ -1,18 +1,24 @@
-import { React, useState } from "react";
-import { ToastContainer } from "react-toastify";
-import { BsEye, BsEyeSlash } from "react-icons/bs";
-import { Link, useNavigate } from "react-router-dom";
-import { notify } from "../../../helper";
+import {React, useState} from "react";
+import {ToastContainer} from "react-toastify";
+import {BsEye, BsEyeSlash} from "react-icons/bs";
+import {Link} from "react-router-dom";
+import {notify} from "../../../helper";
+import Loader from "../../../components/loader/Loader";
+import Api from "../../../services/api";
 
 const Register = () => {
     const [info, setinfo] = useState({
         username: "",
         email: "",
+        address: "",
+        dateOfBirth: "",
         password: "",
         c_password: "",
     });
     const [pswdType, setPswdType] = useState(true);
-    const navigate = useNavigate();
+    const [file, setFile] = useState(null);
+    const [imageUrl, setImageUrl] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
     const showEyePswd = () => {
         setPswdType(!pswdType);
     };
@@ -24,16 +30,36 @@ const Register = () => {
         });
     };
 
+    const onUploadImages = (event) => {
+        const fileType = event.target.files[0].type;
+        if (
+            fileType === "image/png" ||
+            fileType === "image/jpg" ||
+            fileType === "image/jpeg"
+        ) {
+            setFile(event.target.files[0]);
+            setImageUrl(URL.createObjectURL(event.target.files[0]));
+        } else {
+            setFile(null);
+            setImageUrl(null);
+            event.target.files = null;
+            notify("error", "File Format is not valid");
+        }
+    };
+
     const handleRegister = async () => {
-        if (!info.username || !info.email || !info.password) {
+        if (
+            !info.username ||
+            !info.email ||
+            !info.password ||
+            !info.address ||
+            !info.dateOfBirth
+        ) {
             notify("error", "Please fill all the fields");
             return;
         }
         if (info.password !== info.c_password) {
-            notify(
-                "error",
-                "Password dose not match with current password"
-            );
+            notify("error", "Password dose not match with current password");
             return;
         }
         if (info.email) {
@@ -45,7 +71,35 @@ const Register = () => {
                 return;
             }
         }
-        navigate('/user-login')
+
+        setIsLoading(true);
+        const formData = new FormData();
+        formData.append("name", info.username);
+        formData.append("email", info.email);
+        formData.append("password", info.password);
+        formData.append("dob", info.dateOfBirth);
+        formData.append("address", info.address);
+        formData.append("profilePic", file);
+        formData.append("isUser", true);
+
+        const response = await Api.userRegister(formData);
+        if (response?.data?.message) {
+            setIsLoading(false);
+            notify("success", `${response?.data?.message}`);
+            setinfo({
+                username: "",
+                email: "",
+                address: "",
+                dateOfBirth: "",
+                password: "",
+                c_password: "",
+            });
+            setImageUrl(null);
+            setFile(null);
+        } else {
+            setIsLoading(false);
+            notify("error", response?.data?.error);
+        }
     };
     return (
         <>
@@ -97,6 +151,41 @@ const Register = () => {
                                         autoComplete="email"
                                         required
                                         value={info.email}
+                                        onChange={handleChangeText}
+                                        className="w-full bg-white rounded border border-gray-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                                    />
+                                </div>
+                                <div className="intro-x">
+                                    <label
+                                        htmlFor="address"
+                                        className="leading-7 text-[15px] font-semibold text-[#212245]"
+                                    >
+                                        Address
+                                    </label>
+                                    <input
+                                        id="address"
+                                        name="address"
+                                        type="text"
+                                        autoComplete="address"
+                                        required
+                                        value={info.address}
+                                        onChange={handleChangeText}
+                                        className="w-full bg-white rounded border border-gray-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                                    />
+                                </div>
+                                <div className="intro-x">
+                                    <label
+                                        htmlFor="dob"
+                                        className="leading-7 text-[15px] font-semibold text-[#212245]"
+                                    >
+                                        Date of birth
+                                    </label>
+                                    <input
+                                        id="dob"
+                                        name="dateOfBirth"
+                                        type="date"
+                                        required
+                                        value={info.dateOfBirth}
                                         onChange={handleChangeText}
                                         className="w-full bg-white rounded border border-gray-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                                     />
@@ -167,18 +256,130 @@ const Register = () => {
                                         </div>
                                     </div>
                                 </div>
+                                <div className="rounded-lg intro-x">
+                                    <div className="flex items-center">
+                                        <h2 className="leading-7 text-[15px] font-semibold text-[#212245]">
+                                            Profile Photo
+                                        </h2>
+                                    </div>
+                                    <div className="pb-5 pt-2">
+                                        <div className="border-2 border-dashed rounded-md pt-4 bg-white">
+                                            <div className="flex flex-wrap px-4">
+                                                <div className="flex items-center">
+                                                    {file && imageUrl && (
+                                                        <div className="relative w-24 h-24 rounded-lg shadow-xl mb-5 mr-5">
+                                                            <img
+                                                                src={imageUrl}
+                                                                alt="no Data"
+                                                                className="rounded-md object-cover max-w-sm max-h-sm h-full w-full"
+                                                            />
+                                                            <div
+                                                                onClick={() => {
+                                                                    setFile(
+                                                                        null
+                                                                    );
+                                                                    setImageUrl(
+                                                                        null
+                                                                    );
+                                                                }}
+                                                                className="w-5 h-5 flex items-center justify-center absolute rounded-full text-white bg-red-700 right-0 top-0 -mr-2 -mt-2 cursor-pointer"
+                                                            >
+                                                                <svg
+                                                                    width="24"
+                                                                    height="24"
+                                                                    viewBox="0 0 24 24"
+                                                                    fill="none"
+                                                                    stroke="currentColor"
+                                                                    strokeWidth="1.5"
+                                                                    strokeLinecap="round"
+                                                                    strokeLinejoin="round"
+                                                                    className="feather feather-x w-4 h-4"
+                                                                >
+                                                                    <line
+                                                                        x1="18"
+                                                                        y1="6"
+                                                                        x2="6"
+                                                                        y2="18"
+                                                                    ></line>
+                                                                    <line
+                                                                        x1="6"
+                                                                        y1="6"
+                                                                        x2="18"
+                                                                        y2="18"
+                                                                    ></line>
+                                                                </svg>
+                                                            </div>
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            </div>
+                                            <div className="px-4 pb-4 flex flex-wrap items-center relative text-zinc-500">
+                                                <svg
+                                                    width="24"
+                                                    height="24"
+                                                    viewBox="0 0 24 24"
+                                                    fill="none"
+                                                    stroke="currentColor"
+                                                    strokeWidth="1.5"
+                                                    strokeLinecap="round"
+                                                    strokeLinejoin="round"
+                                                    className="w-4 h-4 mr-2"
+                                                >
+                                                    <rect
+                                                        x="3"
+                                                        y="3"
+                                                        width="18"
+                                                        height="18"
+                                                        rx="2"
+                                                        ry="2"
+                                                    ></rect>
+                                                    <circle
+                                                        cx="8.5"
+                                                        cy="8.5"
+                                                        r="1.5"
+                                                    ></circle>
+                                                    <polyline points="21 15 16 10 5 21"></polyline>
+                                                </svg>
+                                                <span className="fs-14 text-cyan-600 mr-1">
+                                                    Upload a Photo
+                                                </span>
+                                                <span className="fs-14">
+                                                    or drag and drop
+                                                </span>
+                                                <input
+                                                    type="file"
+                                                    name="photo"
+                                                    onChange={onUploadImages}
+                                                    className="w-full h-full top-0 left-0 absolute opacity-0"
+                                                    accept="image/jpeg,image/jpg,image/png,image/gif"
+                                                    multiple={false}
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div className="intro-x">
-                                    <span
-                                        className="leading-7 text-[15px] font-semibold text-[#212245]"
-                                    >
-                                        Have a account <Link to={'/auth-login'} state={{ tab: 0 }} className="text-blue-500 hover:underline">Login here</Link>
+                                    <span className="leading-7 text-[15px] font-semibold text-[#212245]">
+                                        Have a account{" "}
+                                        <Link
+                                            to={"/auth-login"}
+                                            state={{tab: 0}}
+                                            className="text-blue-500 hover:underline"
+                                        >
+                                            Login here
+                                        </Link>
                                     </span>
                                 </div>
+
                                 <button
                                     onClick={handleRegister}
                                     className="relative intro-x w-full bg-red-500 hover:bg-[#212245] text-white font-medium tracking-widest flex justify-center py-2.5 px-4 border border-transparent rounded-lg focus:outline-none "
                                 >
-                                    Register
+                                    {isLoading ? (
+                                        <Loader width="w-8" height="h-8" />
+                                    ) : (
+                                        "Register"
+                                    )}
                                 </button>
                             </div>
                         </div>

@@ -98,10 +98,15 @@ const EditResturant = () => {
         formData.append("profilePic", file);
 
         const response = await Api.resturantEdit(formData, id);
-        if (response?.data?.message) {
+        if (response?.data) {
             setIsLoading(false);
-            notify("success", `${response?.data?.message}`);
-            dispatch(handleRestAuth({resturant: response?.data?.data}));
+            notify("success", "Resturant update successfully");
+            dispatch(
+                handleRestAuth({
+                    resturant: response?.data,
+                    isUser: response?.data?.isUser,
+                })
+            );
         } else {
             setIsLoading(false);
             notify("error", response?.data?.error);
