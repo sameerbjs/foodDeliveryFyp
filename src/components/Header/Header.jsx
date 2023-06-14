@@ -13,6 +13,7 @@ function Header() {
         (store) => store.cart.totalCartProducts
     );
     const isUserLogin = useSelector((store) => store.authUser.userAuth);
+    const user_id = useSelector((store) => store.authUser?.userAuth?._id);
     return (
         <div className="pb-[65px]">
             <nav className="bg-white shadow-md fixed w-full z-50">
@@ -126,7 +127,7 @@ function Header() {
                                             isUserLogin?.isVerified ? (
                                                 <div className="w-full">
                                                     <Link
-                                                        to={"/profile"}
+                                                        to={`/profile/${user_id}`}
                                                         className="w-full"
                                                     >
                                                         <button className="text-white bg-red-500 hover:bg-[#212245] w-full px-4 py-2 rounded-lg">
@@ -141,6 +142,7 @@ function Header() {
                                                                         {
                                                                             user: [],
                                                                             isUser: true,
+                                                                            token: null,
                                                                         }
                                                                     )
                                                                 );

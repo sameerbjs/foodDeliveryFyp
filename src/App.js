@@ -1,15 +1,17 @@
 import React, { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import { PageNotFound, Footer, Header } from "./pages";
-import { connect, useSelector } from "react-redux";
 import { HeaderRest } from "./resturantPages";
 import { ResturantsRoutes, UserRoutes } from "./Router";
 import Api from "./services/api";
+import { useSelector } from "react-redux";
 
-function App(props) {
+function App() {
     const isUser = useSelector((store) => store.authUser.isUser);
-    const { restToken, userToken } = props;
 
+    const restToken = useSelector((store) => store.authUser.restToken);
+    const userToken = useSelector((store) => store.authUser.userToken);
+    
     useEffect(() => {
         window.history.scrollRestoration = "manual";
         window.scrollTo(0, 0);
@@ -21,7 +23,6 @@ function App(props) {
     if (userToken) {
         Api.setUserToken(userToken);
     }
-
 
     return (
         <>
@@ -65,11 +66,4 @@ function App(props) {
     );
 }
 
-const mapStateToProps = (store) => {
-    return {
-        restToken: store.authUser?.restToken,
-        userToken: store.authUser?.userToken,
-    };
-};
-
-export default connect(mapStateToProps, null)(App);
+export default App;

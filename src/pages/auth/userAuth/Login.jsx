@@ -6,7 +6,7 @@ import {notify} from "../../../helper";
 import Api from "../../../services/api";
 import Loader from "../../../components/loader/Loader";
 import {useDispatch} from "react-redux";
-import {handleUserAuth} from "../../../redux/AuthSlice";
+import {handleUserAuth, handleUserToken} from "../../../redux/AuthSlice";
 
 const Login = () => {
     const [info, setinfo] = useState({
@@ -69,6 +69,7 @@ const Login = () => {
                     isUser: response?.data?.isUser,
                 })
             );
+            dispatch(handleUserToken({token: response?.data?.token}));
         } else {
             setIsLoading(false);
             notify("error", response?.data?.error);

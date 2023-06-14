@@ -139,7 +139,6 @@ export default class Api {
             return error.response;
         }
     }
-
     static emailVerificationUser = async (token) => {
         try {
             const response = await this._api.get(`/api/verify-user?token=${token}`);
@@ -148,7 +147,6 @@ export default class Api {
             return error.response;
         }
     };
-
     static userLogin = async (data) => {
         try {
             const response = await this._api.post("/api/user-login", data);
@@ -157,4 +155,20 @@ export default class Api {
             return error.response;
         }
     };
+    static userDetail = async (id) => {
+        try {
+            const response = await this._api.get(`/api/get-user/${id}`);
+            return response;
+        } catch (error) {
+            return error.response;
+        }
+    };
+    static userEdit = async (data, id) => {
+        try {
+            const response = await this._api.post(`/api/user-edit/${id}`, data);
+            return response;
+        } catch (error) {
+            return error.response;
+        }
+    }
 }

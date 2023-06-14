@@ -37,7 +37,7 @@ export const UserRoutes = [
     { path: "/products/:name", component: <ProductRest /> },
     { path: "/resturants/:city", component: <Resturants /> },
     { path: "/contact", component: <ContactUs /> },
-    { path: "/profile", component: <Profile /> },
+    { path: "/profile/:id", component: <Profile /> },
     { path: "/resturant-login", component: <ResturantLogin /> },
     { path: "/resturant-register", component: <ResturantRegister /> },
     { path: "/user-login", component: <Login /> },

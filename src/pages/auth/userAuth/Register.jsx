@@ -53,7 +53,7 @@ const Register = () => {
             !info.email ||
             !info.password ||
             !info.address ||
-            !info.dateOfBirth
+            !info.dateOfBirth || !file
         ) {
             notify("error", "Please fill all the fields");
             return;
