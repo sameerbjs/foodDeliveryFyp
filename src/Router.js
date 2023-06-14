@@ -34,7 +34,7 @@ export const UserRoutes = [
     { path: "/checkout", component: <CheckOut /> },
     { path: "/cart", component: <Cart /> },
     { path: "/product/:id", component: <ProductDetail /> },
-    { path: "/products/:name", component: <ProductRest /> },
+    { path: "/products/:name/:id", component: <ProductRest /> },
     { path: "/resturants/:city", component: <Resturants /> },
     { path: "/contact", component: <ContactUs /> },
     { path: "/profile/:id", component: <Profile /> },

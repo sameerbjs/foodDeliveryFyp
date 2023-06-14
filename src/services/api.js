@@ -76,6 +76,14 @@ export default class Api {
             return error.response;
         }
     }
+    static getResturantsByCity = async (city) => {
+        try {
+            const response = await this._api.get(`/api/get-rest-city/${city}`);
+            return response
+        } catch (error) {
+            return error.response
+        }
+    }
 
     static addProduct = async (data) => {
         try {
@@ -85,10 +93,10 @@ export default class Api {
             return error.response;
         }
     };
-    static getAllProducts = async (page, limit, id) => {
+    static getAllProducts = async (page, limit, id,category) => {
         try {
             const response = await this._api.get(`/api/get-all/${id}`, {
-                params: { page, limit },
+                params: { page, limit,category },
             });
             return response;
         } catch (error) {

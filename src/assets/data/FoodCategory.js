@@ -5,7 +5,7 @@ const FoodCategory = [
     },
     {
         "id" : "2",
-        "name": "Baked",
+        "name": "Sweets",
     },
     {
         "id" : "3",
@@ -30,6 +30,10 @@ const FoodCategory = [
     {
         "id" : "8",
         "name": "Desi",
+    },
+    {
+        "id" : "9",
+        "name": "Fried",
     },
 ]
 
