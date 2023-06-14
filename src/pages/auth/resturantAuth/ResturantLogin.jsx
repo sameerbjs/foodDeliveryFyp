@@ -1,11 +1,11 @@
-import { React, useState } from "react";
-import { ToastContainer } from "react-toastify";
-import { BsEye, BsEyeSlash } from "react-icons/bs";
-import { Link, useNavigate } from "react-router-dom";
-import { notify } from "../../../helper";
+import {React, useState} from "react";
+import {ToastContainer} from "react-toastify";
+import {BsEye, BsEyeSlash} from "react-icons/bs";
+import {Link, useNavigate} from "react-router-dom";
+import {notify} from "../../../helper";
 import Api from "../../../services/api";
-import { handleRestAuth } from "../../../redux/AuthSlice";
-import { useDispatch } from "react-redux";
+import {handleRestAuth, handleRestToken} from "../../../redux/AuthSlice";
+import {useDispatch} from "react-redux";
 import Loader from "../../../components/loader/Loader";
 
 const ResturantLogin = () => {
@@ -46,20 +46,34 @@ const ResturantLogin = () => {
 
         const data = {
             email: info.email,
-            password: info.password
-        }
+            password: info.password,
+        };
 
-        setIsLoading(true)
+        setIsLoading(true);
 
         const response = await Api.resturantLogin(data);
 
         if (response?.status === 200) {
-            setIsLoading(false)
-            navigate('/')
-            dispatch(handleRestAuth({ resturant: response?.data, isUser: response?.data?.isUser }));
+            if (response?.data?.isVerified === false) {
+                setIsLoading(false);
+                notify(
+                    "error",
+                    "Resturant already registered with this email but not verify, Verify email please"
+                );
+                return;
+            }
+            setIsLoading(false);
+            navigate("/");
+            dispatch(
+                handleRestAuth({
+                    resturant: response?.data,
+                    isUser: response?.data?.isUser,
+                })
+            );
+            dispatch(handleRestToken({token: response?.data?.token}));
         } else {
-            setIsLoading(false)
-            notify('error', response?.data?.error)
+            setIsLoading(false);
+            notify("error", response?.data?.error);
         }
     };
     return (
@@ -131,19 +145,27 @@ const ResturantLogin = () => {
                                     </div>
                                 </div>
                                 <div className="intro-x">
-                                    <span
-                                        className="leading-7 text-[15px] font-semibold text-[#212245]"
-                                    >
-                                        Don't have an account <Link to={'/auth-register'} state={{ tab: 1 }} className="text-blue-500 hover:underline"> Register here</Link>
+                                    <span className="leading-7 text-[15px] font-semibold text-[#212245]">
+                                        Don't have an account{" "}
+                                        <Link
+                                            to={"/auth-register"}
+                                            state={{tab: 1}}
+                                            className="text-blue-500 hover:underline"
+                                        >
+                                            {" "}
+                                            Register here
+                                        </Link>
                                     </span>
                                 </div>
                                 <button
                                     onClick={handleLogin}
                                     className="relative intro-x w-full bg-red-500 hover:bg-[#212245] text-white font-medium tracking-widest flex justify-center py-2.5 px-4 border border-transparent rounded-lg focus:outline-none "
                                 >
-                                    {
-                                        isLoading ? <Loader width="w-8" height="h-8" /> : 'Login'
-                                    }
+                                    {isLoading ? (
+                                        <Loader width="w-8" height="h-8" />
+                                    ) : (
+                                        "Login"
+                                    )}
                                 </button>
                             </div>
                         </div>

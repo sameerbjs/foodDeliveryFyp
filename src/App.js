@@ -15,13 +15,12 @@ function App(props) {
         window.scrollTo(0, 0);
     }, []);
 
-    useEffect(() => {
-        if (restToken) {
-            Api.setResturantToken({ restToken });
-        } else {
-            Api.setUserToken({ userToken });
-        }
-    }, [userToken, restToken]);
+    if (restToken) {
+        Api.setResturantToken(restToken);
+    }
+    if (userToken) {
+        Api.setUserToken(userToken);
+    }
 
 
     return (
@@ -68,8 +67,8 @@ function App(props) {
 
 const mapStateToProps = (store) => {
     return {
-        restToken: store.authUser?.resturantAuth?.token,
-        userToken: store.authUser?.userAuth?.token,
+        restToken: store.authUser?.restToken,
+        userToken: store.authUser?.userToken,
     };
 };
 

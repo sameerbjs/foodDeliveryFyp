@@ -13,7 +13,7 @@ export default class Api {
             return error;
         }
     };
-    static setResturantToken = ({ token }) => {
+    static setResturantToken = (token) => {
         this._api.interceptors.request.use(
             function (config) {
                 config.headers.Authorization = `Bearer ${token}`;
@@ -24,7 +24,7 @@ export default class Api {
             }
         );
     };
-    static setUserToken = ({ token }) => {
+    static setUserToken = (token) => {
         this._api.interceptors.request.use(
             function (config) {
                 config.headers.Authorization = `Bearer ${token}`;

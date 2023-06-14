@@ -1,4 +1,4 @@
-import {React, useEffect, useState} from "react";
+import {Fragment, React, useEffect, useState} from "react";
 import {notify} from "../../helper";
 import Api from "../../services/api";
 import Loader from "../../components/loader/Loader";
@@ -7,6 +7,9 @@ import {BsEye, BsEyeSlash} from "react-icons/bs";
 import {useParams} from "react-router-dom";
 import {handleRestAuth} from "../../redux/AuthSlice";
 import {useDispatch} from "react-redux";
+import {CheckIcon, ChevronUpDownIcon} from "@heroicons/react/20/solid";
+import cities from "../../assets/data/Cities";
+import {Listbox, Transition} from "@headlessui/react";
 
 const EditResturant = () => {
     const [info, setinfo] = useState({
@@ -21,6 +24,7 @@ const EditResturant = () => {
     const [pswdType, setPswdType] = useState(true);
     const [file, setFile] = useState(null);
     const [imageUrl, setImageUrl] = useState(null);
+    const [city, setCity] = useState(cities[0]);
     const [isLoading, setIsLoading] = useState(false);
     const {id} = useParams();
     const dispatch = useDispatch();
@@ -34,10 +38,17 @@ const EditResturant = () => {
                     username: response?.data?.name,
                     email: response?.data?.email,
                     address: response?.data?.address,
-                    city: response?.data?.city,
                     phone: response?.data?.phone,
                 });
 
+                const selectedCityName = response?.data?.city;
+                const matchingCity = cities.find(
+                    (city) => city.name === selectedCityName
+                );
+
+                if (matchingCity) {
+                    setCity(matchingCity);
+                }
                 setImageUrl(
                     `${process.env.REACT_APP_SERVER_URL}/${response?.data?.profilePath}`
                 );
@@ -64,13 +75,7 @@ const EditResturant = () => {
     };
 
     const handleEditRest = async () => {
-        if (
-            !info.username ||
-            !info.email ||
-            !info.address ||
-            !info.city ||
-            !info.phone
-        ) {
+        if (!info.username || !info.email || !info.address || !info.phone || !file) {
             notify("error", "Please fill all the fields");
             return;
         }
@@ -92,19 +97,19 @@ const EditResturant = () => {
             formData.append("password", info.password);
             formData.append("current_password", info.current_password);
         }
-        formData.append("city", info.city);
+        formData.append("city", city.name);
         formData.append("address", info.address);
         formData.append("phone", info.phone);
         formData.append("profilePic", file);
 
         const response = await Api.resturantEdit(formData, id);
-        if (response?.data) {
+        if (response?.data?.finalData) {
             setIsLoading(false);
             notify("success", "Resturant update successfully");
             dispatch(
                 handleRestAuth({
-                    resturant: response?.data,
-                    isUser: response?.data?.isUser,
+                    resturant: response?.data?.finalData,
+                    isUser: response?.data?.finalData?.isUser,
                 })
             );
         } else {
@@ -193,22 +198,76 @@ const EditResturant = () => {
                                     />
                                 </div>
                                 <div className="intro-x">
-                                    <label
-                                        htmlFor="city"
-                                        className="leading-7 text-[15px] font-semibold text-[#212245]"
-                                    >
+                                    <p className="leading-7 text-[15px] font-semibold text-[#212245]">
                                         City
-                                    </label>
-                                    <input
-                                        id="city"
-                                        name="city"
-                                        type="text"
-                                        autoComplete="city"
-                                        required
-                                        value={info.city}
-                                        onChange={handleChangeText}
-                                        className="w-full bg-white rounded border border-gray-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-                                    />
+                                    </p>
+                                    <Listbox value={city} onChange={setCity}>
+                                        <div className="relative mt-1">
+                                            <Listbox.Button className="relative w-full cursor-default bg-white rounded-lg border py-2 pl-3 pr-10 text-left focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-400">
+                                                <span className="block truncate">
+                                                    {city.name}
+                                                </span>
+                                                <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+                                                    <ChevronUpDownIcon
+                                                        className="h-5 w-5 text-gray-400"
+                                                        aria-hidden="true"
+                                                    />
+                                                </span>
+                                            </Listbox.Button>
+                                            <Transition
+                                                as={Fragment}
+                                                leave="transition ease-in duration-100"
+                                                leaveFrom="opacity-100"
+                                                leaveTo="opacity-0"
+                                            >
+                                                <Listbox.Options className="absolute z-50 mt-1 max-h-60 w-full overflow-auto scrollbar-hide rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                                                    {cities.map(
+                                                        (city, index) => (
+                                                            <Listbox.Option
+                                                                key={index}
+                                                                className={({
+                                                                    active,
+                                                                }) =>
+                                                                    `relative cursor-default select-none py-2 pl-10 pr-4 ${
+                                                                        active
+                                                                            ? "bg-[#fde4e4] text-red-500"
+                                                                            : "text-gray-900"
+                                                                    }`
+                                                                }
+                                                                value={city}
+                                                            >
+                                                                {({
+                                                                    selected,
+                                                                }) => (
+                                                                    <>
+                                                                        <span
+                                                                            className={`block truncate ${
+                                                                                selected
+                                                                                    ? "font-medium"
+                                                                                    : "font-normal"
+                                                                            }`}
+                                                                        >
+                                                                            {
+                                                                                city.name
+                                                                            }
+                                                                        </span>
+                                                                        {selected ? (
+                                                                            <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-red-500">
+                                                                                <CheckIcon
+                                                                                    className="h-5 w-5"
+                                                                                    aria-hidden="true"
+                                                                                />
+                                                                            </span>
+                                                                        ) : null}
+                                                                    </>
+                                                                )}
+                                                            </Listbox.Option>
+                                                        )
+                                                    )}
+                                                </Listbox.Options>
+                                            </Transition>
+                                        </div>
+                                    </Listbox>
                                 </div>
                                 <div className="intro-x">
                                     <label

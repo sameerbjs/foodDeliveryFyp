@@ -83,7 +83,7 @@ const HeaderRest = () => {
                                                     <button className="text-white bg-red-500 hover:bg-[#212245] w-full px-4 py-2 rounded-lg">Profile</button>
                                                 </Link>
                                                 <div className="w-full mt-3">
-                                                    <button onClick={() => { dispatch(handleRestLogout({ resturant: [], isUser: true })); navigate('/') }} className="text-white bg-red-500 hover:bg-[#212245] w-full px-4 py-2 rounded-lg">Logout</button>
+                                                    <button onClick={() => { dispatch(handleRestLogout({ resturant: [], isUser: true, token : null })); navigate('/') }} className="text-white bg-red-500 hover:bg-[#212245] w-full px-4 py-2 rounded-lg">Logout</button>
                                                 </div>
                                             </div>
                                         </Popover.Panel>
