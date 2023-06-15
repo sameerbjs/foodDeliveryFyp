@@ -68,6 +68,7 @@ const ResturantLogin = () => {
                 handleRestAuth({
                     resturant: response?.data,
                     isUser: response?.data?.isUser,
+                    isLogin : true
                 })
             );
             dispatch(handleRestToken({token: response?.data?.token}));

@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {Link, useNavigate, useParams} from "react-router-dom";
 import {BsFillStarFill} from "react-icons/bs";
-import {convertToSlug, notify} from "../../helper";
+import {convertToSlug, getRatingAverage, notify} from "../../helper";
 import {Helmet} from "react-helmet";
 import Api from "../../services/api";
 import Loader from "../../components/loader/Loader";
@@ -96,53 +96,58 @@ const Resturants = () => {
                 </div>
                 <div className="mt-10">
                     <div className="grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-2 grid-cols-1 gap-5">
-                        {allResturants && allResturants.length !== 0
-                            ? allResturants.map((rest, index) => {
-                                  return (
-                                      <div
-                                          className="cursor-pointer overflow-hidden group"
-                                          key={index}
-                                      >
-                                          <Link
-                                              to={`/products/${convertToSlug(
-                                                  rest.name
-                                              )}/${rest._id}`}
-                                          >
-                                              <div className="w-full">
-                                                  <img
-                                                      src={`${
-                                                          process.env
-                                                              .REACT_APP_SERVER_URL
-                                                      }/${rest.profilePath.replace(
-                                                          /\\/g,
-                                                          "/"
-                                                      )}`}
-                                                      alt={rest.name}
-                                                      className="transition-transform duration-300 ease-linear object-contain object-center w-full h-full group-hover:scale-[1.04]"
-                                                  />
-                                              </div>
-                                          </Link>
-                                          <div className="mt-2 flex justify-between items-center">
-                                              <span className="text-[#212245] font-semibold text-lg">
-                                                  {rest.name}
-                                              </span>
-                                              <div className="flex items-center gap-2">
-                                                  <BsFillStarFill
-                                                      color="#ffb413"
-                                                      size={15}
-                                                  />{" "}
-                                                  2/5
-                                              </div>
-                                          </div>
-                                          <div>$$$ {rest.city}</div>
-                                      </div>
-                                  );
-                              })
-                            : (
-                                <div className="text-center col-span-4">
-                                    <h1 className="text-[#212245] font-semibold text-xl">No Resturant Found</h1>
-                                </div>
-                            )}
+                        {allResturants && allResturants.length !== 0 ? (
+                            allResturants.map((rest, index) => {
+                                return (
+                                    <div
+                                        className="cursor-pointer overflow-hidden group"
+                                        key={index}
+                                    >
+                                        <Link
+                                            to={`/products/${convertToSlug(
+                                                rest.name
+                                            )}/${rest._id}`}
+                                        >
+                                            <div className="w-full">
+                                                <img
+                                                    src={`${
+                                                        process.env
+                                                            .REACT_APP_SERVER_URL
+                                                    }/${rest.profilePath.replace(
+                                                        /\\/g,
+                                                        "/"
+                                                    )}`}
+                                                    alt={rest.name}
+                                                    className="transition-transform duration-300 ease-linear object-contain object-center w-full h-full group-hover:scale-[1.04]"
+                                                />
+                                            </div>
+                                        </Link>
+                                        <div className="mt-2 flex justify-between items-center">
+                                            <span className="text-[#212245] font-semibold text-lg">
+                                                {rest.name}
+                                            </span>
+                                            <div className="flex items-center gap-2">
+                                                <BsFillStarFill
+                                                    color="#ffb413"
+                                                    size={15}
+                                                />{" "}
+                                                {getRatingAverage(
+                                                    allResturants
+                                                ) || 0}
+                                                /5
+                                            </div>
+                                        </div>
+                                        <div>$$$ {rest.city}</div>
+                                    </div>
+                                );
+                            })
+                        ) : (
+                            <div className="text-center col-span-4">
+                                <h1 className="text-[#212245] font-semibold text-xl">
+                                    No Resturant Found
+                                </h1>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>

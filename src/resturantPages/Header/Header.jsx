@@ -1,16 +1,16 @@
-import React, { Fragment, useState } from "react";
-import { Dialog, Popover, Transition } from "@headlessui/react";
-import { Link, NavLink, useNavigate } from "react-router-dom";
-import logo from '../../assets/images/res-logo.png'
-import { useDispatch, useSelector } from "react-redux";
-import { handleRestLogout } from "../../redux/AuthSlice";
+import React, {Fragment, useState} from "react";
+import {Dialog, Popover, Transition} from "@headlessui/react";
+import {Link, NavLink, useNavigate} from "react-router-dom";
+import logo from "../../assets/images/res-logo.png";
+import {useDispatch, useSelector} from "react-redux";
+import {handleRestLogout} from "../../redux/AuthSlice";
 
 const HeaderRest = () => {
     const [isOpen, setIsOpen] = useState(false);
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const restAuth = useSelector(store => store.authUser.resturantAuth);
-    const rest_id = useSelector(store => store.authUser?.resturantAuth?._id);
+    const restAuth = useSelector((store) => store.authUser.resturantAuth);
+    const rest_id = useSelector((store) => store.authUser?.resturantAuth?._id);
 
     return (
         <div className="pb-[65px]">
@@ -18,19 +18,21 @@ const HeaderRest = () => {
                 <div className="mx-auto px-4 sm:px-6 lg:px-10 w-full">
                     <div className="flex items-center justify-between h-16">
                         <div className="flex items-center justify-between w-full">
-                            <Link to={'/'} className="flex items-center gap-3">
+                            <Link to={"/"} className="flex items-center gap-3">
                                 <img
                                     className="h-10 w-10"
                                     src={logo}
                                     alt="Workflow"
                                 />
-                                <h5 className="text-[#212245] font-semibold text-[1rem]">Rapid Cravings</h5>
+                                <h5 className="text-[#212245] font-semibold text-[1rem]">
+                                    Rapid Cravings
+                                </h5>
                             </Link>
                             <div className="hidden md:block">
                                 <div className="ml-10 flex items-baseline space-x-4">
                                     <NavLink
                                         to={"/"}
-                                        className={({ isActive }) =>
+                                        className={({isActive}) =>
                                             isActive
                                                 ? "text-red-500 px-3 py-2 font-semibold leading-5 bg-[#fde4e4] rounded-lg"
                                                 : "text-[#212245] hover:text-red-500 px-3 py-2 font-semibold leading-5 hover:bg-[#fde4e4] rounded-lg"
@@ -40,7 +42,7 @@ const HeaderRest = () => {
                                     </NavLink>
                                     <NavLink
                                         to={"/orders"}
-                                        className={({ isActive }) =>
+                                        className={({isActive}) =>
                                             isActive
                                                 ? "text-red-500 px-3 py-2 font-semibold leading-5 bg-[#fde4e4] rounded-lg"
                                                 : "text-[#212245] hover:text-red-500 px-3 py-2 font-semibold leading-5 hover:bg-[#fde4e4] rounded-lg"
@@ -50,7 +52,7 @@ const HeaderRest = () => {
                                     </NavLink>
                                     <NavLink
                                         to={"/products"}
-                                        className={({ isActive }) =>
+                                        className={({isActive}) =>
                                             isActive
                                                 ? "text-red-500 px-3 py-2 font-semibold leading-5 bg-[#fde4e4] rounded-lg"
                                                 : "text-[#212245] hover:text-red-500 px-3 py-2 font-semibold leading-5 hover:bg-[#fde4e4] rounded-lg"
@@ -62,9 +64,21 @@ const HeaderRest = () => {
                             </div>
                             <div className="flex items-center gap-3 lg:mr-0 mr-7 flex-row-reverse">
                                 <Popover className="relative mt-2" as="div">
-                                    <Popover.Button className={'flex items-center gap-3'}>
+                                    <Popover.Button
+                                        className={"flex items-center gap-3"}
+                                    >
                                         <div className="w-9 h-9">
-                                            <img src={`${process.env.REACT_APP_SERVER_URL}/${restAuth.profilePath.replace(/\\/g, '/')}`} alt="avatar" className="w-full rounded-3xl object-cover object-center h-full" />
+                                            <img
+                                                src={`${
+                                                    process.env
+                                                        .REACT_APP_SERVER_URL
+                                                }/${restAuth.profilePath.replace(
+                                                    /\\/g,
+                                                    "/"
+                                                )}`}
+                                                alt="avatar"
+                                                className="w-full rounded-3xl object-cover object-center h-full"
+                                            />
                                         </div>
                                         <span>{restAuth?.name}</span>
                                     </Popover.Button>
@@ -75,15 +89,38 @@ const HeaderRest = () => {
                                         leave="transition duration-75 ease-out"
                                         leaveFrom="transform scale-100 opacity-100"
                                         leaveTo="transform scale-95 opacity-0"
-                                        className={'relative z-50'}
+                                        className={"relative z-50"}
                                     >
                                         <Popover.Panel className="absolute top-3 bg-white px-2 min-w-[150px] py-3 shadow-md right-0 border rounded-md">
                                             <div className="w-full">
-                                                <Link to={`/edit-resturant/${rest_id}`} className="w-full">
-                                                    <button className="text-white bg-red-500 hover:bg-[#212245] w-full px-4 py-2 rounded-lg">Profile</button>
+                                                <Link
+                                                    to={`/edit-resturant/${rest_id}`}
+                                                    className="w-full"
+                                                >
+                                                    <button className="text-white bg-red-500 hover:bg-[#212245] w-full px-4 py-2 rounded-lg">
+                                                        Profile
+                                                    </button>
                                                 </Link>
                                                 <div className="w-full mt-3">
-                                                    <button onClick={() => { dispatch(handleRestLogout({ resturant: [], isUser: true, token : null })); navigate('/') }} className="text-white bg-red-500 hover:bg-[#212245] w-full px-4 py-2 rounded-lg">Logout</button>
+                                                    <button
+                                                        onClick={() => {
+                                                            dispatch(
+                                                                handleRestLogout(
+                                                                    {
+                                                                        resturant:
+                                                                            [],
+                                                                        isUser: true,
+                                                                        token: null,
+                                                                        isLogin: false,
+                                                                    }
+                                                                )
+                                                            );
+                                                            navigate("/");
+                                                        }}
+                                                        className="text-white bg-red-500 hover:bg-[#212245] w-full px-4 py-2 rounded-lg"
+                                                    >
+                                                        Logout
+                                                    </button>
                                                 </div>
                                             </div>
                                         </Popover.Panel>
@@ -139,7 +176,11 @@ const HeaderRest = () => {
                 </div>
 
                 <Transition.Root show={isOpen} as={Fragment}>
-                    <Dialog as="div" className="relative z-50" onClose={setIsOpen}>
+                    <Dialog
+                        as="div"
+                        className="relative z-50"
+                        onClose={setIsOpen}
+                    >
                         <Transition.Child
                             as={Fragment}
                             enter="ease-in-out duration-500"
@@ -166,11 +207,15 @@ const HeaderRest = () => {
                                     <Dialog.Panel className="relative w-screen h-screen overflow-hidden pointer-events-auto">
                                         <div className="bg-white shadow-lg py-3 h-full px-4 sm:px-6 divide-y-2 divide-dashed divi">
                                             <div className="flex justify-between items-center pb-4">
-                                                <p className="font-semibold text-lg pt-2">Rapid Cravings</p>
+                                                <p className="font-semibold text-lg pt-2">
+                                                    Rapid Cravings
+                                                </p>
                                                 <button
                                                     type="button"
                                                     className="inline-flex items-center justify-center p-1 rounded-3xl text-black"
-                                                    onClick={() => setIsOpen(false)}
+                                                    onClick={() =>
+                                                        setIsOpen(false)
+                                                    }
                                                 >
                                                     <svg
                                                         className="block h-6 w-6"
@@ -188,13 +233,15 @@ const HeaderRest = () => {
                                                         />
                                                     </svg>
 
-                                                    <span className="sr-only">Close panel</span>
+                                                    <span className="sr-only">
+                                                        Close panel
+                                                    </span>
                                                 </button>
                                             </div>
                                             <div className="pt-5 pb-3 space-y-1">
                                                 <NavLink
                                                     to={"/"}
-                                                    className={({ isActive }) =>
+                                                    className={({isActive}) =>
                                                         isActive
                                                             ? "text-red-500 px-3 py-2 font-semibold leading-5 bg-[#fde4e4] rounded-lg block"
                                                             : "text-[#212245] hover:text-red-500 px-3 py-2 font-semibold leading-5 block hover:bg-[#fde4e4] rounded-lg"
@@ -204,7 +251,7 @@ const HeaderRest = () => {
                                                 </NavLink>
                                                 <NavLink
                                                     to={"/orders"}
-                                                    className={({ isActive }) =>
+                                                    className={({isActive}) =>
                                                         isActive
                                                             ? "text-red-500 px-3 py-2 font-semibold leading-5 bg-[#fde4e4] rounded-lg block"
                                                             : "text-[#212245] hover:text-red-500 px-3 py-2 font-semibold leading-5 block hover:bg-[#fde4e4] rounded-lg"
@@ -214,7 +261,7 @@ const HeaderRest = () => {
                                                 </NavLink>
                                                 <NavLink
                                                     to={"/products"}
-                                                    className={({ isActive }) =>
+                                                    className={({isActive}) =>
                                                         isActive
                                                             ? "text-red-500 px-3 py-2 font-semibold leading-5 bg-[#fde4e4] rounded-lg block"
                                                             : "text-[#212245] hover:text-red-500 px-3 py-2 font-semibold leading-5 block hover:bg-[#fde4e4] rounded-lg"
@@ -233,6 +280,6 @@ const HeaderRest = () => {
             </nav>
         </div>
     );
-}
+};
 
 export default HeaderRest;

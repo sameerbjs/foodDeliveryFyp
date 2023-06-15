@@ -5,7 +5,8 @@ const initialState = {
     resturantAuth: [],
     userAuth: [],
     restToken: null,
-    userToken: null
+    userToken: null,
+    isLogin : false
 };
 
 const authUserSlice = createSlice({
@@ -15,6 +16,7 @@ const authUserSlice = createSlice({
         handleRestAuth: (state, action) => {
             state.isUser = action.payload.isUser;
             state.resturantAuth = action.payload.resturant;
+            state.isLogin = action.payload.isLogin
         },
 
         handleRestToken: (state, action) => {
@@ -25,11 +27,13 @@ const authUserSlice = createSlice({
             state.isUser = action.payload.isUser
             state.resturantAuth = action.payload.resturant;
             state.restToken = action.payload.token
+            state.isLogin = action.payload.isLogin
         },
 
         handleUserAuth: (state, action) => {
             state.isUser = action.payload.isUser;
             state.userAuth = action.payload.user;
+            state.isLogin = action.payload.isLogin
         },
 
         handleUserToken: (state, action) => {
@@ -40,6 +44,7 @@ const authUserSlice = createSlice({
             state.isUser = action.payload.isUser
             state.userAuth = action.payload.resturant;
             state.userToken = action.payload.token
+            state.isLogin = action.payload.isLogin
         },
     },
 });

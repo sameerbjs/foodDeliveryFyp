@@ -4,11 +4,11 @@ import {Link} from "react-router-dom";
 import TypingAnimation from "../../components/TypingEffect/TypingEffect";
 import "./Home.css";
 import {Helmet} from "react-helmet";
-// import {useSelector} from "react-redux";
+import {useSelector} from "react-redux";
 
 export const HomePage = () => {
     const words = ["Family", "Friends"];
-    // const isUserLogin = useSelector((store) => store.authUser.userAuth);
+    const isUserLogin = useSelector((store) => store.authUser.isLogin);
     return (
         <>
             <Helmet>
@@ -29,18 +29,20 @@ export const HomePage = () => {
                                 <h5 className="lg:text-3xl md:text-2xl text-base text-white font-semibold whitespace-nowrap">
                                     Easy order & Delicious food & Fast delivery
                                 </h5>
-                                <div className="lg:mt-10 md:mt-7 mt-5 group flex gap-3 justify-center flex-wrap">
-                                    <Link to={"/auth-register"}>
-                                        <button className="bg-red-500 flex items-center text-white px-5 lg:py-3 py-2 rounded-lg hover:bg-[#212245] tracking-widest">
-                                            Register
-                                        </button>
-                                    </Link>
-                                    <Link to={"/auth-login"}>
-                                        <button className="bg-red-500 flex items-center text-white px-5 lg:py-3 py-2 rounded-lg hover:bg-[#212245] tracking-widest">
-                                            Login
-                                        </button>
-                                    </Link>
-                                </div>
+                                {!isUserLogin && (
+                                    <div className="lg:mt-10 md:mt-7 mt-5 group flex gap-3 justify-center flex-wrap">
+                                        <Link to={"/auth-register"}>
+                                            <button className="bg-red-500 flex items-center text-white px-5 lg:py-3 py-2 rounded-lg hover:bg-[#212245] tracking-widest">
+                                                Register
+                                            </button>
+                                        </Link>
+                                        <Link to={"/auth-login"}>
+                                            <button className="bg-red-500 flex items-center text-white px-5 lg:py-3 py-2 rounded-lg hover:bg-[#212245] tracking-widest">
+                                                Login
+                                            </button>
+                                        </Link>
+                                    </div>
+                                )}
                             </div>
                         </div>
                     </div>

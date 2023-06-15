@@ -143,6 +143,7 @@ function Header() {
                                                                             user: [],
                                                                             isUser: true,
                                                                             token: null,
+                                                                            isLogin: false,
                                                                         }
                                                                     )
                                                                 );

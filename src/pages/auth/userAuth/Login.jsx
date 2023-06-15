@@ -67,6 +67,7 @@ const Login = () => {
                 handleUserAuth({
                     user: response?.data,
                     isUser: response?.data?.isUser,
+                    isLogin : true
                 })
             );
             dispatch(handleUserToken({token: response?.data?.token}));

@@ -179,4 +179,29 @@ export default class Api {
             return error.response;
         }
     }
+
+    static postRestUserFeedback = async (data) => {
+        try {
+            const response = await this._api.post("/api/post-rating", data);
+            return response;
+        } catch (error) {
+            return error.response
+        }
+    }
+    static getRestUserFeedback = async (id) => {
+        try {
+            const response = await this._api.get(`/api/get-rating/${id}`);
+            return response;
+        } catch (error) {
+            return error.response
+        }
+    }
+    static deleteRestUserFeedback = async (id) => {
+        try {
+            const response = await this._api.delete(`/api/delete-rating/${id}`);
+            return response;
+        } catch (error) {
+            return error.response
+        }
+    }
 }

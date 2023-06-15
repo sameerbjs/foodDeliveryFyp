@@ -2,18 +2,16 @@ import React, {useEffect} from "react";
 import {Link, useParams} from "react-router-dom";
 import {useNavigate} from "react-router-dom";
 import {Tab} from "@headlessui/react";
-import Comments from "./Comments";
-import ReactStars from "react-stars";
 import {useState} from "react";
 import {Helmet} from "react-helmet";
 import FoodCategory from "../../assets/data/FoodCategory";
 import Api from "../../services/api";
 import Loader from "../../components/loader/Loader";
+import PostComments from "./PostComments";
 
 export const ProductRest = () => {
     const navigate = useNavigate();
     const [allProducts, setAllProducts] = useState([]);
-    const [newRating, setNewRating] = useState(0);
     const [isLoading, setIsloading] = useState(false);
     const [selectedIndex, setSelectedIndex] = useState(0);
     const [page, setPage] = useState(1);
@@ -56,9 +54,7 @@ export const ProductRest = () => {
     const handleLoadMore = () => {
         setPage((prevPage) => prevPage + 1);
     };
-    const ratingChanged = (newRating) => {
-        setNewRating(newRating);
-    };
+
     const handleTabChange = async (index) => {
         setSelectedIndex(index);
         const {name} = FoodCategory.find(
@@ -239,35 +235,9 @@ export const ProductRest = () => {
                         </button>
                     </div>
                 )}
+
                 <div className="p-4">
-                    <div>
-                        <span className="text-lg">Rate our resturant</span>
-                        <div className="flex gap-2 items-center">
-                            <ReactStars
-                                count={5}
-                                onChange={ratingChanged}
-                                size={24}
-                                value={newRating}
-                                color2={"#ffd700"}
-                            />
-                            <span className="text-base">{newRating}</span>
-                        </div>
-                        <textarea
-                            name=""
-                            className="w-full bg-white rounded border border-gray-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-                            id=""
-                            rows="5"
-                        ></textarea>
-                        <div className="flex justify-end">
-                            <button className="flex items-center bg-red-500 hover:bg-[#212245] text-white fs-14 px-3 py-2 rounded-lg shadow-md">
-                                Send
-                            </button>
-                        </div>
-                    </div>
-                    <div className="my-5">
-                        <p className="text-[#212245] text-xl">User Feedback</p>
-                    </div>
-                    <Comments />
+                    <PostComments id={id} />
                 </div>
             </div>
         </React.Fragment>
