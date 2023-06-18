@@ -6,6 +6,7 @@ import {Helmet} from "react-helmet";
 import Api from "../../services/api";
 import Loader from "../../components/loader/Loader";
 import {ToastContainer} from "react-toastify";
+import moment from "moment/moment";
 
 const Resturants = () => {
     const [allResturants, setAllResturants] = useState([]);
@@ -36,20 +37,13 @@ const Resturants = () => {
                 setAllResturants(response.data?.resturants);
                 setIsLoading(false);
             } else {
-                notify("error", response.data?.error);
                 setIsLoading(false);
+                notify("error", response.data?.error);
             }
         };
         getResturant();
     }, [cityName]);
 
-    if (isLoading) {
-        return (
-            <div className="flex justify-center items-center h-[calc(100vh-100px)] overflow-hidden">
-                <Loader width="w-16" height="h-16" />
-            </div>
-        );
-    }
     return (
         <>
             <Helmet>
@@ -96,11 +90,16 @@ const Resturants = () => {
                 </div>
                 <div className="mt-10">
                     <div className="grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-2 grid-cols-1 gap-5">
-                        {allResturants && allResturants.length !== 0 ? (
+                        {isLoading ? (
+                            <div className="flex justify-center items-center col-span-4 overflow-hidden">
+                                <Loader width="w-16" height="h-16" />
+                            </div>
+                        ) : allResturants && allResturants.length !== 0 ? (
                             allResturants.map((rest, index) => {
                                 return (
+                                    <>
                                     <div
-                                        className="cursor-pointer overflow-hidden group"
+                                        className="cursor-pointer overflow-hidden group py-4"
                                         key={index}
                                     >
                                         <Link
@@ -108,7 +107,7 @@ const Resturants = () => {
                                                 rest.name
                                             )}/${rest._id}`}
                                         >
-                                            <div className="w-full">
+                                            <div className="relative w-full">
                                                 <img
                                                     src={`${
                                                         process.env
@@ -118,27 +117,46 @@ const Resturants = () => {
                                                         "/"
                                                     )}`}
                                                     alt={rest.name}
-                                                    className="transition-transform duration-300 ease-linear object-contain object-center w-full h-full group-hover:scale-[1.04]"
+                                                    className="transition-transform duration-300 w-full ease-linear object-contain group-hover:scale-[1.04]"
                                                 />
                                             </div>
                                         </Link>
-                                        <div className="mt-2 flex justify-between items-center">
-                                            <span className="text-[#212245] font-semibold text-lg">
-                                                {rest.name}
-                                            </span>
-                                            <div className="flex items-center gap-2">
-                                                <BsFillStarFill
-                                                    color="#ffb413"
-                                                    size={15}
-                                                />{" "}
-                                                {getRatingAverage(
-                                                    allResturants
-                                                ) || 0}
-                                                /5
+                                        <div className="relative px-4 -mt-16">
+                                            <div className="bg-white rounded-lg shadow-md p-6">
+                                                <div className="flex items-center justify-between">
+                                                    <span className="bg-teal-200 text-teal-800 text-xs px-2 inline-block rounded-full  uppercase font-semibold tracking-wide">
+                                                        {rest.city}
+                                                    </span>
+                                                    <span className="text-xs px-2 inline-flex rounded-full gap-2 uppercase font-semibold tracking-wide">
+                                                        <BsFillStarFill
+                                                            color="#ffb413"
+                                                            size={15}
+                                                        />{" "}
+                                                        {getRatingAverage(
+                                                            allResturants
+                                                        ) || 0}
+                                                        /5
+                                                    </span>
+                                                </div>
+                                                <h4 className="mt-1 text-lg font-semibold uppercase leading-tight truncate">
+                                                    {rest.name}
+                                                </h4>
+                                                <div className="mt-2">
+                                                    <span className="text-teal-600 text-md font-semibold">
+                                                        Created at{" "}
+                                                    </span>
+                                                    <span className="text-sm text-gray-600">
+                                                        {moment(
+                                                            rest.createdDate
+                                                        ).format(
+                                                            "Do MMMM YYYY"
+                                                        )}
+                                                    </span>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div>$$$ {rest.city}</div>
                                     </div>
+                                    </>
                                 );
                             })
                         ) : (

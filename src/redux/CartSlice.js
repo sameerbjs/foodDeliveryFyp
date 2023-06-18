@@ -13,7 +13,7 @@ const addToCartSlice = createSlice({
     reducers: {
         addToCartProduct: (state, action) => {
             const existingProduct = state.cartProducts.find(
-                (el) => el.id === action.payload.id
+                (el) => el._id === action.payload._id
             );
             if (existingProduct) {
                 toast.warn("Product already exsist");
@@ -25,7 +25,7 @@ const addToCartSlice = createSlice({
         },
         removeToCartProduct: (state, action) => {
             const filteredArray = state.cartProducts.filter(
-                (el) => el.id !== action.payload.id
+                (el) => el._id !== action.payload.id
             );
             state.cartProducts = filteredArray;
             state.totalCartProducts = state.cartProducts.length;
@@ -33,12 +33,12 @@ const addToCartSlice = createSlice({
         },
         increaseQuantity: (state, action) => {
             const {id} = action.payload;
-            const product = state.cartProducts.find((item) => item.id === id);
+            const product = state.cartProducts.find((item) => item._id === id);
             product.quantity += 1;
         },
         decreaseQuantity: (state, action) => {
             const {id} = action.payload;
-            const product = state.cartProducts.find((item) => item.id === id);
+            const product = state.cartProducts.find((item) => item._id === id);
             product.quantity -= 1;
         },
         handleTotalPrice: (state, action) => {

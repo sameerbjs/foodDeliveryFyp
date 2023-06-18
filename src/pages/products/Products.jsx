@@ -8,6 +8,8 @@ import FoodCategory from "../../assets/data/FoodCategory";
 import Api from "../../services/api";
 import Loader from "../../components/loader/Loader";
 import PostComments from "./PostComments";
+import {notify} from "../../helper";
+import {ToastContainer} from "react-toastify";
 
 export const ProductRest = () => {
     const navigate = useNavigate();
@@ -28,28 +30,24 @@ export const ProductRest = () => {
             const {name} = FoodCategory.find(
                 (category) => parseInt(category.id) === selectedIndex + 1
             );
-            try {
-                const response = await Api.getAllProducts(
-                    page,
-                    limit,
-                    id,
-                    name
-                );
-                if (response?.data?.products) {
-                    setIsloading(false);
-                }
+            const response = await Api.getAllProducts(page, limit, id, name);
+            if (response?.data?.products) {
+                setIsloading(false);
                 const newProducts = response?.data?.products;
                 setAllProducts((prevProducts) =>
                     page === 1 ? newProducts : [...prevProducts, ...newProducts]
                 );
-            } catch (error) {
+            } else {
                 setIsloading(false);
-                console.log("Error fetching products", error);
+                notify("error", response?.data?.error);
+                setTimeout(() => {
+                    navigate('/auth-login')
+                }, 3000);
             }
         };
 
         fetchAllProducts();
-    }, [page, id,selectedIndex]);
+    }, [page, id, selectedIndex,navigate]);
 
     const handleLoadMore = () => {
         setPage((prevPage) => prevPage + 1);
@@ -77,18 +75,12 @@ export const ProductRest = () => {
         }
     };
 
-    if (isLoading) {
-        return (
-            <div className="flex justify-center items-center h-[calc(100vh-100px)] overflow-hidden">
-                <Loader width="w-16" height="h-16" />
-            </div>
-        );
-    }
     return (
         <React.Fragment>
             <Helmet>
                 <title>Rapid Cravings - Products</title>
             </Helmet>
+            <ToastContainer autoClose={2000} theme="dark" />
             <div className="container px-5 py-7 mx-auto overflow-hidden">
                 <div>
                     <button
@@ -141,7 +133,11 @@ export const ProductRest = () => {
                     </Tab.List>
                 </Tab.Group>
                 <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 -m-4">
-                    {allProducts && allProducts.length !== 0 ? (
+                    {isLoading ? (
+                        <div className="flex justify-center items-center col-span-3 overflow-hidden">
+                            <Loader width="w-16" height="h-16" />
+                        </div>
+                    ) : allProducts && allProducts.length !== 0 ? (
                         allProducts.map((product, index) => {
                             return (
                                 <div className="p-4" key={index}>
@@ -236,9 +232,11 @@ export const ProductRest = () => {
                     </div>
                 )}
 
-                <div className="p-4">
-                    <PostComments id={id} />
-                </div>
+                {selectedIndex === 0 && (
+                    <div className="p-4">
+                        <PostComments id={id} />
+                    </div>
+                )}
             </div>
         </React.Fragment>
     );

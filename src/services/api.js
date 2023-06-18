@@ -103,9 +103,9 @@ export default class Api {
             return error.response;
         }
     };
-    static getProductsLength = async () => {
+    static getProductsLength = async (id) => {
         try {
-            const response = await this._api.get('/api/get-length');
+            const response = await this._api.get(`/api/get-length/${id}`);
             return response;
         } catch (error) {
             return error.response;

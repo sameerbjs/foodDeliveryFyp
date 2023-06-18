@@ -2,13 +2,14 @@ import React, {useEffect, useState} from "react";
 import {BsFillBoxFill} from "react-icons/bs";
 import {RiShoppingCart2Line} from "react-icons/ri";
 import Api from "../../services/api";
+import { useSelector } from "react-redux";
 
 const RestHome = () => {
     const [totalLength, setTotalLenght] = useState(0);
-
+    const rest_id = useSelector(store => store.authUser?.resturantAuth?._id);
     useEffect(() => {
         const fetchProductLength = async () => {
-            const response = await Api.getProductsLength();
+            const response = await Api.getProductsLength(rest_id);
             if (response?.data?.message) {
                 setTotalLenght(response?.data?.message);
             } else {
@@ -16,7 +17,7 @@ const RestHome = () => {
             }
         };
         fetchProductLength();
-    }, []);
+    }, [rest_id]);
     return (
         <div>
             <section className="container px-5 py-7 mx-auto overflow-hidden">

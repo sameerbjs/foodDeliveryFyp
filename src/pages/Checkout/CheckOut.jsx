@@ -1,75 +1,186 @@
-import { Dialog, Transition } from '@headlessui/react';
-import React, { Fragment, useEffect, useState } from 'react'
-import { Helmet } from 'react-helmet';
-import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import {Dialog, Transition} from "@headlessui/react";
+import React, {Fragment, useEffect, useState} from "react";
+import {Helmet} from "react-helmet";
+import {useSelector} from "react-redux";
+import {useNavigate} from "react-router-dom";
 
 const CheckOut = () => {
     const navigate = useNavigate();
-    const totalPrice = useSelector(store => store.cart.totalPrice)
+    const totalPrice = useSelector((store) => store.cart.totalPrice);
+    const cur_user = useSelector((store) => store.authUser?.userAuth);
     const [isOpen, setIsOpen] = useState(false);
-    const [deliveryCharges, setDeliveryCharges] = useState(200)
+    const [deliveryCharges, setDeliveryCharges] = useState(200);
+    const [orderDetail, setOrderDetail] = useState({
+        name: "",
+        email: "",
+        city: "",
+        street_house: "",
+        full_address: "",
+        phone: "",
+    });
 
     useEffect(() => {
-        window.history.scrollRestoration = 'manual';
+        window.history.scrollRestoration = "manual";
         window.scrollTo(0, 0);
         setDeliveryCharges(200);
     }, []);
+    
+    useEffect(() => {
+        setOrderDetail({
+            name: cur_user.name,
+            email: cur_user.email,
+            city: "",
+            phone: "",
+        });
+    }, [cur_user]);
+
+    const handleChangeText = (event) => {
+        setOrderDetail({
+            ...orderDetail,
+            [event.target.name]: event.target.value,
+        });
+    };
     return (
         <>
             <Helmet>
                 <title>Rapid Cravings - Checkout</title>
             </Helmet>
             <div className="container px-5 py-7 mx-auto">
-                <div className='mb-5'>
-                    <button onClick={() => navigate(-1)} className="rounded-xl bg-gray-200 hover:bg-gray-300 px-4 py-1 inline-flex gap-1 items-center justify-center text-gray-700">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-4 h-4">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+                <div className="mb-5">
+                    <button
+                        onClick={() => navigate(-1)}
+                        className="rounded-xl bg-gray-200 hover:bg-gray-300 px-4 py-1 inline-flex gap-1 items-center justify-center text-gray-700"
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            strokeWidth="1.5"
+                            stroke="currentColor"
+                            className="w-4 h-4"
+                        >
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"
+                            />
                         </svg>
                         Back
                     </button>
                 </div>
-                <div className='overflow-hidden'>
-                    <div className='flex justify-between items-center whitespace-nowrap flex-wrap'>
-                        <h1 className='font-semibold text-[#212245] lg:text-3xl md:text-2xl text-xl'>
+                <div className="overflow-hidden">
+                    <div className="flex justify-between items-center whitespace-nowrap flex-wrap">
+                        <h1 className="font-semibold text-[#212245] lg:text-3xl md:text-2xl text-xl">
                             Products Checkout
                         </h1>
                     </div>
 
-                    <div className='grid lg:grid-cols-2 md:grid-cols-2 grid-cols-1 mt-4 gap-5'>
+                    <div className="grid lg:grid-cols-2 md:grid-cols-2 grid-cols-1 mt-4 gap-5">
                         <div className="relative">
-                            <label htmlFor="name" className="leading-7 text-[15px] font-semibold text-[#212245]">Name</label>
-                            <input type="text" id="name" name="name" className="w-full bg-white rounded border border-gray-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+                            <label
+                                htmlFor="name"
+                                className="leading-7 text-[15px] font-semibold text-[#212245]"
+                            >
+                                Name
+                            </label>
+                            <input
+                                type="text"
+                                id="name"
+                                value={orderDetail.name}
+                                onChange={handleChangeText}
+                                name="name"
+                                className="w-full bg-white rounded border border-gray-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                            />
                         </div>
                         <div className="relative">
-                            <label htmlFor="email" className="leading-7 text-[15px] font-semibold text-[#212245]">Email</label>
-                            <input type="text" id="email" name="email" className="w-full bg-white rounded border border-gray-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+                            <label
+                                htmlFor="email"
+                                className="leading-7 text-[15px] font-semibold text-[#212245]"
+                            >
+                                Email
+                            </label>
+                            <input
+                                type="text"
+                                id="email"
+                                value={orderDetail.email}
+                                onChange={handleChangeText}
+                                name="email"
+                                className="w-full bg-white rounded border border-gray-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                            />
                         </div>
                         <div className="relative">
-                            <label htmlFor="city" className="leading-7 text-[15px] font-semibold text-[#212245]">City</label>
-                            <input type="text" id="city" name="city" className="w-full bg-white rounded border border-gray-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+                            <label
+                                htmlFor="city"
+                                className="leading-7 text-[15px] font-semibold text-[#212245]"
+                            >
+                                City
+                            </label>
+                            <input
+                                type="text"
+                                value={orderDetail.city}
+                                onChange={handleChangeText}
+                                id="city"
+                                name="city"
+                                className="w-full bg-white rounded border border-gray-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                            />
                         </div>
                         <div className="relative">
-                            <label htmlFor="street_house" className="leading-7 text-[15px] font-semibold text-[#212245]">Street & House No</label>
-                            <input type="text" id="street_house" name="street_house" className="w-full bg-white rounded border border-gray-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+                            <label
+                                htmlFor="street_house"
+                                className="leading-7 text-[15px] font-semibold text-[#212245]"
+                            >
+                                Street & House No
+                            </label>
+                            <input
+                                type="text"
+                                id="street_house"
+                                value={orderDetail.street_house}
+                                onChange={handleChangeText}
+                                name="street_house"
+                                className="w-full bg-white rounded border border-gray-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                            />
                         </div>
                         <div className="relative">
-                            <label htmlFor="full_address" className="leading-7 text-[15px] font-semibold text-[#212245]">Full address</label>
-                            <input type="text" id="full_address" name="full_address" className="w-full bg-white rounded border border-gray-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+                            <label
+                                htmlFor="full_address"
+                                className="leading-7 text-[15px] font-semibold text-[#212245]"
+                            >
+                                Full address
+                            </label>
+                            <input
+                                type="text"
+                                id="full_address"
+                                value={orderDetail.full_address}
+                                onChange={handleChangeText}
+                                name="full_address"
+                                className="w-full bg-white rounded border border-gray-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                            />
                         </div>
                         <div className="relative">
-                            <label htmlFor="number" className="leading-7 text-[15px] font-semibold text-[#212245]">Phone No</label>
-                            <input type="text" id="number" name="number" className="w-full bg-white rounded border border-gray-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out" />
+                            <label
+                                htmlFor="number"
+                                className="leading-7 text-[15px] font-semibold text-[#212245]"
+                            >
+                                Phone No
+                            </label>
+                            <input
+                                type="text"
+                                id="number"
+                                value={orderDetail.phone}
+                                onChange={handleChangeText}
+                                name="phone"
+                                className="w-full bg-white rounded border border-gray-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                            />
                         </div>
                     </div>
-                    <div className='max-w-max ml-auto space-y-2 mt-5 rounded-lg text-left'>
-                        <h1 className='font-semibold text-[#212245]'>
+                    <div className="max-w-max ml-auto space-y-2 mt-5 rounded-lg text-left">
+                        <h1 className="font-semibold text-[#212245]">
                             Payment : Cash on Delivery
                         </h1>
-                        <h1 className='font-semibold text-[#212245]'>
+                        <h1 className="font-semibold text-[#212245]">
                             Delivery charges : {deliveryCharges}
                         </h1>
-                        <h1 className='font-semibold text-[#212245]'>
+                        <h1 className="font-semibold text-[#212245]">
                             Total Price : {totalPrice + deliveryCharges} {""}
                         </h1>
                         <button
@@ -81,7 +192,11 @@ const CheckOut = () => {
                     </div>
                 </div>
                 <Transition appear show={isOpen} as={Fragment}>
-                    <Dialog as="div" className="relative z-10" onClose={setIsOpen}>
+                    <Dialog
+                        as="div"
+                        className="relative z-10"
+                        onClose={setIsOpen}
+                    >
                         <Transition.Child
                             as={Fragment}
                             enter="ease-out duration-300"
@@ -114,7 +229,8 @@ const CheckOut = () => {
                                         </Dialog.Title>
                                         <div className="mt-2">
                                             <p className="text-sm text-gray-800">
-                                                Are you sure to place this order ?
+                                                Are you sure to place this order
+                                                ?
                                             </p>
                                         </div>
 
@@ -142,7 +258,7 @@ const CheckOut = () => {
                 </Transition>
             </div>
         </>
-    )
-}
+    );
+};
 
-export default CheckOut
+export default CheckOut;

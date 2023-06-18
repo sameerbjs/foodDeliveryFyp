@@ -1,13 +1,14 @@
 import React, {useCallback, useEffect, useState} from "react";
 import Comments from "./Comments";
 import ReactStars from "react-stars";
-import {ToastContainer} from "react-toastify";
 import {notify} from "../../helper";
 import Api from "../../services/api";
 import {useSelector} from "react-redux";
+import Loader from "../../components/loader/Loader";
 
 const PostComments = ({id}) => {
     const [comment, setComment] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
     const [newRating, setNewRating] = useState(0);
     const [allComments, setAllComments] = useState([]);
     const user_id = useSelector((store) => store.authUser?.userAuth?._id);
@@ -31,6 +32,7 @@ const PostComments = ({id}) => {
             return;
         }
 
+        setIsLoading(true);
         const dataComment = {
             comment: comment,
             rating: newRating,
@@ -46,10 +48,12 @@ const PostComments = ({id}) => {
             ]);
             setComment("");
             setNewRating(0);
+            setIsLoading(false);
         } else {
+            setIsLoading(false);
             notify("error", response.data?.error);
         }
-    }, [comment, newRating, id,user_id]);
+    }, [comment, newRating, id, user_id]);
 
     const deleteComment = async (commentId) => {
         const response = await Api.deleteRestUserFeedback(commentId);
@@ -63,11 +67,6 @@ const PostComments = ({id}) => {
     };
     return (
         <>
-            <ToastContainer
-                position="top-right"
-                autoClose={2000}
-                theme="dark"
-            />
             <div>
                 <span className="text-lg">Rate our resturant</span>
                 <div className="flex gap-2 items-center">
@@ -92,7 +91,11 @@ const PostComments = ({id}) => {
                         onClick={addComment}
                         className="flex items-center bg-red-500 hover:bg-[#212245] text-white fs-14 px-3 py-2 rounded-lg shadow-md"
                     >
-                        Send
+                        {isLoading ? (
+                            <Loader width="w-8" height="h-8" />
+                        ) : (
+                            "Send"
+                        )}
                     </button>
                 </div>
             </div>
