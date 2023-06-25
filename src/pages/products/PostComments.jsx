@@ -86,10 +86,10 @@ const PostComments = ({id}) => {
                     onChange={(event) => setComment(event.target.value)}
                     rows="5"
                 ></textarea>
-                <div className="flex justify-end">
+                <div className="flex justify-end items-center">
                     <button
                         onClick={addComment}
-                        className="flex items-center bg-red-500 hover:bg-[#212245] text-white fs-14 px-3 py-2 rounded-lg shadow-md"
+                        className="flex w-32 items-center justify-center bg-red-500 hover:bg-[#212245] text-white fs-14 px-3 py-2 rounded-lg shadow-md"
                     >
                         {isLoading ? (
                             <Loader width="w-8" height="h-8" />

@@ -1,13 +1,17 @@
 import {Dialog, Transition} from "@headlessui/react";
 import React, {Fragment, useEffect, useState} from "react";
 import {Helmet} from "react-helmet";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
+import Api from "../../services/api";
+import {handleDeleteProductOrderPlace} from "../../redux/CartSlice";
 
 const CheckOut = () => {
     const navigate = useNavigate();
-    const totalPrice = useSelector((store) => store.cart.totalPrice);
+    const dispatch = useDispatch();
+    const totalPriceProducts = useSelector((store) => store.cart.totalPrice);
     const cur_user = useSelector((store) => store.authUser?.userAuth);
+    const cartProducts = useSelector((store) => store.cart.cartProducts);
     const [isOpen, setIsOpen] = useState(false);
     const [deliveryCharges, setDeliveryCharges] = useState(200);
     const [orderDetail, setOrderDetail] = useState({
@@ -15,7 +19,6 @@ const CheckOut = () => {
         email: "",
         city: "",
         street_house: "",
-        full_address: "",
         phone: "",
     });
 
@@ -24,13 +27,11 @@ const CheckOut = () => {
         window.scrollTo(0, 0);
         setDeliveryCharges(200);
     }, []);
-    
+
     useEffect(() => {
         setOrderDetail({
             name: cur_user.name,
             email: cur_user.email,
-            city: "",
-            phone: "",
         });
     }, [cur_user]);
 
@@ -39,6 +40,36 @@ const CheckOut = () => {
             ...orderDetail,
             [event.target.name]: event.target.value,
         });
+    };
+
+    const handlePlaceOrder = async () => {
+        const data = {
+            products: cartProducts?.map((item) => ({
+                productId: item?._id,
+                quantity: item.quantity,
+                totalPrice: item.price,
+                size: item?.size,
+            })),
+            city: orderDetail.city,
+            price: totalPriceProducts,
+            phone: orderDetail.phone,
+            address: orderDetail.street_house,
+            userId: cur_user?._id,
+        };
+        const response = await Api.placeOrder(data);
+        let itemToDelete = [];
+        for (let index = 0; index < data.products?.length; index++) {
+            itemToDelete.push(data.products[index].productId);
+        }
+        if (response?.data?.success) {
+            dispatch(
+                handleDeleteProductOrderPlace({itemToDelete: itemToDelete})
+            );
+            setIsOpen(false);
+            navigate(`/profile/${cur_user._id}`, {
+                state: {tab: 1, order: true},
+            });
+        }
     };
     return (
         <>
@@ -113,7 +144,7 @@ const CheckOut = () => {
                                 htmlFor="city"
                                 className="leading-7 text-[15px] font-semibold text-[#212245]"
                             >
-                                City
+                                City and area
                             </label>
                             <input
                                 type="text"
@@ -142,22 +173,6 @@ const CheckOut = () => {
                         </div>
                         <div className="relative">
                             <label
-                                htmlFor="full_address"
-                                className="leading-7 text-[15px] font-semibold text-[#212245]"
-                            >
-                                Full address
-                            </label>
-                            <input
-                                type="text"
-                                id="full_address"
-                                value={orderDetail.full_address}
-                                onChange={handleChangeText}
-                                name="full_address"
-                                className="w-full bg-white rounded border border-gray-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-                            />
-                        </div>
-                        <div className="relative">
-                            <label
                                 htmlFor="number"
                                 className="leading-7 text-[15px] font-semibold text-[#212245]"
                             >
@@ -175,13 +190,16 @@ const CheckOut = () => {
                     </div>
                     <div className="max-w-max ml-auto space-y-2 mt-5 rounded-lg text-left">
                         <h1 className="font-semibold text-[#212245]">
+                            Total items : {cartProducts?.length}
+                        </h1>
+                        <h1 className="font-semibold text-[#212245]">
                             Payment : Cash on Delivery
                         </h1>
                         <h1 className="font-semibold text-[#212245]">
                             Delivery charges : {deliveryCharges}
                         </h1>
                         <h1 className="font-semibold text-[#212245]">
-                            Total Price : {totalPrice + deliveryCharges} {""}
+                            Total Price : {totalPriceProducts + deliveryCharges} {""}
                         </h1>
                         <button
                             onClick={() => setIsOpen(true)}
@@ -243,7 +261,7 @@ const CheckOut = () => {
                                                 Cancel
                                             </button>
                                             <button
-                                                onClick={() => setIsOpen(false)}
+                                                onClick={handlePlaceOrder}
                                                 type="button"
                                                 className="inline-flex justify-center rounded-md border border-transparent bg-green-100 px-4 py-2 text-sm font-medium text-green-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                                             >

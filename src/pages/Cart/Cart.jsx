@@ -34,6 +34,7 @@ const Cart = () => {
         dispatch(handleTotalPrice({price: price}));
         navigate("/checkout");
     };
+
     return (
         <>
             <ToastContainer
@@ -108,8 +109,12 @@ const Cart = () => {
                                                                 cart.quantity}{" "}
                                                             PKR
                                                         </p>
+                                                        <p className="mt-1">
+                                                            Size : {cart.size}
+                                                        </p>
                                                     </div>
-                                                    <div className="flex items-center gap-3 mt-2 justify-end">
+                                                    <div className="flex items-center gap-3">
+                                                        <p>Quantity</p>
                                                         <button
                                                             onClick={() =>
                                                                 decreaseQuantityHandle(

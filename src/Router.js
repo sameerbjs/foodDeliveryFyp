@@ -26,6 +26,7 @@ import {
     EditProduct,
     EditResturant,
     Orders,
+    OrderDetail,
 } from "./resturantPages";
 
 export const UserRoutes = [
@@ -56,4 +57,5 @@ export const ResturantsRoutes = [
     { path: "/edit-pro/:id", component: <EditProduct /> },
     { path: "/orders", component: <Orders /> },
     { path: "/edit-resturant/:id", component: <EditResturant /> },
+    { path: "/order-detail/:id", component: <OrderDetail /> },
 ];

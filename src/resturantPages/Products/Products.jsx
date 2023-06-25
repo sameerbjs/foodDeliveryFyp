@@ -167,7 +167,7 @@ const AllProducts = () => {
                             ) : (
                                 <tr>
                                     <td
-                                        className="px-6 py-4 text-center"
+                                        className="px-6 py-4 text-center font-bold"
                                         colSpan="100%"
                                     >
                                         No Product Found

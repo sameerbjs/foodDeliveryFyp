@@ -41,13 +41,13 @@ export const ProductRest = () => {
                 setIsloading(false);
                 notify("error", response?.data?.error);
                 setTimeout(() => {
-                    navigate('/auth-login')
+                    navigate("/auth-login");
                 }, 3000);
             }
         };
 
         fetchAllProducts();
-    }, [page, id, selectedIndex,navigate]);
+    }, [page, id, selectedIndex, navigate]);
 
     const handleLoadMore = () => {
         setPage((prevPage) => prevPage + 1);

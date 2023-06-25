@@ -1,4 +1,5 @@
 import HeaderRest from "./Header/Header";
+import OrderDetail from "./Orders/OrderDetail";
 import Orders from "./Orders/Orders";
 import AddProduct from "./Products/AddProduct";
 import EditProduct from "./Products/EditProduct";
@@ -14,5 +15,6 @@ export {
     AddProduct,
     EditProduct,
     Orders,
-    EditResturant
+    EditResturant,
+    OrderDetail
 };

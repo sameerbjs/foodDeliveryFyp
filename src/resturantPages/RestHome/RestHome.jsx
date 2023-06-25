@@ -2,18 +2,21 @@ import React, {useEffect, useState} from "react";
 import {BsFillBoxFill} from "react-icons/bs";
 import {RiShoppingCart2Line} from "react-icons/ri";
 import Api from "../../services/api";
-import { useSelector } from "react-redux";
+import {useSelector} from "react-redux";
 
 const RestHome = () => {
-    const [totalLength, setTotalLenght] = useState(0);
-    const rest_id = useSelector(store => store.authUser?.resturantAuth?._id);
+    const [totalProductLength, setTotalProductLenght] = useState(0);
+    const [totalOrderLength, setTotalOrderLenght] = useState(0);
+    const rest_id = useSelector((store) => store.authUser?.resturantAuth?._id);
     useEffect(() => {
         const fetchProductLength = async () => {
-            const response = await Api.getProductsLength(rest_id);
-            if (response?.data?.message) {
-                setTotalLenght(response?.data?.message);
+            const response = await Api.getItemsLength(rest_id);
+            if (response?.data) {
+                setTotalProductLenght(response?.data?.totalProducts);
+                setTotalOrderLenght(response?.data?.totalOrders);
             } else {
-                setTotalLenght(0);
+                setTotalProductLenght(0);
+                setTotalOrderLenght(0);
             }
         };
         fetchProductLength();
@@ -32,7 +35,7 @@ const RestHome = () => {
                             <div className="px-4 py-6">
                                 <RiShoppingCart2Line className="w-12 h-12 mb-3 inline-block" />
                                 <h2 className="font-medium text-3xl text-gray-900">
-                                    {totalLength}
+                                    {totalProductLength}
                                 </h2>
                                 <p className="leading-relaxed">Products</p>
                             </div>
@@ -41,7 +44,7 @@ const RestHome = () => {
                             <div className="px-4 py-6">
                                 <BsFillBoxFill className="w-12 h-12 mb-3 inline-block" />
                                 <h2 className="font-medium text-3xl text-gray-900">
-                                    10
+                                    {totalOrderLength}
                                 </h2>
                                 <p className="leading-relaxed">Orders</p>
                             </div>

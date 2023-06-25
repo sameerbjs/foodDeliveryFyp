@@ -85,6 +85,15 @@ export default class Api {
         }
     }
 
+    static getItemsLength = async (id) => {
+        try {
+            const response = await this._api.get(`/api/get-length/${id}`);
+            return response;
+        } catch (error) {
+            return error.response;
+        }
+    };
+
     static addProduct = async (data) => {
         try {
             const response = await this._api.post("/api/add-product", data);
@@ -93,19 +102,11 @@ export default class Api {
             return error.response;
         }
     };
-    static getAllProducts = async (page, limit, id,category) => {
+    static getAllProducts = async (page, limit, id, category) => {
         try {
             const response = await this._api.get(`/api/get-all/${id}`, {
-                params: { page, limit,category },
+                params: { page, limit, category },
             });
-            return response;
-        } catch (error) {
-            return error.response;
-        }
-    };
-    static getProductsLength = async (id) => {
-        try {
-            const response = await this._api.get(`/api/get-length/${id}`);
             return response;
         } catch (error) {
             return error.response;
@@ -202,6 +203,41 @@ export default class Api {
             return response;
         } catch (error) {
             return error.response
+        }
+    }
+
+    static placeOrder = async (data) => {
+        try {
+            const response = await this._api.post("/api/place-order", data);
+            return response;
+        } catch (error) {
+            return error.response
+        }
+    }
+    static getResturantAllOrders = async (id, status) => {
+        try {
+            const response = await this._api.get(`/api/get-order/${id}`, {
+                params: { status },
+            });
+            return response;
+        } catch (error) {
+            return error.response;
+        }
+    }
+    static getOrderDetail = async (id) => {
+        try {
+            const response = await this._api.get(`/api/get-order-detail/${id}`);
+            return response;
+        } catch (error) {
+            return error.response;
+        }
+    }
+    static changeOrderStatus = async (id, data) => {
+        try {
+            const response = await this._api.post(`/api/order-status/${id}`, data);
+            return response;
+        } catch (error) {
+            return error.response;
         }
     }
 }
