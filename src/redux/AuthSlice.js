@@ -42,7 +42,7 @@ const authUserSlice = createSlice({
 
         handleUserLogout: (state, action) => {
             state.isUser = action.payload.isUser
-            state.userAuth = action.payload.resturant;
+            state.userAuth = action.payload.user;
             state.userToken = action.payload.token
             state.isLogin = action.payload.isLogin
         },
