@@ -11,7 +11,7 @@ const Profile = () => {
     const {state} = useLocation();
     const [selected, setSelectedTab] = useState(0);
     useEffect(() => {
-        if (state.order === true) {
+        if (state?.order === true) {
             setSelectedTab(state.order);
         } else {
             setSelectedTab(0);

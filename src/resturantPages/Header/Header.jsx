@@ -69,13 +69,7 @@ const HeaderRest = () => {
                                     >
                                         <div className="w-9 h-9">
                                             <img
-                                                src={`${
-                                                    process.env
-                                                        .REACT_APP_SERVER_URL
-                                                }/${restAuth.profilePath.replace(
-                                                    /\\/g,
-                                                    "/"
-                                                )}`}
+                                                src={`${restAuth.profilePic}`}
                                                 alt="avatar"
                                                 className="w-full rounded-3xl object-cover object-center h-full"
                                             />

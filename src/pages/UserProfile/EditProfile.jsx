@@ -8,6 +8,7 @@ import Api from "../../services/api";
 import {handleUserAuth} from "../../redux/AuthSlice";
 import {useDispatch} from "react-redux";
 import {ToastContainer} from "react-toastify";
+import UploadProgress from "../../components/uploadProgress";
 
 const EditProfile = () => {
     const [info, setinfo] = useState({
@@ -22,6 +23,9 @@ const EditProfile = () => {
     const [file, setFile] = useState(null);
     const [imageUrl, setImageUrl] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
+    const [picture, setPicture] = useState("");
+    const [uploadProgress, setUploadProgress] = useState(0);
+    const [isOpen, setIsOpen] = useState(false);
     const dispatch = useDispatch();
     const {id} = useParams();
 
@@ -37,12 +41,8 @@ const EditProfile = () => {
                     dateOfBirth: response?.data?.dob,
                 });
 
-                setImageUrl(
-                    `${process.env.REACT_APP_SERVER_URL}/${response?.data?.profilePath}`
-                );
-                setFile(
-                    `${process.env.REACT_APP_SERVER_URL}/${response?.data?.profilePath}`
-                );
+                setImageUrl(`${response?.data?.profilePic}`);
+                setFile(`${response?.data?.profilePic}`);
                 setIsLoading(false);
             } else {
                 notify("error", response?.data?.error);
@@ -67,8 +67,7 @@ const EditProfile = () => {
             !info.username ||
             !info.email ||
             !info.address ||
-            !info.dateOfBirth ||
-            !file
+            !info.dateOfBirth
         ) {
             notify("error", "Please fill all the fields");
             return;
@@ -85,18 +84,22 @@ const EditProfile = () => {
         }
 
         setIsLoading(true);
-        const formData = new FormData();
-        formData.append("name", info.username);
-        formData.append("email", info.email);
-        if (info.password) {
-            formData.append("password", info.password);
-            formData.append("current_password", info.c_password);
-        }
-        formData.append("dob", info.dateOfBirth);
-        formData.append("address", info.address);
-        formData.append("profilePic", file);
 
-        const response = await Api.userEdit(formData, id);
+        const userData = {
+            name: info.username,
+            email: info.email,
+            dob: info.dateOfBirth,
+            address: info.address,
+            isUser: true,
+        };
+        if (info.password) {
+            userData["password"] = info.password;
+            userData["current_password"] = info.current_password;
+        }
+        if (picture) {
+            userData["profilePic"] = picture;
+        }
+        const response = await Api.userEdit(userData, id);
         if (response?.data?.finalData) {
             setIsLoading(false);
             notify("success", "User update successfully");
@@ -112,19 +115,47 @@ const EditProfile = () => {
         }
     };
 
-    const onUploadImages = (event) => {
+    const onUploadImages = async (event) => {
         const fileType = event.target.files[0].type;
+        const file = event.target.files[0];
         if (
             fileType === "image/png" ||
             fileType === "image/jpg" ||
             fileType === "image/jpeg"
         ) {
-            setFile(event.target.files[0]);
-            setImageUrl(URL.createObjectURL(event.target.files[0]));
+            if (file.size > 2 * 1024 * 1024) {
+                notify("error", "File size should not exceed 2MB");
+                setFile(null);
+                setImageUrl(null);
+                event.target.files = null;
+                setIsLoading(false);
+            } else {
+                setIsOpen(true);
+                setFile(event.target.files[0]);
+                setImageUrl(URL.createObjectURL(event.target.files[0]));
+                const formData = new FormData();
+                formData.append("image", event.target.files[0]);
+                const response = await Api.imageUpload(
+                    formData,
+                    (progressEvent) => {
+                        const percentCompleted = Math.round(
+                            (progressEvent.loaded * 100) / progressEvent.total
+                        );
+                        setUploadProgress(percentCompleted);
+                        if (percentCompleted === 100) {
+                            setIsOpen(false);
+                        }
+                    }
+                );
+                if (response.status === 200) {
+                    setPicture(response?.data);
+                }
+            }
         } else {
             setFile(null);
             setImageUrl(null);
             event.target.files = null;
+            setIsLoading(false);
             notify("error", "File Format is not valid");
         }
     };
@@ -397,13 +428,18 @@ const EditProfile = () => {
                                 {isLoading ? (
                                     <Loader width="w-8" height="h-8" />
                                 ) : (
-                                    "Edit Prodile"
+                                    "Edit Profile"
                                 )}
                             </button>
                         </div>
                     </div>
                 </div>
             </div>
+            <UploadProgress
+                isOpen={isOpen}
+                setIsOpen={setIsOpen}
+                uploadProgress={uploadProgress}
+            />
         </>
     );
 };

@@ -36,6 +36,17 @@ export default class Api {
         );
     };
 
+    static imageUpload = async (data,onUploadProgress) => {
+        try {
+            const response = await this._api.post("/api/upload-image", data, {
+                onUploadProgress,
+            })
+            return response;
+        } catch (error) {
+            return error.response;
+        }
+    }
+
     static resturantRegister = async (data) => {
         try {
             const response = await this._api.post("/api/rest-register", data);

@@ -10,6 +10,7 @@ import {useDispatch} from "react-redux";
 import {CheckIcon, ChevronUpDownIcon} from "@heroicons/react/20/solid";
 import cities from "../../assets/data/Cities";
 import {Listbox, Transition} from "@headlessui/react";
+import UploadProgress from "../../components/uploadProgress";
 
 const EditResturant = () => {
     const [info, setinfo] = useState({
@@ -27,6 +28,9 @@ const EditResturant = () => {
     const [city, setCity] = useState(cities[0]);
     const [isLoading, setIsLoading] = useState(false);
     const {id} = useParams();
+    const [picture, setPicture] = useState("");
+    const [uploadProgress, setUploadProgress] = useState(0);
+    const [isOpen, setIsOpen] = useState(false);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -49,12 +53,8 @@ const EditResturant = () => {
                 if (matchingCity) {
                     setCity(matchingCity);
                 }
-                setImageUrl(
-                    `${process.env.REACT_APP_SERVER_URL}/${response?.data?.profilePath}`
-                );
-                setFile(
-                    `${process.env.REACT_APP_SERVER_URL}/${response?.data?.profilePath}`
-                );
+                setImageUrl(`${response?.data?.profilePic}`);
+                setFile(`${response?.data?.profilePic}`);
                 setIsLoading(false);
             } else {
                 notify("error", response?.data?.error);
@@ -75,7 +75,7 @@ const EditResturant = () => {
     };
 
     const handleEditRest = async () => {
-        if (!info.username || !info.email || !info.address || !info.phone || !file) {
+        if (!info.username || !info.email || !info.address || !info.phone) {
             notify("error", "Please fill all the fields");
             return;
         }
@@ -90,19 +90,24 @@ const EditResturant = () => {
         }
 
         setIsLoading(true);
-        const formData = new FormData();
-        formData.append("name", info.username);
-        formData.append("email", info.email);
-        if (info.password) {
-            formData.append("password", info.password);
-            formData.append("current_password", info.current_password);
-        }
-        formData.append("city", city.name);
-        formData.append("address", info.address);
-        formData.append("phone", info.phone);
-        formData.append("profilePic", file);
 
-        const response = await Api.resturantEdit(formData, id);
+        const restData = {
+            name: info.username,
+            email: info.email,
+            city: city?.name,
+            address: info.address,
+            phone: info.phone,
+        };
+
+        if (info.password) {
+            restData["password"] = info.password;
+            restData["current_password"] = info.current_password;
+        }
+        if (picture) {
+            restData["profilePic"] = picture;
+        }
+
+        const response = await Api.resturantEdit(restData, id);
         if (response?.data?.finalData) {
             setIsLoading(false);
             notify("success", "Resturant update successfully");
@@ -118,19 +123,47 @@ const EditResturant = () => {
         }
     };
 
-    const onUploadImages = (event) => {
+    const onUploadImages = async (event) => {
         const fileType = event.target.files[0].type;
+        const file = event.target.files[0];
         if (
             fileType === "image/png" ||
             fileType === "image/jpg" ||
             fileType === "image/jpeg"
         ) {
-            setFile(event.target.files[0]);
-            setImageUrl(URL.createObjectURL(event.target.files[0]));
+            if (file.size > 2 * 1024 * 1024) {
+                notify("error", "File size should not exceed 2MB");
+                setFile(null);
+                setImageUrl(null);
+                event.target.files = null;
+                setIsLoading(false);
+            } else {
+                setIsOpen(true);
+                setFile(event.target.files[0]);
+                setImageUrl(URL.createObjectURL(event.target.files[0]));
+                const formData = new FormData();
+                formData.append("image", event.target.files[0]);
+                const response = await Api.imageUpload(
+                    formData,
+                    (progressEvent) => {
+                        const percentCompleted = Math.round(
+                            (progressEvent.loaded * 100) / progressEvent.total
+                        );
+                        setUploadProgress(percentCompleted);
+                        if (percentCompleted === 100) {
+                            setIsOpen(false);
+                        }
+                    }
+                );
+                if (response.status === 200) {
+                    setPicture(response?.data);
+                }
+            }
         } else {
             setFile(null);
             setImageUrl(null);
             event.target.files = null;
+            setIsLoading(false);
             notify("error", "File Format is not valid");
         }
     };
@@ -488,6 +521,11 @@ const EditResturant = () => {
                     </div>
                 </div>
             </div>
+            <UploadProgress
+                isOpen={isOpen}
+                setIsOpen={setIsOpen}
+                uploadProgress={uploadProgress}
+            />
         </>
     );
 };

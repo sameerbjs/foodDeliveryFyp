@@ -14,6 +14,7 @@ function Header() {
     );
     const isUserLogin = useSelector((store) => store.authUser.userAuth);
     const user_id = useSelector((store) => store.authUser?.userAuth?._id);
+
     return (
         <div className="pb-[65px]">
             <nav className="bg-white shadow-md fixed w-full z-50">
@@ -94,13 +95,7 @@ function Header() {
                                             {isUserLogin &&
                                             isUserLogin?.isVerified ? (
                                                 <img
-                                                    src={`${
-                                                        process.env
-                                                            .REACT_APP_SERVER_URL
-                                                    }/${isUserLogin.profilePath.replace(
-                                                        /\\/g,
-                                                        "/"
-                                                    )}`}
+                                                    src={`${isUserLogin.profilePic}`}
                                                     alt="avatar"
                                                     className="w-full rounded-3xl object-cover object-center h-full"
                                                 />
