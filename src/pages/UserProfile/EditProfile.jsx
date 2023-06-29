@@ -107,6 +107,7 @@ const EditProfile = () => {
                 handleUserAuth({
                     user: response?.data?.finalData,
                     isUser: response?.data?.finalData?.isUser,
+                    isLogin : true
                 })
             );
         } else {

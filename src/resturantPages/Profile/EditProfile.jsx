@@ -112,6 +112,7 @@ const EditResturant = () => {
                 handleRestAuth({
                     resturant: response?.data?.finalData,
                     isUser: response?.data?.finalData?.isUser,
+                    isLogin : true
                 })
             );
         } else {

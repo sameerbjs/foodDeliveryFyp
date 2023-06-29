@@ -7,11 +7,14 @@ import {useNavigate, useParams} from "react-router-dom";
 import Api from "../../services/api";
 import {ToastContainer} from "react-toastify";
 import Loader from "../../components/loader/Loader";
+import UploadProgress from "../../components/uploadProgress";
 
 const EditProduct = () => {
     const navigate = useNavigate();
     const {id} = useParams();
-
+    const [picture, setPicture] = useState("");
+    const [uploadProgress, setUploadProgress] = useState(0);
+    const [isOpen, setIsOpen] = useState(false);
     const [file, setFile] = useState(null);
     const [isLoading, setIsloading] = useState(false);
     const [imageUrl, setImageUrl] = useState(null);
@@ -40,12 +43,9 @@ const EditProduct = () => {
                 price: response?.data?.price,
                 size: response?.data?.size,
             });
-            setImageUrl(
-                `${process.env.REACT_APP_SERVER_URL}/${response?.data?.productPath}`
-            );
-            setFile(
-                `${process.env.REACT_APP_SERVER_URL}/${response?.data?.productPath}`
-            );
+            setImageUrl(`${response?.data?.productPic}`);
+            setFile(`${response?.data?.productPic}`);
+            setPicture(`${response?.data?.productPic}`);
             const selectedCategoryName = response?.data?.category;
             const matchingCategory = FoodCategory.find(
                 (category) => category.name === selectedCategoryName
@@ -59,34 +59,63 @@ const EditProduct = () => {
         getProduct();
     }, [id]);
 
-    const onUploadImages = (event) => {
+    const onUploadImages = async (event) => {
         const fileType = event.target.files[0].type;
+        const file = event.target.files[0];
         if (
             fileType === "image/png" ||
             fileType === "image/jpg" ||
             fileType === "image/jpeg"
         ) {
-            setFile(event.target.files[0]);
-            setImageUrl(URL.createObjectURL(event.target.files[0]));
+            if (file.size > 2 * 1024 * 1024) {
+                notify("error", "File size should not exceed 2MB");
+                setFile(null);
+                setImageUrl(null);
+                event.target.files = null;
+                setIsloading(false);
+            } else {
+                setIsOpen(true);
+                setFile(event.target.files[0]);
+                setImageUrl(URL.createObjectURL(event.target.files[0]));
+                const formData = new FormData();
+                formData.append("image", event.target.files[0]);
+                const response = await Api.imageUpload(
+                    formData,
+                    (progressEvent) => {
+                        const percentCompleted = Math.round(
+                            (progressEvent.loaded * 100) / progressEvent.total
+                        );
+                        setUploadProgress(percentCompleted);
+                        if (percentCompleted === 100) {
+                            setIsOpen(false);
+                        }
+                    }
+                );
+                if (response.status === 200) {
+                    setPicture(response?.data);
+                }
+            }
         } else {
             setFile(null);
             setImageUrl(null);
             event.target.files = null;
+            setIsloading(false);
             notify("error", "File Format is not valid");
         }
     };
 
     const editProductHandle = async () => {
         setIsloading(true);
-        const formData = new FormData();
-        formData.append("title", dataInp.title);
-        formData.append("size", dataInp.size);
-        formData.append("description", dataInp.description);
-        formData.append("category", selectedFood.name);
-        formData.append("price", dataInp.price);
-        formData.append("productPic", file);
 
-        const response = await Api.updateProduct(id, formData);
+        const productData = {
+            title: dataInp.title,
+            description: dataInp.description,
+            size: dataInp.size,
+            price: dataInp.price,
+            category: selectedFood?.name,
+            productPic: picture,
+        };
+        const response = await Api.updateProduct(id, productData);
         if (response?.data?.message) {
             notify("success", response.data.message);
             setDataInp({
@@ -385,6 +414,11 @@ const EditProduct = () => {
                     </div>
                 </div>
             </div>
+            <UploadProgress
+                isOpen={isOpen}
+                setIsOpen={setIsOpen}
+                uploadProgress={uploadProgress}
+            />
         </>
     );
 };

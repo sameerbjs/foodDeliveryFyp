@@ -8,6 +8,7 @@ import {useSelector} from "react-redux";
 import Api from "../../services/api";
 import {ToastContainer} from "react-toastify";
 import Loader from "../../components/loader/Loader";
+import UploadProgress from "../../components/uploadProgress";
 
 const AddProduct = () => {
     const rest_id = useSelector((store) => store.authUser?.resturantAuth?._id);
@@ -16,6 +17,9 @@ const AddProduct = () => {
     const [imageUrl, setImageUrl] = useState(null);
     const [selectedFood, setSelectedFood] = useState(FoodCategory[0]);
     const navigate = useNavigate();
+    const [picture, setPicture] = useState("");
+    const [uploadProgress, setUploadProgress] = useState(0);
+    const [isOpen, setIsOpen] = useState(false);
     const [dataInp, setDataInp] = useState({
         title: "",
         description: "",
@@ -30,19 +34,47 @@ const AddProduct = () => {
         });
     };
 
-    const onUploadImages = (event) => {
+    const onUploadImages = async (event) => {
         const fileType = event.target.files[0].type;
+        const file = event.target.files[0];
         if (
             fileType === "image/png" ||
             fileType === "image/jpg" ||
             fileType === "image/jpeg"
         ) {
-            setFile(event.target.files[0]);
-            setImageUrl(URL.createObjectURL(event.target.files[0]));
+            if (file.size > 2 * 1024 * 1024) {
+                notify("error", "File size should not exceed 2MB");
+                setFile(null);
+                setImageUrl(null);
+                event.target.files = null;
+                setIsLoading(false);
+            } else {
+                setIsOpen(true);
+                setFile(event.target.files[0]);
+                setImageUrl(URL.createObjectURL(event.target.files[0]));
+                const formData = new FormData();
+                formData.append("image", event.target.files[0]);
+                const response = await Api.imageUpload(
+                    formData,
+                    (progressEvent) => {
+                        const percentCompleted = Math.round(
+                            (progressEvent.loaded * 100) / progressEvent.total
+                        );
+                        setUploadProgress(percentCompleted);
+                        if (percentCompleted === 100) {
+                            setIsOpen(false);
+                        }
+                    }
+                );
+                if (response.status === 200) {
+                    setPicture(response?.data);
+                }
+            }
         } else {
             setFile(null);
             setImageUrl(null);
             event.target.files = null;
+            setIsLoading(false);
             notify("error", "File Format is not valid");
         }
     };
@@ -51,14 +83,15 @@ const AddProduct = () => {
         setIsLoading(true);
         const {title, description, price, size} = dataInp;
 
-        const productData = new FormData();
-        productData.append("rest_id", rest_id);
-        productData.append("title", title);
-        productData.append("description", description);
-        productData.append("size", size);
-        productData.append("price", price);
-        productData.append("category", selectedFood?.name);
-        productData.append("productPic", file);
+        const productData = {
+            rest_id: rest_id,
+            title: title,
+            description: description,
+            size: size,
+            price: price,
+            category: selectedFood?.name,
+            productPic: picture,
+        };
 
         const response = await Api.addProduct(productData);
         if (response?.data?.message) {
@@ -71,6 +104,7 @@ const AddProduct = () => {
             });
             setSelectedFood(FoodCategory[0]);
             setImageUrl(null);
+            setPicture('');
             setFile(null);
             navigate("/products");
         } else {
@@ -358,6 +392,11 @@ const AddProduct = () => {
                     </div>
                 </div>
             </div>
+            <UploadProgress
+                isOpen={isOpen}
+                setIsOpen={setIsOpen}
+                uploadProgress={uploadProgress}
+            />
         </>
     );
 };
