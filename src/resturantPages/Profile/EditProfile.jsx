@@ -97,14 +97,11 @@ const EditResturant = () => {
             city: city?.name,
             address: info.address,
             phone: info.phone,
+            profilePic : picture
         };
-
         if (info.password) {
             restData["password"] = info.password;
             restData["current_password"] = info.current_password;
-        }
-        if (picture) {
-            restData["profilePic"] = picture;
         }
 
         const response = await Api.resturantEdit(restData, id);

@@ -43,6 +43,7 @@ const EditProfile = () => {
 
                 setImageUrl(`${response?.data?.profilePic}`);
                 setFile(`${response?.data?.profilePic}`);
+                setPicture(`${response?.data?.profilePic}`);
                 setIsLoading(false);
             } else {
                 notify("error", response?.data?.error);
@@ -91,14 +92,13 @@ const EditProfile = () => {
             dob: info.dateOfBirth,
             address: info.address,
             isUser: true,
+            profilePic : picture
         };
         if (info.password) {
             userData["password"] = info.password;
             userData["current_password"] = info.current_password;
         }
-        if (picture) {
-            userData["profilePic"] = picture;
-        }
+    
         const response = await Api.userEdit(userData, id);
         if (response?.data?.finalData) {
             setIsLoading(false);
