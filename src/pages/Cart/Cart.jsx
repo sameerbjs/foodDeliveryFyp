@@ -88,13 +88,7 @@ const Cart = () => {
                                                         <img
                                                             alt="ecommerce"
                                                             className="object-contain h-full w-full"
-                                                            src={`${
-                                                                process.env
-                                                                    .REACT_APP_SERVER_URL
-                                                            }/${cart?.productPath.replace(
-                                                                /\\/g,
-                                                                "/"
-                                                            )}`}
+                                                            src={`${cart?.productPic}`}
                                                         />
                                                     </Link>
                                                     <div className="mt-4">

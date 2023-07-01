@@ -5,6 +5,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import Api from "../../services/api";
 import {handleDeleteProductOrderPlace} from "../../redux/CartSlice";
+import Loader from "../../components/loader/Loader";
 
 const CheckOut = () => {
     const navigate = useNavigate();
@@ -14,6 +15,7 @@ const CheckOut = () => {
     const cartProducts = useSelector((store) => store.cart.cartProducts);
     const [isOpen, setIsOpen] = useState(false);
     const [deliveryCharges, setDeliveryCharges] = useState(200);
+    const [isLoading, setIsLoading] = useState(false);
     const [orderDetail, setOrderDetail] = useState({
         name: "",
         email: "",
@@ -43,6 +45,7 @@ const CheckOut = () => {
     };
 
     const handlePlaceOrder = async () => {
+        setIsLoading(true);
         const data = {
             products: cartProducts?.map((item) => ({
                 productId: item?._id,
@@ -69,6 +72,9 @@ const CheckOut = () => {
             navigate(`/profile/${cur_user._id}`, {
                 state: {tab: 1, order: true},
             });
+            setIsLoading(false);
+        } else {
+            setIsLoading(false);
         }
     };
     return (
@@ -199,7 +205,8 @@ const CheckOut = () => {
                             Delivery charges : {deliveryCharges}
                         </h1>
                         <h1 className="font-semibold text-[#212245]">
-                            Total Price : {totalPriceProducts + deliveryCharges} {""}
+                            Total Price : {totalPriceProducts + deliveryCharges}{" "}
+                            {""}
                         </h1>
                         <button
                             onClick={() => setIsOpen(true)}
@@ -265,7 +272,14 @@ const CheckOut = () => {
                                                 type="button"
                                                 className="inline-flex justify-center rounded-md border border-transparent bg-green-100 px-4 py-2 text-sm font-medium text-green-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                                             >
-                                                Confirm
+                                                {isLoading ? (
+                                                    <Loader
+                                                        width="w-8"
+                                                        height="h-8"
+                                                    />
+                                                ) : (
+                                                    "Confirm"
+                                                )}
                                             </button>
                                         </div>
                                     </Dialog.Panel>

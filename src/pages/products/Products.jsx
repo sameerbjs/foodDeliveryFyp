@@ -145,13 +145,7 @@ export const ProductRest = () => {
                                         <div className="h-64">
                                             <img
                                                 className="w-full object-contain h-full"
-                                                src={`${
-                                                    process.env
-                                                        .REACT_APP_SERVER_URL
-                                                }/${product.productPath.replace(
-                                                    /\\/g,
-                                                    "/"
-                                                )}`}
+                                                src={`${product.productPic}`}
                                                 alt={product.title}
                                             />
                                         </div>

@@ -109,13 +109,7 @@ const Resturants = () => {
                                         >
                                             <div className="relative w-full">
                                                 <img
-                                                    src={`${
-                                                        process.env
-                                                            .REACT_APP_SERVER_URL
-                                                    }/${rest.profilePath.replace(
-                                                        /\\/g,
-                                                        "/"
-                                                    )}`}
+                                                    src={`${rest.profilePic}`}
                                                     alt={rest.name}
                                                     className="transition-transform duration-300 w-full ease-linear object-contain group-hover:scale-[1.04]"
                                                 />

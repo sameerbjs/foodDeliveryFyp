@@ -121,13 +121,7 @@ const OrderDetail = () => {
                                     <div className="flex items-start space-x-4">
                                         <div className="flex-shrink-0">
                                             <img
-                                                src={`${
-                                                    process.env
-                                                        .REACT_APP_SERVER_URL
-                                                }/${item?.product?.productPath.replace(
-                                                    /\\/g,
-                                                    "/"
-                                                )}`}
+                                                src={`${item?.product?.productPic}`}
                                                 alt="Product"
                                                 className="h-12 w-12 rounded-md"
                                             />

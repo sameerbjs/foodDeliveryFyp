@@ -79,12 +79,7 @@ const ProductDetail = () => {
                     <div className="lg:w-4/5 mx-auto flex flex-wrap">
                         <div className="lg:w-1/2 w-full lg:h-auto h-64">
                             <img
-                                src={`${
-                                    process.env.REACT_APP_SERVER_URL
-                                }/${productDetail?.productPath.replace(
-                                    /\\/g,
-                                    "/"
-                                )}`}
+                                src={`${productDetail?.productPic}`}
                                 className=" object-contain h-full w-full object-center rounded"
                                 alt={productDetail?.title}
                             />

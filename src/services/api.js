@@ -36,7 +36,7 @@ export default class Api {
         );
     };
 
-    static imageUpload = async (data,onUploadProgress) => {
+    static imageUpload = async (data, onUploadProgress) => {
         try {
             const response = await this._api.post("/api/upload-image", data, {
                 onUploadProgress,
@@ -246,6 +246,24 @@ export default class Api {
     static changeOrderStatus = async (id, data) => {
         try {
             const response = await this._api.post(`/api/order-status/${id}`, data);
+            return response;
+        } catch (error) {
+            return error.response;
+        }
+    }
+    static getOrderById = async (rest_id, search, status) => {
+        try {
+            const response = await this._api.get(`/api/order`, {
+                params: { rest_id, search, status },
+            });
+            return response;
+        } catch (error) {
+            return error.response;
+        }
+    }
+    static getUserAllOrders = async (id, status) => {
+        try {
+            const response = await this._api.get(`/api/get-user-order/${id}`);
             return response;
         } catch (error) {
             return error.response;
