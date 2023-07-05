@@ -60,6 +60,16 @@ const HeaderRest = () => {
                                     >
                                         Products
                                     </NavLink>
+                                    <NavLink
+                                        to={`/category/${rest_id}`}
+                                        className={({isActive}) =>
+                                            isActive
+                                                ? "text-red-500 px-3 py-2 font-semibold leading-5 bg-[#fde4e4] rounded-lg"
+                                                : "text-[#212245] hover:text-red-500 px-3 py-2 font-semibold leading-5 hover:bg-[#fde4e4] rounded-lg"
+                                        }
+                                    >
+                                        Categories
+                                    </NavLink>
                                 </div>
                             </div>
                             <div className="flex items-center gap-3 lg:mr-0 mr-7 flex-row-reverse">
@@ -262,6 +272,16 @@ const HeaderRest = () => {
                                                     }
                                                 >
                                                     Products
+                                                </NavLink>
+                                                <NavLink
+                                                    to={`/category/${rest_id}`}
+                                                    className={({isActive}) =>
+                                                        isActive
+                                                            ? "text-red-500 px-3 py-2 font-semibold leading-5 bg-[#fde4e4] rounded-lg block"
+                                                            : "text-[#212245] hover:text-red-500 px-3 py-2 font-semibold leading-5 block hover:bg-[#fde4e4] rounded-lg"
+                                                    }
+                                                >
+                                                    Categories
                                                 </NavLink>
                                             </div>
                                         </div>

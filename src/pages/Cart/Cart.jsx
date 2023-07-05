@@ -103,9 +103,12 @@ const Cart = () => {
                                                                 cart.quantity}{" "}
                                                             PKR
                                                         </p>
-                                                        <p className="mt-1">
-                                                            Size : {cart.size}
-                                                        </p>
+                                                        {cart.size && (
+                                                            <p className="mt-1">
+                                                                Size :{" "}
+                                                                {cart.size}
+                                                            </p>
+                                                        )}
                                                     </div>
                                                     <div className="flex items-center gap-3">
                                                         <p>Quantity</p>

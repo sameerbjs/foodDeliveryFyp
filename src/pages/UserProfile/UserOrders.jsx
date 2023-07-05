@@ -17,10 +17,6 @@ const UserOrders = () => {
             setIsLoading(true);
             const response = await Api.getUserAllOrders(user_id);
             if (response?.data?.orders) {
-                console.log(
-                    "response?.data?.orders :>> ",
-                    response?.data?.orders
-                );
                 setIsLoading(false);
                 setAllOrders(response?.data?.orders);
             } else {
@@ -101,6 +97,10 @@ const UserOrders = () => {
                                                                                     prod?.quantity
                                                                                 }
                                                                             </p>
+                                                                            {
+                                                                                prod
+                                                                                ?.product
+                                                                                ?.size && 
                                                                             <p>
                                                                                 Size
                                                                                 :{" "}
@@ -110,6 +110,7 @@ const UserOrders = () => {
                                                                                         ?.size
                                                                                 }
                                                                             </p>
+                                                                            }
                                                                             <p>
                                                                                 Status
                                                                                 :{" "}

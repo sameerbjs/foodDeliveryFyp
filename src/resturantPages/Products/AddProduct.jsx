@@ -1,7 +1,6 @@
-import React, {Fragment, useState} from "react";
+import React, {Fragment, useEffect, useState} from "react";
 import {notify} from "../../helper";
 import {Listbox, Transition} from "@headlessui/react";
-import FoodCategory from "../../assets/data/FoodCategory";
 import {CheckIcon, ChevronUpDownIcon} from "@heroicons/react/20/solid";
 import {useNavigate} from "react-router-dom";
 import {useSelector} from "react-redux";
@@ -15,17 +14,29 @@ const AddProduct = () => {
     const [file, setFile] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [imageUrl, setImageUrl] = useState(null);
-    const [selectedFood, setSelectedFood] = useState(FoodCategory[0]);
+    const [selectedFood, setSelectedFood] = useState();
     const navigate = useNavigate();
     const [picture, setPicture] = useState("");
     const [uploadProgress, setUploadProgress] = useState(0);
     const [isOpen, setIsOpen] = useState(false);
+    const [allCategories, setAllCategories] = useState([]);
     const [dataInp, setDataInp] = useState({
         title: "",
         description: "",
         price: "",
-        size: "Small",
+        size: "",
     });
+
+    useEffect(() => {
+        setIsLoading(true);
+        const fetchAllCategories = async () => {
+            const response = await Api.getCategory(rest_id);
+            setAllCategories(response.data?.data);
+            setSelectedFood(response.data?.data[0]);
+            setIsLoading(false);
+        };
+        fetchAllCategories();
+    }, [rest_id]);
 
     const handleChange = (event) => {
         setDataInp({
@@ -87,7 +98,7 @@ const AddProduct = () => {
             rest_id: rest_id,
             title: title,
             description: description,
-            size: size,
+            size: size ? size : "",
             price: price,
             category: selectedFood?.name,
             productPic: picture,
@@ -102,9 +113,9 @@ const AddProduct = () => {
                 description: "",
                 price: "",
             });
-            setSelectedFood(FoodCategory[0]);
+            setSelectedFood(allCategories[0]);
             setImageUrl(null);
-            setPicture('');
+            setPicture("");
             setFile(null);
             navigate("/products");
         } else {
@@ -162,39 +173,6 @@ const AddProduct = () => {
                             className="w-full bg-white rounded border border-gray-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                         />
                     </div>
-                    <div className="intro-x space-y-3">
-                        <label htmlFor="size" className="font-bold">
-                            Size
-                        </label>
-                        <select
-                            className="appearance-none w-full bg-white rounded border border-gray-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-                            id="size"
-                            name="size"
-                            value={dataInp.size}
-                            onChange={handleChange}
-                        >
-                            <option value="Small">Small</option>
-                            <option value="Medium">Medium</option>
-                            <option value="Large">Large</option>
-                        </select>
-                        <p className="text-sm">
-                            Default size of product is medium in case of when
-                            size is not selected
-                        </p>
-                    </div>
-                    <div className="intro-x space-y-3">
-                        <label htmlFor="price" className="font-bold">
-                            Price
-                        </label>
-                        <input
-                            id="price"
-                            name="price"
-                            onChange={handleChange}
-                            value={dataInp.price}
-                            type="text"
-                            className="w-full bg-white rounded border border-gray-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-                        />
-                    </div>
                     <div className="intro-x space-y-3 !z-50">
                         <p className="font-semibold text-[14px] text-[#212245]">
                             Category
@@ -202,11 +180,15 @@ const AddProduct = () => {
                         <Listbox
                             value={selectedFood}
                             onChange={setSelectedFood}
+                            disabled={allCategories?.length === 0}
                         >
                             <div className="relative mt-1">
-                                <Listbox.Button className="relative w-full cursor-default bg-white rounded-lg border py-2 pl-3 pr-10 text-left focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-400">
+                                <Listbox.Button className="relative w-full cursor-default bg-white rounded-lg border-gray-300 border py-2 pl-3 pr-10 text-left focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-400">
                                     <span className="block truncate">
-                                        {selectedFood.name}
+                                        {allCategories &&
+                                        allCategories.length !== 0
+                                            ? selectedFood?.name
+                                            : "No category found, please add some categories"}
                                     </span>
                                     <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
                                         <ChevronUpDownIcon
@@ -222,45 +204,78 @@ const AddProduct = () => {
                                     leaveTo="opacity-0"
                                 >
                                     <Listbox.Options className="absolute z-50 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 scrollbar-hide text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                                        {FoodCategory.map((food, index) => (
-                                            <Listbox.Option
-                                                key={index}
-                                                className={({active}) =>
-                                                    `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                                                        active
-                                                            ? "bg-[#fde4e4] text-red-500"
-                                                            : "text-gray-900"
-                                                    }`
-                                                }
-                                                value={food}
-                                            >
-                                                {({selected}) => (
-                                                    <>
-                                                        <span
-                                                            className={`block truncate ${
-                                                                selected
-                                                                    ? "font-medium"
-                                                                    : "font-normal"
-                                                            }`}
-                                                        >
-                                                            {food.name}
-                                                        </span>
-                                                        {selected ? (
-                                                            <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-red-500">
-                                                                <CheckIcon
-                                                                    className="h-5 w-5"
-                                                                    aria-hidden="true"
-                                                                />
+                                        {allCategories &&
+                                            allCategories.length !== 0 &&
+                                            allCategories.map((food, index) => (
+                                                <Listbox.Option
+                                                    key={index}
+                                                    className={({active}) =>
+                                                        `relative cursor-default select-none py-2 pl-10 pr-4 ${
+                                                            active
+                                                                ? "bg-[#fde4e4] text-red-500"
+                                                                : "text-gray-900"
+                                                        }`
+                                                    }
+                                                    value={food}
+                                                >
+                                                    {({selected}) => (
+                                                        <>
+                                                            <span
+                                                                className={`block truncate ${
+                                                                    selected
+                                                                        ? "font-medium"
+                                                                        : "font-normal"
+                                                                }`}
+                                                            >
+                                                                {food.name}
                                                             </span>
-                                                        ) : null}
-                                                    </>
-                                                )}
-                                            </Listbox.Option>
-                                        ))}
+                                                            {selected ? (
+                                                                <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-red-500">
+                                                                    <CheckIcon
+                                                                        className="h-5 w-5"
+                                                                        aria-hidden="true"
+                                                                    />
+                                                                </span>
+                                                            ) : null}
+                                                        </>
+                                                    )}
+                                                </Listbox.Option>
+                                            ))}
                                     </Listbox.Options>
                                 </Transition>
                             </div>
                         </Listbox>
+                    </div>
+                    {selectedFood?.name === "Pizza" && (
+                        <div className="intro-x space-y-3">
+                            <label htmlFor="size" className="font-bold">
+                                Size
+                            </label>
+                            <select
+                                className="appearance-none w-full bg-white rounded border border-gray-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                                id="size"
+                                name="size"
+                                value={dataInp.size}
+                                onChange={handleChange}
+                            >
+                                <option value="Small">Small</option>
+                                <option value="Medium">Medium</option>
+                                <option value="Large">Large</option>
+                            </select>
+                        </div>
+                    )}
+                    <div className="intro-x space-y-3">
+                        <label htmlFor="price" className="font-bold">
+                            Price
+                        </label>
+                        <input
+                            id="price"
+                            name="price"
+                            onChange={handleChange}
+                            value={dataInp.price}
+                            type="text"
+                            className="w-full bg-white rounded border border-gray-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                        />
                     </div>
                 </div>
                 <div className="mt-5">
@@ -380,6 +395,7 @@ const AddProduct = () => {
                         <div>
                             <button
                                 onClick={handleAddProduct}
+                                disabled={allCategories?.length === 0}
                                 className="relative intro-x w-full bg-red-500 hover:bg-[#212245] text-white font-medium flex justify-center py-2.5 px-4 border border-transparent rounded-lg focus:outline-none "
                             >
                                 {isLoading ? (

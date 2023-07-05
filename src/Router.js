@@ -27,6 +27,7 @@ import {
     EditResturant,
     Orders,
     OrderDetail,
+    Categories
 } from "./resturantPages";
 
 export const UserRoutes = [
@@ -58,4 +59,5 @@ export const ResturantsRoutes = [
     { path: "/orders", component: <Orders /> },
     { path: "/edit-resturant/:id", component: <EditResturant /> },
     { path: "/order-detail/:id", component: <OrderDetail /> },
+    { path: "/category/:id", component: <Categories /> },
 ];

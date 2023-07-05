@@ -57,7 +57,7 @@ const Login = () => {
                 setIsLoading(false);
                 notify(
                     "error",
-                    "User already registered with this email but not verify, Verify email please"
+                    "Verify email please"
                 );
                 return;
             }

@@ -8,8 +8,10 @@ import Api from "../../services/api";
 import {ToastContainer} from "react-toastify";
 import Loader from "../../components/loader/Loader";
 import UploadProgress from "../../components/uploadProgress";
+import { useSelector } from "react-redux";
 
 const EditProduct = () => {
+    const rest_id = useSelector((store) => store.authUser?.resturantAuth?._id);
     const navigate = useNavigate();
     const {id} = useParams();
     const [picture, setPicture] = useState("");
@@ -18,6 +20,7 @@ const EditProduct = () => {
     const [file, setFile] = useState(null);
     const [isLoading, setIsloading] = useState(false);
     const [imageUrl, setImageUrl] = useState(null);
+    const [allCategories, setAllCategories] = useState([]);
     const [selectedFood, setSelectedFood] = useState(FoodCategory[0]);
     const [dataInp, setDataInp] = useState({
         title: "",
@@ -25,6 +28,16 @@ const EditProduct = () => {
         price: "",
         size: "",
     });
+
+    useEffect(() => {
+        setIsloading(true);
+        const fetchAllCategories = async () => {
+            const response = await Api.getCategory(rest_id);
+            setAllCategories(response.data?.data);
+            setIsloading(false);
+        };
+        fetchAllCategories();
+    }, [rest_id])
 
     const handleChange = (event) => {
         setDataInp({
@@ -188,35 +201,6 @@ const EditProduct = () => {
                             className="w-full bg-white rounded border border-gray-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                         />
                     </div>
-                    <div className="intro-x space-y-3">
-                        <label htmlFor="size" className="font-bold">
-                            Size
-                        </label>
-                        <select
-                            className="appearance-none w-full bg-white rounded border border-gray-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-                            id="size"
-                            name="size"
-                            value={dataInp.size}
-                            onChange={handleChange}
-                        >
-                            <option value="Small">Small</option>
-                            <option value="Medium">Medium</option>
-                            <option value="Large">Large</option>
-                        </select>
-                    </div>
-                    <div className="intro-x space-y-3">
-                        <label htmlFor="price" className="font-bold">
-                            Price
-                        </label>
-                        <input
-                            id="price"
-                            name="price"
-                            onChange={handleChange}
-                            value={dataInp.price}
-                            type="text"
-                            className="w-full bg-white rounded border border-gray-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-                        />
-                    </div>
                     <div className="intro-x space-y-3 !z-50">
                         <p className="font-semibold text-[14px] text-[#212245]">
                             Category
@@ -244,7 +228,9 @@ const EditProduct = () => {
                                     leaveTo="opacity-0"
                                 >
                                     <Listbox.Options className="absolute z-50 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 scrollbar-hide text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                                        {FoodCategory.map((food, index) => (
+                                        {allCategories &&
+                                            allCategories.length !== 0 &&
+                                            allCategories.map((food, index) => (
                                             <Listbox.Option
                                                 key={index}
                                                 className={({active}) =>
@@ -283,6 +269,38 @@ const EditProduct = () => {
                                 </Transition>
                             </div>
                         </Listbox>
+                    </div>
+                    {
+                        selectedFood.name === 'Pizza' && 
+                    <div className="intro-x space-y-3">
+                        <label htmlFor="size" className="font-bold">
+                            Size
+                        </label>
+                        <select
+                            className="appearance-none w-full bg-white rounded border border-gray-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                            id="size"
+                            name="size"
+                            value={dataInp.size}
+                            onChange={handleChange}
+                        >
+                            <option value="Small">Small</option>
+                            <option value="Medium">Medium</option>
+                            <option value="Large">Large</option>
+                        </select>
+                    </div>
+                    }
+                    <div className="intro-x space-y-3">
+                        <label htmlFor="price" className="font-bold">
+                            Price
+                        </label>
+                        <input
+                            id="price"
+                            name="price"
+                            onChange={handleChange}
+                            value={dataInp.price}
+                            type="text"
+                            className="w-full bg-white rounded border border-gray-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                        />
                     </div>
                 </div>
                 <div className="mt-5">

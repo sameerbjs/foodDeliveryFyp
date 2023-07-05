@@ -1,3 +1,4 @@
+import Categories from "./Categories";
 import HeaderRest from "./Header/Header";
 import OrderDetail from "./Orders/OrderDetail";
 import Orders from "./Orders/Orders";
@@ -16,5 +17,6 @@ export {
     EditProduct,
     Orders,
     EditResturant,
-    OrderDetail
+    OrderDetail,
+    Categories
 };

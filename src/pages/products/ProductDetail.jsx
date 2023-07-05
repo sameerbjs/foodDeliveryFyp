@@ -91,12 +91,16 @@ const ProductDetail = () => {
                             <h1 className="text-[#212245] text-3xl  font-medium mb-1">
                                 {productDetail?.title}
                             </h1>
-                        
+
                             <p className="leading-relaxed items-center border-b-2 border-gray-100 pb-5">
                                 {productDetail?.description}.
                             </p>
-                            <p className="leading-relaxed items-center pt-2 pb-3">Size : {productDetail?.size}</p>
-                            <div className="flex justify-between items-center">
+                            {productDetail?.size && (
+                                <p className="leading-relaxed items-center pt-2 pb-3">
+                                    Size : {productDetail?.size}
+                                </p>
+                            )}
+                            <div className="flex justify-between items-center pt-4">
                                 <span className=" font-medium text-2xl text-gray-900">
                                     {productDetail?.price} pkr
                                 </span>

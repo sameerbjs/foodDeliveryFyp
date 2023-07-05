@@ -106,6 +106,7 @@ const Resturants = () => {
                                             to={`/products/${convertToSlug(
                                                 rest.name
                                             )}/${rest._id}`}
+                                            state={{categories : rest?.categories}}
                                         >
                                             <div className="relative w-full">
                                                 <img
@@ -141,7 +142,7 @@ const Resturants = () => {
                                                     </span>
                                                     <span className="text-sm text-gray-600">
                                                         {moment(
-                                                            rest.createdDate
+                                                            rest?.createdAt
                                                         ).format(
                                                             "Do MMMM YYYY"
                                                         )}

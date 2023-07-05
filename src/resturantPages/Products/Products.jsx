@@ -92,7 +92,7 @@ const AllProducts = () => {
                         Add New Product
                     </Link>
                 </div>
-                <div class="relative overflow-x-auto mt-5">
+                <div className="relative overflow-x-auto mt-5">
                     <table className="min-w-full divide-y divide-gray-300 text-left">
                         <thead className="bg-gray-200">
                             <tr>
@@ -115,53 +115,49 @@ const AllProducts = () => {
                         </thead>
                         <tbody className="bg-white divide-y divide-gray-200">
                             {allProducts && allProducts.length ? (
-                                allProducts.map((item) => {
+                                allProducts.map((item, index) => {
                                     return (
-                                        <>
-                                            <tr key={item.id}>
-                                                <th
-                                                    scope="row"
-                                                    className="px-6 py-4 font-normal whitespace-nowrap"
-                                                >
-                                                    {item.title}
-                                                </th>
-                                                <td className="px-6 py-4">
-                                                    {item.category}
-                                                </td>
-                                                <td className="px-6 py-4">
-                                                    20
-                                                </td>
-                                                <td className="px-6 py-4">
-                                                    {item.price} pkr
-                                                </td>
-                                                <td className="px-6 py-4">
-                                                    <div className="flex gap-2 items-center">
-                                                        <Link
-                                                            to={`/edit-pro/${item._id}`}
-                                                            className="border px-2 py-1 hover:bg-slate-200/60"
-                                                        >
-                                                            Edit
-                                                        </Link>
-                                                        <Link
-                                                            to={`/pro-view/${item._id}`}
-                                                            className="border px-2 py-1 hover:bg-slate-200/60"
-                                                        >
-                                                            View
-                                                        </Link>
-                                                        <button
-                                                            onClick={() =>
-                                                                handleDeleteModel(
-                                                                    item._id
-                                                                )
-                                                            }
-                                                            className="border px-2 py-1 hover:bg-slate-200/60"
-                                                        >
-                                                            Delete
-                                                        </button>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </>
+                                        <tr key={index}>
+                                            <th
+                                                scope="row"
+                                                className="px-6 py-4 font-normal whitespace-nowrap"
+                                            >
+                                                {item.title}
+                                            </th>
+                                            <td className="px-6 py-4">
+                                                {item.category}
+                                            </td>
+                                            <td className="px-6 py-4">20</td>
+                                            <td className="px-6 py-4">
+                                                {item.price} pkr
+                                            </td>
+                                            <td className="px-6 py-4">
+                                                <div className="flex gap-2 items-center">
+                                                    <Link
+                                                        to={`/edit-pro/${item._id}`}
+                                                        className="border px-2 py-1 hover:bg-slate-200/60"
+                                                    >
+                                                        Edit
+                                                    </Link>
+                                                    <Link
+                                                        to={`/pro-view/${item._id}`}
+                                                        className="border px-2 py-1 hover:bg-slate-200/60"
+                                                    >
+                                                        View
+                                                    </Link>
+                                                    <button
+                                                        onClick={() =>
+                                                            handleDeleteModel(
+                                                                item._id
+                                                            )
+                                                        }
+                                                        className="border px-2 py-1 hover:bg-slate-200/60"
+                                                    >
+                                                        Delete
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
                                     );
                                 })
                             ) : (

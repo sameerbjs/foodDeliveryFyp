@@ -269,4 +269,29 @@ export default class Api {
             return error.response;
         }
     }
+
+    static addCategory = async (data) => {
+        try {
+            const response = await this._api.post('/api/add-category', data);
+            return response;
+        } catch (error) {
+            return error.response
+        }
+    }
+    static getCategory = async (id) => {
+        try {
+            const response = await this._api.get(`/api/get-category/${id}`);
+            return response;
+        } catch (error) {
+            return error.response
+        }
+    }
+    static deleteCategory = async (id) => {
+        try {
+            const response = await this._api.delete(`/api/delete-category/${id}`);
+            return response;
+        } catch (error) {
+            return error.response
+        }
+    }
 }

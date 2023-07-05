@@ -146,7 +146,10 @@ const Orders = () => {
                             <h2 className="text-2xl font-bold mb-4">Orders</h2>
                             {orders?.length !== 0 ? (
                                 orders?.map((order, index) => {
-                                    return (
+                                    return order?.products?.some(
+                                        (item) =>
+                                            item?.product?.rest_id === rest_id
+                                    ) ? (
                                         <div
                                             className="flex flex-col space-y-4 mb-3"
                                             key={index}
@@ -172,7 +175,8 @@ const Orders = () => {
                                                     <ul className="mt-2 space-y-4">
                                                         {order?.products?.map(
                                                             (prod, index) => {
-                                                                return (
+                                                                return prod?.product ===
+                                                                    null ? null : (
                                                                     <>
                                                                         <li
                                                                             className="ttext-gray-800 flex justify-between items-center"
@@ -202,15 +206,19 @@ const Orders = () => {
                                                                                         prod?.quantity
                                                                                     }
                                                                                 </p>
-                                                                                <p>
-                                                                                    Size
-                                                                                    :{" "}
-                                                                                    {
-                                                                                        prod
-                                                                                            ?.product
-                                                                                            ?.size
-                                                                                    }
-                                                                                </p>
+                                                                                {prod
+                                                                                    ?.product
+                                                                                    ?.size && (
+                                                                                    <p>
+                                                                                        Size
+                                                                                        :{" "}
+                                                                                        {
+                                                                                            prod
+                                                                                                ?.product
+                                                                                                ?.size
+                                                                                        }
+                                                                                    </p>
+                                                                                )}
                                                                                 <p>
                                                                                     Status
                                                                                     :{" "}
@@ -278,7 +286,7 @@ const Orders = () => {
                                                 </div>
                                             </div>
                                         </div>
-                                    );
+                                    ) : null;
                                 })
                             ) : (
                                 <div className="flex justify-center items-center mt-20">

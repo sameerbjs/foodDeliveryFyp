@@ -1,5 +1,5 @@
 import React, {useEffect} from "react";
-import {Link, useParams} from "react-router-dom";
+import {Link, useLocation, useParams} from "react-router-dom";
 import {useNavigate} from "react-router-dom";
 import {Tab} from "@headlessui/react";
 import {useState} from "react";
@@ -16,6 +16,7 @@ export const ProductRest = () => {
     const [allProducts, setAllProducts] = useState([]);
     const [isLoading, setIsloading] = useState(false);
     const [selectedIndex, setSelectedIndex] = useState(0);
+    const {state} = useLocation();
     const [page, setPage] = useState(1);
     const limit = 10; // Number of products to fetch per page
     const {id} = useParams();
@@ -71,10 +72,44 @@ export const ProductRest = () => {
             );
         } catch (error) {
             setIsloading(false);
-            console.log("Error fetching products", error);
         }
     };
 
+    if (state?.categories?.length === 0) {
+        return (
+            <div className="container px-5 py-7 mx-auto overflow-hidden">
+                <div>
+                    <button
+                        onClick={() => navigate(-1)}
+                        className="rounded-xl bg-gray-200 hover:bg-gray-300 px-4 py-1 inline-flex gap-1 items-center justify-center text-gray-700"
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            strokeWidth="1.5"
+                            stroke="currentColor"
+                            className="w-4 h-4"
+                        >
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"
+                            />
+                        </svg>
+                        Back
+                    </button>
+                </div>
+                <div className=" flex justify-center items-center h-[calc(100vh-300px)]">
+                    <div className="text-center">
+                        <h1 className="font-bold text-2xl">
+                            No products Found
+                        </h1>
+                    </div>
+                </div>
+            </div>
+        );
+    }
     return (
         <React.Fragment>
             <Helmet>
@@ -113,7 +148,7 @@ export const ProductRest = () => {
                             "flex gap-4 scrollbar-hide items-center lg:justify-center justify-start pt-5 pb-10 overflow-x-auto whitespace-nowrap"
                         }
                     >
-                        {FoodCategory.map((category, index) => {
+                        {state?.categories?.map((category, index) => {
                             return (
                                 <Tab key={index}>
                                     {({selected}) => (
