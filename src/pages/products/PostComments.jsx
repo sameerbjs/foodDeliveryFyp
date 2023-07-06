@@ -27,11 +27,6 @@ const PostComments = ({id}) => {
     }, [id]);
 
     const addComment = useCallback(async () => {
-        if (!comment) {
-            notify("error", "Comment field cannot be empty");
-            return;
-        }
-
         setIsLoading(true);
         const dataComment = {
             comment: comment,

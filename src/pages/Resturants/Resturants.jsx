@@ -97,7 +97,6 @@ const Resturants = () => {
                         ) : allResturants && allResturants.length !== 0 ? (
                             allResturants.map((rest, index) => {
                                 return (
-                                    <>
                                     <div
                                         className="cursor-pointer overflow-hidden group py-4"
                                         key={index}
@@ -151,7 +150,6 @@ const Resturants = () => {
                                             </div>
                                         </div>
                                     </div>
-                                    </>
                                 );
                             })
                         ) : (

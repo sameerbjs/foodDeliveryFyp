@@ -25,19 +25,17 @@ export const ProductRest = () => {
         window.scrollTo(0, 0);
     }, []);
 
+    const name = state?.categories[0]?.name;
     useEffect(() => {
         setIsloading(true);
         const fetchAllProducts = async () => {
-            const {name} = FoodCategory.find(
-                (category) => parseInt(category.id) === selectedIndex + 1
-            );
             const response = await Api.getAllProducts(page, limit, id, name);
             if (response?.data?.products) {
-                setIsloading(false);
                 const newProducts = response?.data?.products;
                 setAllProducts((prevProducts) =>
                     page === 1 ? newProducts : [...prevProducts, ...newProducts]
                 );
+                setIsloading(false);
             } else {
                 setIsloading(false);
                 notify("error", response?.data?.error);
@@ -48,18 +46,16 @@ export const ProductRest = () => {
         };
 
         fetchAllProducts();
-    }, [page, id, selectedIndex, navigate]);
+    }, [page, id,name, navigate]);
 
     const handleLoadMore = () => {
         setPage((prevPage) => prevPage + 1);
     };
 
-    const handleTabChange = async (index) => {
-        setSelectedIndex(index);
-        const {name} = FoodCategory.find(
-            (category) => parseInt(category.id) === index + 1
+    const handleTabChange = async (category) => {
+        const {name} = state?.categories.find(
+            (cate) => cate?.id === category?.id
         );
-
         setIsloading(true);
         try {
             const response = await Api.getAllProducts(page, limit, id, name);
@@ -141,7 +137,7 @@ export const ProductRest = () => {
                 </div>
                 <Tab.Group
                     selectedIndex={selectedIndex}
-                    onChange={(index) => handleTabChange(index)}
+                    onChange={(index) => setSelectedIndex(index)}
                 >
                     <Tab.List
                         className={
@@ -150,7 +146,7 @@ export const ProductRest = () => {
                     >
                         {state?.categories?.map((category, index) => {
                             return (
-                                <Tab key={index}>
+                                <Tab key={index} onClick={()=>handleTabChange(category)}>
                                     {({selected}) => (
                                         <span
                                             className={

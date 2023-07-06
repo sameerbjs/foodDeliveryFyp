@@ -51,6 +51,7 @@ const Categories = () => {
             setAllCategories((prevCategories) =>
                 prevCategories.filter((category) => category._id !== id)
             );
+            notify("success", response?.data?.message)
         } else {
             notify("error", response.data?.error);
         }
