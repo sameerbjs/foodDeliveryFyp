@@ -4,7 +4,6 @@ import {useNavigate} from "react-router-dom";
 import {Tab} from "@headlessui/react";
 import {useState} from "react";
 import {Helmet} from "react-helmet";
-import FoodCategory from "../../assets/data/FoodCategory";
 import Api from "../../services/api";
 import Loader from "../../components/loader/Loader";
 import PostComments from "./PostComments";
