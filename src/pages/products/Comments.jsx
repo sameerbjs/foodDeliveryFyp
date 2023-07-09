@@ -13,7 +13,7 @@ const Comments = ({data, onDelete, user_id}) => {
                     <div className="h-px w-40 bg-slate-200 pointer-events-none absolute -left-2 top-1/2 "></div>
                     <div className="w-10 h-10 absolute -left-2 top-1/2 -mt-5 rounded-full shadow text-center zoom-in">
                         <img
-                            src={`https://api.dicebear.com/6.x/bottts/svg?seed=${data?.user?.name}`}
+                            src={`${data?.user?.profilePic}`}
                             alt="avatar"
                             className="rounded-full object-cover shadow-lg shrink-0"
                         />

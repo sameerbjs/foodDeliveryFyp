@@ -55,6 +55,7 @@ const EditResturant = () => {
                 }
                 setImageUrl(`${response?.data?.profilePic}`);
                 setFile(`${response?.data?.profilePic}`);
+                setPicture(`${response?.data?.profilePic}`)
                 setIsLoading(false);
             } else {
                 notify("error", response?.data?.error);

@@ -82,7 +82,7 @@ const ProductView = () => {
                                         <h1 className="text-[#212245] text-3xl  font-medium mb-1">{productDetail?.title}</h1>
                                         <p className="leading-relaxed items-center pb-5 border-b-2 border-gray-100 mb-5">Price : {productDetail?.price} PKR</p>
                                         <p className="leading-relaxed items-center pb-5 mb-5">Size : {productDetail?.size}</p>
-                                        <pre className="leading-relaxed whitespace-pre-line items-center pb-5 border-b-2 border-gray-100 mb-5">{productDetail?.description}.</pre>
+                                        <pre className="leading-relaxed whitespace-pre-line break-all items-center pb-5 border-b-2 border-gray-100 mb-5">{productDetail?.description}.</pre>
                                         <div className='flex items-center justify-between flex-wrap gap-3'>
                                             <div>
                                                 <h2>Total orders : 20</h2>

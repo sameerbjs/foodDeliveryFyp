@@ -230,7 +230,7 @@ const EditProfile = () => {
                                     htmlFor="address"
                                     className="leading-7 text-[15px] font-semibold text-[#212245]"
                                 >
-                                    Address
+                                    City name
                                 </label>
                                 <input
                                     id="address"

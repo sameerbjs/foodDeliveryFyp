@@ -7,6 +7,7 @@ import moment from "moment";
 import Loader from "../../components/loader/Loader";
 import notify from "../../helper/notify";
 import {ToastContainer} from "react-toastify";
+import './index.css'
 
 const Orders = () => {
     const orderFilterSearch = [
@@ -20,10 +21,6 @@ const Orders = () => {
         },
         {
             id: "3",
-            name: "Shipped",
-        },
-        {
-            id: "4",
             name: "Delivered",
         },
     ];
@@ -273,9 +270,6 @@ const Orders = () => {
                                                             >
                                                                 <option value="Pending">
                                                                     Pending
-                                                                </option>
-                                                                <option value="Shipped">
-                                                                    Shipped
                                                                 </option>
                                                                 <option value="Delivered">
                                                                     Delivered

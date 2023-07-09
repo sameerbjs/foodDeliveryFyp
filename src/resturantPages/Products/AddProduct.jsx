@@ -91,8 +91,12 @@ const AddProduct = () => {
     };
 
     const handleAddProduct = async () => {
-        setIsLoading(true);
         const {title, description, price, size} = dataInp;
+        if(!title || !description || !price || !picture){
+            return notify('error', 'Please fill all the fields')
+        }
+
+        setIsLoading(true);
 
         const productData = {
             rest_id: rest_id,

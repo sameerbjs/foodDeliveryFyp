@@ -92,7 +92,7 @@ const ProductDetail = () => {
                                 {productDetail?.title}
                             </h1>
 
-                            <p className="leading-relaxed items-center border-b-2 border-gray-100 pb-5">
+                            <p className="leading-relaxed break-all items-center border-b-2 border-gray-100 pb-5">
                                 {productDetail?.description}.
                             </p>
                             {productDetail?.size && (

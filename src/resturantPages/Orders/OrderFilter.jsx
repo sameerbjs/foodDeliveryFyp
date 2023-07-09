@@ -20,7 +20,7 @@ const OrderFilter = ({
         <div className="intro-x">
             <Listbox value={filters} onChange={handleChangeFilter}>
                 <div className="relative mt-1">
-                    <Listbox.Button className="relative w-full cursor-default bg-white rounded-lg border-2 py-2 pl-3 pr-10 text-left focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-400">
+                    <Listbox.Button className="relative w-full cursor-default bg-white rounded-lg py-2 pl-3 pr-10 text-left">
                         <span className="block truncate">{filters}</span>
                         <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
                             <ChevronUpDownIcon
