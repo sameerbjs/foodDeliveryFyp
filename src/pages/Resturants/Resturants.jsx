@@ -11,6 +11,8 @@ import moment from "moment/moment";
 const Resturants = () => {
     const [allResturants, setAllResturants] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+    const [search, setSearch] = useState('');
+    const [typingTimeout, setTypingTimeout] = useState(null);
 
     const cityName = useParams().city;
     const cityTranslations = {
@@ -21,6 +23,7 @@ const Resturants = () => {
         Karachi: "کراچی",
         Rawalpindi: "راولپنڈی",
         Quetta: "کوئٹہ",
+        Gujranwala : "گوجرانولہ"
     };
     const navigate = useNavigate();
 
@@ -44,6 +47,24 @@ const Resturants = () => {
         getResturant();
     }, [cityName]);
 
+    const handleSearch = (event) => {
+        setSearch(event.target.value);
+        clearTimeout(typingTimeout)
+
+        const timeout = setTimeout(() => {
+            searchResturant(event.target.value);
+        }, 500);
+
+        setTypingTimeout(timeout);
+    }
+    const searchResturant = async (name) => {
+        try {
+            const response = await Api.searchResturant(name);
+            setAllResturants(response.data?.resturant);
+        } catch (error) {
+            notify("error", error);         
+        }
+    }
     return (
         <>
             <Helmet>
@@ -89,6 +110,22 @@ const Resturants = () => {
                     </p>
                 </div>
                 <div className="mt-10">
+                    <div className="intro-x lg:w-1/4 md:1/2 w-full mb-5">
+                        <label
+                            htmlFor="searchresturant"
+                            className="leading-7 text-[15px] font-semibold text-[#212245]"
+                        >
+                            Search Resturant
+                        </label>
+                        <input
+                            id="searchresturant"
+                            name="search"
+                            type="text"
+                            value={search}
+                            onChange={handleSearch}
+                            className="w-full bg-white rounded border border-gray-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
+                        />
+                    </div>
                     <div className="grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-2 grid-cols-1 gap-5">
                         {isLoading ? (
                             <div className="flex justify-center items-center col-span-4 overflow-hidden">
@@ -105,13 +142,15 @@ const Resturants = () => {
                                             to={`/products/${convertToSlug(
                                                 rest.name
                                             )}/${rest._id}`}
-                                            state={{categories : rest?.categories}}
+                                            state={{
+                                                categories: rest?.categories,
+                                            }}
                                         >
                                             <div className="relative w-full">
                                                 <img
                                                     src={`${rest.profilePic}`}
                                                     alt={rest.name}
-                                                    className="transition-transform duration-300 w-full ease-linear object-contain group-hover:scale-[1.04]"
+                                                    className="transition-transform duration-300 h-full w-full ease-linear object-contain group-hover:scale-[1.04]"
                                                 />
                                             </div>
                                         </Link>

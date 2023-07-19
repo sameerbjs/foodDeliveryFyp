@@ -95,6 +95,16 @@ export default class Api {
             return error.response
         }
     }
+    static searchResturant = async (name) => {
+        try {
+            const response = await this._api.get('/api/search-rest', {
+                params: { name }
+            })
+            return response;
+        } catch (error) {
+            return error.response;
+        }
+    }
 
     static getItemsLength = async (id) => {
         try {

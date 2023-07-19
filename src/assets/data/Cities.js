@@ -5,6 +5,7 @@ import Sialkot from '../../assets/images/Sialkot.png'
 import Rawalpindi from '../../assets/images/Rawalpindi.png'
 import Multan from '../../assets/images/Multan.png'
 import Quetta from '../../assets/images/Quetta.png'
+import Gujranwala from '../../assets/images/gujranwala.png'
 
 const cities = [
     {
@@ -62,6 +63,14 @@ const cities = [
         "lat": "30.1798",
         "lng": "66.9750",
         "image" : Quetta
+    },
+    {
+        "id" : "8",
+        "country": "PK",
+        "name": "Gujranwala",
+        "lat": "32.1877",
+        "lng": "74.1945",
+        "image" : Gujranwala
     },
 ]
 

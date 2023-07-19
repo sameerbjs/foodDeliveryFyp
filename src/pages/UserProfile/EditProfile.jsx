@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {Fragment, useEffect, useState} from "react";
 import {BsEye, BsEyeSlash} from "react-icons/bs";
 import {notify} from "../../helper";
 import {Helmet} from "react-helmet";
@@ -7,14 +7,16 @@ import {useParams} from "react-router-dom";
 import Api from "../../services/api";
 import {handleUserAuth} from "../../redux/AuthSlice";
 import {useDispatch} from "react-redux";
+import cities from "../../assets/data/Cities";
 import {ToastContainer} from "react-toastify";
 import UploadProgress from "../../components/uploadProgress";
+import { Listbox, Transition } from "@headlessui/react";
+import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
 
 const EditProfile = () => {
     const [info, setinfo] = useState({
         username: "",
         email: "",
-        address: "",
         dateOfBirth: "",
         password: "",
         c_password: "",
@@ -24,6 +26,7 @@ const EditProfile = () => {
     const [imageUrl, setImageUrl] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [picture, setPicture] = useState("");
+    const [city, setCity] = useState(cities[0]);
     const [uploadProgress, setUploadProgress] = useState(0);
     const [isOpen, setIsOpen] = useState(false);
     const dispatch = useDispatch();
@@ -37,9 +40,16 @@ const EditProfile = () => {
                 setinfo({
                     username: response?.data?.name,
                     email: response?.data?.email,
-                    address: response?.data?.address,
                     dateOfBirth: response?.data?.dob,
                 });
+
+                const selectedCityName = response?.data?.address;
+                const matchingCity = cities.find(
+                    (city) => city.name === selectedCityName
+                );
+                if (matchingCity) {
+                    setCity(matchingCity);
+                }
 
                 setImageUrl(`${response?.data?.profilePic}`);
                 setFile(`${response?.data?.profilePic}`);
@@ -67,7 +77,6 @@ const EditProfile = () => {
         if (
             !info.username ||
             !info.email ||
-            !info.address ||
             !info.dateOfBirth
         ) {
             notify("error", "Please fill all the fields");
@@ -90,7 +99,7 @@ const EditProfile = () => {
             name: info.username,
             email: info.email,
             dob: info.dateOfBirth,
-            address: info.address,
+            address: city?.name,
             isUser: true,
             profilePic : picture
         };
@@ -226,23 +235,77 @@ const EditProfile = () => {
                                 />
                             </div>
                             <div className="intro-x">
-                                <label
-                                    htmlFor="address"
-                                    className="leading-7 text-[15px] font-semibold text-[#212245]"
-                                >
-                                    City name
-                                </label>
-                                <input
-                                    id="address"
-                                    name="address"
-                                    type="text"
-                                    autoComplete="address"
-                                    required
-                                    value={info.address}
-                                    onChange={handleChangeText}
-                                    className="w-full bg-white rounded border border-gray-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
-                                />
-                            </div>
+                                    <p className="leading-7 text-[15px] font-semibold text-[#212245]">
+                                        City
+                                    </p>
+                                    <Listbox value={city} onChange={setCity}>
+                                        <div className="relative mt-1">
+                                            <Listbox.Button className="relative w-full cursor-default bg-white rounded-lg border py-2 pl-3 pr-10 text-left focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-gray-400">
+                                                <span className="block truncate">
+                                                    {city.name}
+                                                </span>
+                                                <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+                                                    <ChevronUpDownIcon
+                                                        className="h-5 w-5 text-gray-400"
+                                                        aria-hidden="true"
+                                                    />
+                                                </span>
+                                            </Listbox.Button>
+                                            <Transition
+                                                as={Fragment}
+                                                leave="transition ease-in duration-100"
+                                                leaveFrom="opacity-100"
+                                                leaveTo="opacity-0"
+                                            >
+                                                <Listbox.Options className="absolute z-50 mt-1 max-h-60 w-full overflow-auto scrollbar-hide rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                                                    {cities.map(
+                                                        (city, index) => (
+                                                            <Listbox.Option
+                                                                key={index}
+                                                                className={({
+                                                                    active,
+                                                                }) =>
+                                                                    `relative cursor-default select-none py-2 pl-10 pr-4 ${
+                                                                        active
+                                                                            ? "bg-[#fde4e4] text-red-500"
+                                                                            : "text-gray-900"
+                                                                    }`
+                                                                }
+                                                                value={city}
+                                                            >
+                                                                {({
+                                                                    selected,
+                                                                }) => (
+                                                                    <>
+                                                                        <span
+                                                                            className={`block truncate ${
+                                                                                selected
+                                                                                    ? "font-medium"
+                                                                                    : "font-normal"
+                                                                            }`}
+                                                                        >
+                                                                            {
+                                                                                city.name
+                                                                            }
+                                                                        </span>
+                                                                        {selected ? (
+                                                                            <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-red-500">
+                                                                                <CheckIcon
+                                                                                    className="h-5 w-5"
+                                                                                    aria-hidden="true"
+                                                                                />
+                                                                            </span>
+                                                                        ) : null}
+                                                                    </>
+                                                                )}
+                                                            </Listbox.Option>
+                                                        )
+                                                    )}
+                                                </Listbox.Options>
+                                            </Transition>
+                                        </div>
+                                    </Listbox>
+                                </div>
                             <div className="intro-x">
                                 <label
                                     htmlFor="dob"

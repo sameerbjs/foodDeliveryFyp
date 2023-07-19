@@ -6,6 +6,8 @@ import {useNavigate} from "react-router-dom";
 import Api from "../../services/api";
 import {handleDeleteProductOrderPlace} from "../../redux/CartSlice";
 import Loader from "../../components/loader/Loader";
+import { notify } from "../../helper";
+import { ToastContainer } from "react-toastify";
 
 const CheckOut = () => {
     const navigate = useNavigate();
@@ -45,6 +47,9 @@ const CheckOut = () => {
     };
 
     const handlePlaceOrder = async () => {
+        if(!orderDetail.city || !orderDetail.street_house || !orderDetail.phone){
+            return notify('error', 'Please fill all the fields')
+        }
         setIsLoading(true);
         const data = {
             products: cartProducts?.map((item) => ({
@@ -82,6 +87,11 @@ const CheckOut = () => {
             <Helmet>
                 <title>Rapid Cravings - Checkout</title>
             </Helmet>
+            <ToastContainer
+                position="top-right"
+                theme="dark"
+                autoClose={1500}
+            />
             <div className="container px-5 py-7 mx-auto">
                 <div className="mb-5">
                     <button
@@ -259,18 +269,18 @@ const CheckOut = () => {
                                             </p>
                                         </div>
 
-                                        <div className="mt-4">
+                                        <div className="mt-4 flex gap-3">
                                             <button
                                                 onClick={() => setIsOpen(false)}
                                                 type="button"
-                                                className="inline-flex mr-2 justify-center rounded-md border border-transparent bg-gray-100 px-4 py-2 text-sm font-medium text-gray-900 hover:bg-gray-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                                                className="mr-2 rounded-md border border-transparent bg-gray-100 px-4 py-2 text-sm font-medium text-gray-900 hover:bg-gray-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                                             >
                                                 Cancel
                                             </button>
                                             <button
                                                 onClick={handlePlaceOrder}
                                                 type="button"
-                                                className="inline-flex justify-center rounded-md border border-transparent bg-green-100 px-4 py-2 text-sm font-medium text-green-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                                                className="flex w-20 justify-center items-center rounded-md border border-transparent bg-green-100 text-sm font-medium text-green-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                                             >
                                                 {isLoading ? (
                                                     <Loader
