@@ -51,7 +51,7 @@ export const HomePage = () => {
                 <div className="container mx-auto px-5 py-10">
                     <HomeExplore />
                 </div>
-                <div className="reviewbg lg:h-[400px] md:h-[400px] h-[500px] mt-8">
+                {/* <div className="reviewbg lg:h-[400px] md:h-[400px] h-[500px] mt-8">
                     <div className="h-full bg-black/60 flex justify-center items-center">
                         <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 lg:gap-20 md:gap-10 gap-8">
                             <div className="text-white text-center">
@@ -80,7 +80,7 @@ export const HomePage = () => {
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> */}
             </div>
         </>
     );
