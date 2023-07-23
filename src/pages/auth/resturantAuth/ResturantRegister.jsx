@@ -1,7 +1,7 @@
 import {Fragment, React, useState} from "react";
 import {ToastContainer} from "react-toastify";
 import {BsEye, BsEyeSlash} from "react-icons/bs";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {notify} from "../../../helper";
 import Api from "../../../services/api";
 import Loader from "../../../components/loader/Loader";
@@ -27,6 +27,7 @@ const ResturantRegister = () => {
     const [picture, setPicture] = useState("");
     const [uploadProgress, setUploadProgress] = useState(0);
     const [isOpen, setIsOpen] = useState(false);
+    const navigate = useNavigate();
 
     const showEyePswd = () => {
         setPswdType(!pswdType);
@@ -80,6 +81,9 @@ const ResturantRegister = () => {
         };
 
         const response = await Api.resturantRegister(data);
+        if(response === undefined){
+            return navigate('/error');
+        }
         if (response?.data?.message) {
             setIsLoading(false);
             notify("success", `${response?.data?.message}`);

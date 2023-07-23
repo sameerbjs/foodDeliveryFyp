@@ -36,6 +36,9 @@ const Resturants = () => {
         setIsLoading(true);
         const getResturant = async () => {
             const response = await Api.getResturantsByCity(cityName);
+            if(response === undefined){
+                return navigate('/error');
+            }
             if (response.status === 200) {
                 setAllResturants(response.data?.resturants);
                 setIsLoading(false);
@@ -45,7 +48,7 @@ const Resturants = () => {
             }
         };
         getResturant();
-    }, [cityName]);
+    }, [cityName,navigate]);
 
     const handleSearch = (event) => {
         setSearch(event.target.value);

@@ -6,6 +6,7 @@ import { ResturantsRoutes, UserRoutes } from "./Router";
 import Api from "./services/api";
 import { useDispatch, useSelector } from "react-redux";
 import { handleRestLogout, handleUserLogout } from "./redux/AuthSlice";
+import ErrorPage from "./pages/Error";
 
 function App() {
     const isUser = useSelector((store) => store.authUser.isUser);
@@ -70,6 +71,7 @@ function App() {
                                 />
                             ))}
                             <Route path="*" element={<PageNotFound />} />
+                            <Route path="/error" element={<ErrorPage />} />
                         </Routes>
                     </main>
                     <Footer />
@@ -88,6 +90,7 @@ function App() {
                                     />
                                 ))}
                                 <Route path="*" element={<PageNotFound />} />
+                                <Route path="/error" element={<ErrorPage />} />
                             </Routes>
                         </main>
                     </div>

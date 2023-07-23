@@ -51,36 +51,6 @@ export const HomePage = () => {
                 <div className="container mx-auto px-5 py-10">
                     <HomeExplore />
                 </div>
-                {/* <div className="reviewbg lg:h-[400px] md:h-[400px] h-[500px] mt-8">
-                    <div className="h-full bg-black/60 flex justify-center items-center">
-                        <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 lg:gap-20 md:gap-10 gap-8">
-                            <div className="text-white text-center">
-                                <h1 className="text-2xl font-semibold whitespace-nowrap">
-                                    Total resturants
-                                </h1>
-                                <p className="text-xl pt-2">10</p>
-                            </div>
-                            <div className="text-white text-center">
-                                <h1 className="text-2xl font-semibold whitespace-nowrap">
-                                    Happy customers
-                                </h1>
-                                <p className="text-xl pt-2">110k</p>
-                            </div>
-                            <div className="text-white text-center">
-                                <h1 className="text-2xl font-semibold whitespace-nowrap">
-                                    Rating
-                                </h1>
-                                <p className="text-xl pt-2">8/10</p>
-                            </div>
-                            <div className="text-white text-center">
-                                <h1 className="text-2xl font-semibold whitespace-nowrap">
-                                    Popularity
-                                </h1>
-                                <p className="text-xl pt-2">WorldWide</p>
-                            </div>
-                        </div>
-                    </div>
-                </div> */}
             </div>
         </>
     );

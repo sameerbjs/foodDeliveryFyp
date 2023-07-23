@@ -52,6 +52,9 @@ const Login = () => {
 
         const response = await Api.userLogin(data);
 
+        if(response === undefined){
+            return navigate('/error');
+        }
         if (response?.status === 200) {
             if (response?.data?.isVerified === false) {
                 setIsLoading(false);

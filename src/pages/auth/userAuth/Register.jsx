@@ -1,7 +1,7 @@
 import {React, Fragment,useState} from "react";
 import {ToastContainer} from "react-toastify";
 import {BsEye, BsEyeSlash} from "react-icons/bs";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {notify} from "../../../helper";
 import Loader from "../../../components/loader/Loader";
 import Api from "../../../services/api";
@@ -26,6 +26,7 @@ const Register = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [uploadProgress, setUploadProgress] = useState(0);
     const [isOpen, setIsOpen] = useState(false);
+    const navigate = useNavigate();
 
     const showEyePswd = () => {
         setPswdType(!pswdType);
@@ -119,6 +120,9 @@ const Register = () => {
         };
 
         const response = await Api.userRegister(data);
+        if(response === undefined){
+            return navigate('/error');
+        }
         if (response?.data?.message) {
             setIsLoading(false);
             notify("success", `${response?.data?.message}`);

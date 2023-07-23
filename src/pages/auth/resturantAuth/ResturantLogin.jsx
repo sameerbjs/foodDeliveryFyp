@@ -52,7 +52,9 @@ const ResturantLogin = () => {
         setIsLoading(true);
 
         const response = await Api.resturantLogin(data);
-
+        if(response === undefined){
+            return navigate('/error');
+        }
         if (response?.status === 200) {
             if (response?.data?.isVerified === false) {
                 setIsLoading(false);
