@@ -5,6 +5,7 @@ const initialState = {
     cartProducts: [],
     totalCartProducts: 0,
     totalPrice: 0,
+    restCity : '',
 };
 
 const addToCartSlice = createSlice({
@@ -18,7 +19,8 @@ const addToCartSlice = createSlice({
             if (existingProduct) {
                 toast.warn("Product already exsist");
             } else {
-                state.cartProducts.push(action.payload);
+                state.restCity = action.payload.restCity;
+                state.cartProducts.push(action.payload.product);
                 toast.success("Product added to cart");
             }
             state.totalCartProducts = state.cartProducts.length;

@@ -32,18 +32,18 @@ const AuthRegisterProcess = () => {
                     <Tab.List className={'flex justify-center gap-4 items-center flex-wrap p-1'}>
                         <Tab>
                             {({ selected }) => (
-                                <button className={!selected ? 'px-4 py-2 text-black bg-red-500/50 rounded-lg' : 'bg-red-500 px-4 py-2 text-white rounded-lg'}>
+                                <span className={!selected ? 'px-4 py-2 text-black bg-red-500/50 rounded-lg' : 'bg-red-500 px-4 py-2 text-white rounded-lg'}>
                                     Register as user
-                                </button>
+                                </span>
 
                             )}
                         </Tab>
                         <Tab>
                             {({ selected }) => (
 
-                                <button className={!selected ? 'px-4 py-2 text-black bg-red-500/50 rounded-lg' : 'bg-red-500 px-4 py-2 text-white rounded-lg'}>
+                                <span className={!selected ? 'px-4 py-2 text-black bg-red-500/50 rounded-lg' : 'bg-red-500 px-4 py-2 text-white rounded-lg'}>
                                     Register as resturant manager
-                                </button>
+                                </span>
                             )}
 
                         </Tab>

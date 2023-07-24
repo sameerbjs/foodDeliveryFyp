@@ -131,11 +131,10 @@ const OrderDetail = () => {
                                                         {item?.product?.price},
                                                         Quantity:{" "}
                                                         {item?.quantity},
-                                                        {item?.product
-                                                            ?.size && {
-                                                            Size: item?.product
-                                                                ?.size,
-                                                        }}
+                                                        {
+                                                            console.log('item?.product :>> ', item?.product?.size)
+                                                        }
+                                                        {item?.product?.size && `Size: ${item.product.size}`}
                                                     </p>
                                                 </div>
                                             </div>

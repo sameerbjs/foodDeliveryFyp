@@ -35,7 +35,7 @@ function App() {
                     }
                 )
             );
-            navigate('/');        
+            navigate('/');
         }, 24 * 60 * 60 * 1000);
     }
     if (userToken) {
@@ -52,37 +52,19 @@ function App() {
                     }
                 )
             );
-            navigate('/');        
+            navigate('/');
         }, 24 * 60 * 60 * 1000);
     }
 
     return (
         <>
-            {isUser ? (
-                <div className="relative min-h-screen flex flex-col">
-                    <Header />
-                    <main className="flex-grow">
-                        <Routes>
-                            {UserRoutes.map((route, index) => (
-                                <Route
-                                    key={index}
-                                    path={route.path}
-                                    element={route.component}
-                                />
-                            ))}
-                            <Route path="*" element={<PageNotFound />} />
-                            <Route path="/error" element={<ErrorPage />} />
-                        </Routes>
-                    </main>
-                    <Footer />
-                </div>
-            ) : (
-                <>
+            {
+                isUser ? (
                     <div className="relative min-h-screen flex flex-col">
-                        <HeaderRest />
+                        <Header />
                         <main className="flex-grow">
                             <Routes>
-                                {ResturantsRoutes.map((route, index) => (
+                                {UserRoutes.map((route, index) => (
                                     <Route
                                         key={index}
                                         path={route.path}
@@ -93,9 +75,28 @@ function App() {
                                 <Route path="/error" element={<ErrorPage />} />
                             </Routes>
                         </main>
+                        <Footer />
                     </div>
-                </>
-            )}
+                ) : (
+                    <>
+                        <div className="relative min-h-screen flex flex-col">
+                            <HeaderRest />
+                            <main className="flex-grow">
+                                <Routes>
+                                    {ResturantsRoutes.map((route, index) => (
+                                        <Route
+                                            key={index}
+                                            path={route.path}
+                                            element={route.component}
+                                        />
+                                    ))}
+                                    <Route path="*" element={<PageNotFound />} />
+                                    <Route path="/error" element={<ErrorPage />} />
+                                </Routes>
+                            </main>
+                        </div>
+                    </>
+                )}
         </>
     );
 }

@@ -95,10 +95,10 @@ export default class Api {
             return error.response
         }
     }
-    static searchResturant = async (name) => {
+    static searchResturant = async (name,city) => {
         try {
             const response = await this._api.get('/api/search-rest', {
-                params: { name }
+                params: { name,city }
             })
             return response;
         } catch (error) {
@@ -302,6 +302,15 @@ export default class Api {
             return response;
         } catch (error) {
             return error.response
+        }
+    }
+
+    static handleContactUs = async (data) => {
+        try{
+            const response = await this._api.post('/api/contact-us', data);
+            return response;
+        } catch(error){
+            return error.response;
         }
     }
 }

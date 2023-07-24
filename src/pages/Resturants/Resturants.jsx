@@ -7,12 +7,14 @@ import Api from "../../services/api";
 import Loader from "../../components/loader/Loader";
 import {ToastContainer} from "react-toastify";
 import moment from "moment/moment";
+import {useSelector} from "react-redux";
 
 const Resturants = () => {
     const [allResturants, setAllResturants] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
-    const [search, setSearch] = useState('');
+    const [search, setSearch] = useState("");
     const [typingTimeout, setTypingTimeout] = useState(null);
+    const isUserLogin = useSelector((store) => store.authUser.isLogin);
 
     const cityName = useParams().city;
     const cityTranslations = {
@@ -23,7 +25,7 @@ const Resturants = () => {
         Karachi: "کراچی",
         Rawalpindi: "راولپنڈی",
         Quetta: "کوئٹہ",
-        Gujranwala : "گوجرانولہ"
+        Gujranwala: "گوجرانولہ",
     };
     const navigate = useNavigate();
 
@@ -36,8 +38,8 @@ const Resturants = () => {
         setIsLoading(true);
         const getResturant = async () => {
             const response = await Api.getResturantsByCity(cityName);
-            if(response === undefined){
-                return navigate('/error');
+            if (response === undefined) {
+                return navigate("/error");
             }
             if (response.status === 200) {
                 setAllResturants(response.data?.resturants);
@@ -48,26 +50,26 @@ const Resturants = () => {
             }
         };
         getResturant();
-    }, [cityName,navigate]);
+    }, [cityName, navigate]);
 
     const handleSearch = (event) => {
         setSearch(event.target.value);
-        clearTimeout(typingTimeout)
+        clearTimeout(typingTimeout);
 
         const timeout = setTimeout(() => {
             searchResturant(event.target.value);
         }, 500);
 
         setTypingTimeout(timeout);
-    }
+    };
     const searchResturant = async (name) => {
         try {
-            const response = await Api.searchResturant(name);
+            const response = await Api.searchResturant(name,cityName);
             setAllResturants(response.data?.resturant);
         } catch (error) {
-            notify("error", error);         
+            notify("error", error);
         }
-    }
+    };
     return (
         <>
             <Helmet>
@@ -142,9 +144,13 @@ const Resturants = () => {
                                         key={index}
                                     >
                                         <Link
-                                            to={`/products/${convertToSlug(
-                                                rest.name
-                                            )}/${rest._id}`}
+                                            to={`${
+                                                isUserLogin
+                                                    ? `/products/${convertToSlug(
+                                                          rest.name
+                                                      )}/${rest._id}`
+                                                    : "/auth-login"
+                                            }`}
                                             state={{
                                                 categories: rest?.categories,
                                             }}

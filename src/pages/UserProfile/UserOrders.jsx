@@ -70,7 +70,7 @@ const UserOrders = () => {
                                                             return (
                                                                 <>
                                                                     <li
-                                                                        className=" text-gray-800 flex justify-between items-center"
+                                                                        className="flex justify-between items-center"
                                                                         key={
                                                                             index
                                                                         }
@@ -87,7 +87,7 @@ const UserOrders = () => {
                                                                                 Price
                                                                                 :{" "}
                                                                                 {prod?.totalPrice *
-                                                                                    prod?.quantity}{" "}
+                                                                                    prod?.quantity + 200}{" "}
                                                                                 PKR
                                                                             </p>
                                                                             <p>
@@ -122,6 +122,9 @@ const UserOrders = () => {
                                                                         <div className="w-28 h-28">
                                                                             <img src={prod.product?.productPic} alt="product" className="w-full h-full object-contain" />
                                                                         </div>
+                                                                    </li>
+                                                                    <li>
+                                                                        Delivery charges are include in price.
                                                                     </li>
                                                                     <hr className="h-px my-8 bg-gray-400 border-0" />
                                                                 </>

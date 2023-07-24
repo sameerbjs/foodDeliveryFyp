@@ -6,8 +6,8 @@ import {useNavigate} from "react-router-dom";
 import Api from "../../services/api";
 import {handleDeleteProductOrderPlace} from "../../redux/CartSlice";
 import Loader from "../../components/loader/Loader";
-import { notify } from "../../helper";
-import { ToastContainer } from "react-toastify";
+import {notify} from "../../helper";
+import {ToastContainer} from "react-toastify";
 
 const CheckOut = () => {
     const navigate = useNavigate();
@@ -17,12 +17,13 @@ const CheckOut = () => {
     const cartProducts = useSelector((store) => store.cart.cartProducts);
     const [isOpen, setIsOpen] = useState(false);
     const [deliveryCharges, setDeliveryCharges] = useState(200);
+    console.log('cartProducts :>> ', cartProducts);
     const [isLoading, setIsLoading] = useState(false);
     const [orderDetail, setOrderDetail] = useState({
         name: "",
         email: "",
         city: "",
-        street_house: "",
+        streethouse: "",
         phone: "",
     });
 
@@ -36,6 +37,9 @@ const CheckOut = () => {
         setOrderDetail({
             name: cur_user.name,
             email: cur_user.email,
+            city: cur_user.address,
+            streethouse : "",
+            phone : ""
         });
     }, [cur_user]);
 
@@ -47,8 +51,12 @@ const CheckOut = () => {
     };
 
     const handlePlaceOrder = async () => {
-        if(!orderDetail.city || !orderDetail.street_house || !orderDetail.phone){
-            return notify('error', 'Please fill all the fields')
+        if (
+            !orderDetail.city ||
+            !orderDetail.streethouse ||
+            !orderDetail.phone
+        ) {
+            return notify("error", "Please fill all the fields");
         }
         setIsLoading(true);
         const data = {
@@ -61,7 +69,7 @@ const CheckOut = () => {
             city: orderDetail.city,
             price: totalPriceProducts,
             phone: orderDetail.phone,
-            address: orderDetail.street_house,
+            address: orderDetail.streethouse,
             userId: cur_user?._id,
         };
         const response = await Api.placeOrder(data);
@@ -160,30 +168,31 @@ const CheckOut = () => {
                                 htmlFor="city"
                                 className="leading-7 text-[15px] font-semibold text-[#212245]"
                             >
-                                City and area
+                                City
                             </label>
                             <input
                                 type="text"
                                 value={orderDetail.city}
                                 onChange={handleChangeText}
                                 id="city"
+                                disabled
                                 name="city"
                                 className="w-full bg-white rounded border border-gray-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                             />
                         </div>
                         <div className="relative">
                             <label
-                                htmlFor="street_house"
+                                htmlFor="streethouse"
                                 className="leading-7 text-[15px] font-semibold text-[#212245]"
                             >
-                                Street & House No
+                                Area & Street & House No
                             </label>
                             <input
                                 type="text"
-                                id="street_house"
-                                value={orderDetail.street_house}
+                                id="streethouse"
                                 onChange={handleChangeText}
-                                name="street_house"
+                                value={orderDetail.streethouse}
+                                name="streethouse"
                                 className="w-full bg-white rounded border border-gray-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                             />
                         </div>
@@ -280,7 +289,7 @@ const CheckOut = () => {
                                             <button
                                                 onClick={handlePlaceOrder}
                                                 type="button"
-                                                className="flex w-20 justify-center items-center rounded-md border border-transparent bg-green-100 text-sm font-medium text-green-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                                                className="rounded-md px-5 border border-transparent bg-red-100 text-sm font-medium text-red-900 hover:bg-red-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                                             >
                                                 {isLoading ? (
                                                     <Loader

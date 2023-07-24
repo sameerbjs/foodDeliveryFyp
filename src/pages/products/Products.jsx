@@ -7,7 +7,6 @@ import {Helmet} from "react-helmet";
 import Api from "../../services/api";
 import Loader from "../../components/loader/Loader";
 import PostComments from "./PostComments";
-import {notify} from "../../helper";
 import {ToastContainer} from "react-toastify";
 
 export const ProductRest = () => {
@@ -37,10 +36,6 @@ export const ProductRest = () => {
                 setIsloading(false);
             } else {
                 setIsloading(false);
-                notify("error", response?.data?.error);
-                setTimeout(() => {
-                    navigate("/auth-login");
-                }, 3000);
             }
         };
 

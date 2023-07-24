@@ -6,12 +6,14 @@ import {ToastContainer} from "react-toastify";
 import {Helmet} from "react-helmet";
 import Api from "../../services/api.js";
 import Loader from "../../components/loader/Loader.jsx";
+import notify from "../../helper/notify.js";
 
 const ProductDetail = () => {
     const [productDetail, setProductDetail] = React.useState();
     const [isLoading, setIsloading] = useState(false);
 
     const dispatch = useDispatch();
+    const cur_user = useSelector((store) => store.authUser?.userAuth);
     const cartProducts = useSelector((store) => store.cart.cartProducts);
     const {id} = useParams();
     const navigate = useNavigate();
@@ -28,7 +30,17 @@ const ProductDetail = () => {
     }, [id]);
 
     const handleAddCart = (product) => {
-        dispatch(addToCartProduct(product));
+        if (cur_user.address !== product.resturant.city) {
+            const errorMessage = `Invalid restaurant location.\nPlease choose products from ${cur_user.address}.`;
+            notify("error", errorMessage);
+            return;
+        }
+        dispatch(
+            addToCartProduct({
+                product: product,
+                restCity: product.resturant.city,
+            })
+        );
     };
     const handleRemoveCart = (id) => {
         dispatch(removeToCartProduct({id: id}));

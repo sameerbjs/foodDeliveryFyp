@@ -162,6 +162,7 @@ const ResturantLogin = () => {
                                 </div>
                                 <button
                                     onClick={handleLogin}
+                                    disabled={!info.email || !info.password || isLoading}
                                     className="relative intro-x w-full bg-red-500 hover:bg-[#212245] text-white font-medium tracking-widest flex justify-center py-2.5 px-4 border border-transparent rounded-lg focus:outline-none "
                                 >
                                     {isLoading ? (
